@@ -1,0 +1,14 @@
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Proizvodjac</th>
+        <th>Model</th>
+        <th>Cijena</th>
+    </tr>
+    <tr *ngFor='let e of automobili' (click)='selektujAutomobil(e)'>
+        <td>{{ e.id }}</td>
+        <td>{{ e.proizvodjac }}</td>
+        <td>{{ e.model }}</td>
+        <td>{{ e.cijena }}</td>
+    </tr>
+</table>

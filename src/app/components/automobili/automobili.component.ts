@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Automobil } from './../../models/Automobil';
+import { AutomobilComponent } from '../automobil/automobil.component';
 
 @Component({
   selector: 'app-automobili',
@@ -10,6 +11,7 @@ export class AutomobiliComponent implements OnInit {
 
   naslovStranice = "Spisak svih automobila";
   automobili: Automobil[] = [];
+  selektovaniAutomobil: Automobil;
 
   constructor() { }
 

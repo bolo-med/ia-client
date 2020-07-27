@@ -4,17 +4,11 @@
 
 <!-- <input type="text" [(ngModel)]='naslovStranice'> -->
 
-<table class="table table-striped">
-    <tr>
-        <th>ID</th>
-        <th>Proizvodjac</th>
-        <th>Model</th>
-        <th>Cijena</th>
-    </tr>
-    <tr *ngFor='let e of automobili'>
-        <td>{{ e.id }}</td>
-        <td>{{ e.proizvodjac }}</td>
-        <td>{{ e.model }}</td>
-        <td>{{ e.cijena }}</td>
-    </tr>
-</table>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <app-automobili-table [automobili]='automobili'></app-automobili-table>
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <app-automobil [selektovaniAutomobil]='selektovaniAutomobil'></app-automobil>
+    </div>
+</div>

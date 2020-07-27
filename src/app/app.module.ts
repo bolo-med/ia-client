@@ -8,6 +8,7 @@ import { AutomobiliComponent } from './components/automobili/automobili.componen
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AutomobilComponent } from './components/automobil/automobil.component';
+import { AutomobiliTableComponent } from './components/automobili-table/automobili-table.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { AutomobilComponent } from './components/automobil/automobil.component';
     AutomobiliComponent,
     LoginComponent,
     RegisterComponent,
-    AutomobilComponent
+    AutomobilComponent,
+    AutomobiliTableComponent
   ],
   imports: [
     BrowserModule,
