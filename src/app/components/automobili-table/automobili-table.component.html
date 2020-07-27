@@ -7,8 +7,8 @@
     </tr>
     <tr *ngFor='let e of automobili' (click)='selektujAutomobil(e)'>
         <td>{{ e.id }}</td>
-        <td>{{ e.proizvodjac }}</td>
-        <td>{{ e.model }}</td>
+        <td>{{ e.proizvodjac.naziv }}</td>
+        <td>{{ e.modelID }}</td>
         <td>{{ e.cijena }}</td>
     </tr>
 </table>

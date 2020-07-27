@@ -1,13 +1,23 @@
+import { Status } from './Status';
+import { Proizvodjac } from './Proizvodjac';
+import { Model } from './Model';
+import { Rezervacija } from './Rezervacija';
+
 export class Automobil {
 
     id: number;
-    proizvodjac: string;
-    model: string;
-    // godiste: number;
-    // motor: string;
-    // mjenjac: string;
-    // status: string;
-    // fotografija: string;
+    proizvodjacID: number;
+    modelID: number;
+    godiste: number;
+    motor: string;
+    mjenjac: string;
+    statusID: number;
+    fotografija: string;
     cijena: number;
+    status: Status;
+    proizvodjac: Proizvodjac;
+    model: Model;
+    rezervacije: Rezervacija[];
 
 }
+
