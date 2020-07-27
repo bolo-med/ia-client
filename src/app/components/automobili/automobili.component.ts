@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Automobil } from './../../models/Automobil';
 
 @Component({
   selector: 'app-automobili',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AutomobiliComponent implements OnInit {
 
+  naslovStranice = "Spisak svih automobila";
+  automobili: Automobil[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
+    this.automobili = [
+      {
+        id: 1,
+        proizvodjac: 'Zastava',
+        model: 'Yugo',
+        cijena: 49.99
+      },
+      {
+        id: 2,
+        proizvodjac: 'Dacia',
+        model: 'Sandero',
+        cijena: 59.99
+      }
+    ];
   }
 
 }

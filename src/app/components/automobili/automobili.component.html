@@ -1,1 +1,20 @@
-<p>automobili works!</p>
+<h2>
+    {{ naslovStranice }}
+</h2>
+
+<!-- <input type="text" [(ngModel)]='naslovStranice'> -->
+
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Proizvodjac</th>
+        <th>Model</th>
+        <th>Cijena</th>
+    </tr>
+    <tr *ngFor='let e of automobili'>
+        <td>{{ e.id }}</td>
+        <td>{{ e.proizvodjac }}</td>
+        <td>{{ e.model }}</td>
+        <td>{{ e.cijena }}</td>
+    </tr>
+</table>
