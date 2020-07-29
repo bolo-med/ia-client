@@ -4,40 +4,41 @@
 </div>
 <div>
     <label>ProizvodjacID</label>
-    <select name="proizvodjaci" class="form-control">
+    <select name="proizvodjaci" class="form-control" [(ngModel)]='automobil.proizvodjacID' (ngModelChange)='toNumber()'>
         <option *ngFor='let e of proizvodjaci' value="{{e.id}}">{{e.naziv}}</option>
     </select>
 </div>
 <div>
     <label>ModelID</label>
-    <select name="modeli" class="form-control">
+    <select name="modeli" class="form-control" [(ngModel)]='automobil.modelID' (ngModelChange)='toNumber()'>
         <option *ngFor='let e of modeli' value="{{e.id}}">{{e.oznaka}}</option>
     </select>
 </div>
 <div>
     <label>Godiste</label>
-    <input type="text" class="form-control">
+    <input type="text" class="form-control" [(ngModel)]='automobil.godiste' (ngModelChange)='toNumber()'>
 </div> 
 <div>
     <label>Motor</label>
-    <input type="text" class="form-control">
+    <input type="text" class="form-control" [(ngModel)]='automobil.motor'>
 </div>
 <div>
     <label>Mjenjac</label>
-    <input type="text" class="form-control">
+    <input type="text" class="form-control" [(ngModel)]='automobil.mjenjac'>
 </div>
 <div>
     <label>StatusID</label>
-    <select name="statusi" class="form-control">
+    <select name="statusi" class="form-control" [(ngModel)]='automobil.statusID' (ngModelChange)='toNumber()'>
         <option *ngFor='let e of statusi' value="{{e.id}}">{{e.tip}}</option>
     </select>
 </div>
 <div>
     <label>Fotografija</label>
-    <input type="text" class="form-control">
+    <input type="text" class="form-control" [(ngModel)]='automobil.fotografija'>
 </div>
 <div>
     <label>Cijena</label>
-    <input type="text" class="form-control">
+    <input type="text" class="form-control" [(ngModel)]='automobil.cijena' (ngModelChange)='toNumber()'>
 </div>
 
+<button class="btn btn-success" (click)='dodajAutomobil()'>Dodaj automobil</button>

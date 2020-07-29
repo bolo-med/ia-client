@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Automobil } from './../models/Automobil';
 import { environment } from 'src/environments/environment';
+import { OperationResponse } from './../models/OperationResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class AutomobiliService {
   // public getAutomobil(id: number) {
   //   return this.http.get<Automobil>(`${this.serviceUrl}/${id}`);
   // }
+
+  public insertAutomobil(automobil: Automobil) {
+    return this.http.post<OperationResponse>(this.serviceUrl, automobil);
+  }
 
 }
 
