@@ -31,10 +31,10 @@ export class AutomobilObrazacAdmComponent implements OnInit {
     if (confirm('Jeste li sigurni?')) {
       this.automobiliService.insertAutomobil(this.automobil).subscribe(data => {
         if (data.status === 0) {
-          console.log('Automobil je dodat u bazu podataka!');
+          alert('Automobil je dodat u bazu podataka!' + data.status);
         }
         else {
-          console.log('Doslo je do greske!');
+          alert('Doslo je do greske!' + data.status);
         }
       });
     }

@@ -8,10 +8,10 @@
 </div>
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="auto-adm" value="izm-ukl" [checked]='odabranaIzmjUklanj'  (click)='kliknutoIzmUkl()'>
-    <label class="form-check-label" for="izm-ukl">Izmijeni/Ukloni automobil</label>
+    <label class="form-check-label" for="izm-ukl">Izmijeni/Ukloni automobil, proizvodjaca, model i/ili status</label>
 </div>
 
-<br><br>
+<br><br><br>
 
 <div class="row">
     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranUnos'>
@@ -19,6 +19,10 @@
                                    [modeli]='modeli' 
                                    [statusi]='statusi'>
         </app-automobil-obrazac-adm>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranUnos'>
+        <app-pro-mod-sta-adm></app-pro-mod-sta-adm>
     </div>
 
     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranaIzmjUklanj'>

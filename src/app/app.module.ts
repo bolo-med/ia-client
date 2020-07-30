@@ -13,6 +13,10 @@ import { AutomobiliTableComponent } from './components/automobili-table/automobi
 import { AutomobiliAdmComponent } from './components/automobili-adm/automobili-adm.component';
 import { AutomobilObrazacAdmComponent } from './components/automobil-obrazac-adm/automobil-obrazac-adm.component';
 import { AutomobiliTabelaAdmComponent } from './components/automobili-tabela-adm/automobili-tabela-adm.component';
+import { ProModStaAdmComponent } from './components/pro-mod-sta-adm/pro-mod-sta-adm.component';
+import { ProizvodjacAdmComponent } from './components/proizvodjac-adm/proizvodjac-adm.component';
+import { ModelAdmComponent } from './components/model-adm/model-adm.component';
+import { StatusAdmComponent } from './components/status-adm/status-adm.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { AutomobiliTabelaAdmComponent } from './components/automobili-tabela-adm
     AutomobiliTableComponent,
     AutomobiliAdmComponent,
     AutomobilObrazacAdmComponent,
-    AutomobiliTabelaAdmComponent
+    AutomobiliTabelaAdmComponent,
+    ProModStaAdmComponent,
+    ProizvodjacAdmComponent,
+    ModelAdmComponent,
+    StatusAdmComponent
   ],
   imports: [
     BrowserModule,
