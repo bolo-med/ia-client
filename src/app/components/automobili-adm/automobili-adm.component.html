@@ -8,7 +8,11 @@
 </div>
 <div class="form-check form-check-inline">
     <input class="form-check-input" type="radio" name="auto-adm" value="izm-ukl" [checked]='odabranaIzmjUklanj'  (click)='kliknutoIzmUkl()'>
-    <label class="form-check-label" for="izm-ukl">Izmijeni/Ukloni automobil, proizvodjaca, model i/ili status</label>
+    <label class="form-check-label" for="izm-ukl">Izmijeni/Ukloni automobil</label>
+</div>
+<div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="auto-adm" value="izm-ukl-ost" [checked]='odabranaIzmjUklanjOst'  (click)='kliknutoIzmUklOst()'>
+    <label class="form-check-label" for="izm-ukl-ost">Izmijeni/Ukloni proizvodjaca, model i/ili status</label>
 </div>
 
 <br><br><br>
@@ -27,5 +31,16 @@
 
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf='odabranaIzmjUklanj'>
         <app-automobili-tabela-adm [automobili]='automobili'></app-automobili-tabela-adm>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranaIzmjUklanjOst'>
+        <app-proizvodjaci-tabela [proizvodjaci]='proizvodjaci'></app-proizvodjaci-tabela>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranaIzmjUklanjOst'>
+        <app-modeli-tabela [modeli]='modeli'></app-modeli-tabela>
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranaIzmjUklanjOst'>
+        <app-statusi-tabela [statusi]='statusi'></app-statusi-tabela>
     </div>
 </div>

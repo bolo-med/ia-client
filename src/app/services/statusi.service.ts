@@ -21,5 +21,9 @@ export class StatusiService {
     return this.http.post<OperationResponse>(this.serviceUrl, status);
   }
 
+  public deleteStatus(id: number) {
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
+  }
+
 }
 

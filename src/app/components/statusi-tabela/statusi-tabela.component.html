@@ -1,1 +1,22 @@
-<p>statusi-tabela works!</p>
+<br><br>
+
+<h2 class="center-margin-bottom">Svi statusi</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Tip</th>
+        <th>Izmijeni</th>
+        <th>Ukloni</th>
+    </tr>
+    <tr *ngFor='let e of statusi'>
+        <td>{{ e.id }}</td>
+        <td>{{ e.tip }}</td>
+        <td>
+            <button class="btn btn-warning">Izmijeni</button>
+        </td>
+        <td>
+            <button class="btn btn-danger" (click)='ukloniStatus(e)'>Ukloni</button>
+        </td>
+    </tr>
+</table>

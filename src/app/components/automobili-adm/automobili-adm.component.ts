@@ -15,8 +15,9 @@ import { AutomobiliService } from 'src/app/services/automobili.service';
 })
 export class AutomobiliAdmComponent implements OnInit {
 
-  odabranUnos = true;
-  odabranaIzmjUklanj = false;
+  odabranUnos: boolean = true;
+  odabranaIzmjUklanj: boolean = false;
+  odabranaIzmjUklanjOst: boolean = false;
   proizvodjaci: Proizvodjac[] = [];
   modeli: Model[] = [];
   statusi: Status[] = [];
@@ -51,6 +52,7 @@ export class AutomobiliAdmComponent implements OnInit {
     if (!this.odabranUnos) {
       this.odabranUnos = true;
       this.odabranaIzmjUklanj = false;
+      this.odabranaIzmjUklanjOst = false;
     }
   }
 
@@ -58,6 +60,15 @@ export class AutomobiliAdmComponent implements OnInit {
     if (!this.odabranaIzmjUklanj) {
       this.odabranUnos = false;
       this.odabranaIzmjUklanj = true;
+      this.odabranaIzmjUklanjOst = false;
+    }
+  }
+
+  kliknutoIzmUklOst() {
+    if (!this.odabranaIzmjUklanjOst) {
+      this.odabranaIzmjUklanjOst = true;
+      this.odabranUnos = false;
+      this.odabranaIzmjUklanj = false;
     }
   }
 

@@ -1,1 +1,20 @@
-<p>proizvodjaci-tabela works!</p>
+<h2 class="center-margin-bottom">Svi proizvodjaci</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Naziv</th>
+        <th>Izmjeni</th>
+        <th>Ukloni</th>
+    </tr>
+    <tr *ngFor='let e of proizvodjaci'>
+        <td>{{ e.id }}</td>
+        <td>{{ e.naziv }}</td>
+        <td>
+            <button class="btn btn-warning">Izmijeni</button>
+        </td>
+        <td>
+            <button class="btn btn-danger" (click)='ukloniProizvodjaca(e)'>Ukloni</button>
+        </td>
+    </tr>
+</table>

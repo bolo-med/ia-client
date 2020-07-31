@@ -21,5 +21,9 @@ export class ProizvodjaciService {
     return this.http.post<OperationResponse>(this.serviceUrl, proizvodjac);
   }
 
+  public deleteProizvodjac(id: number) {
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
+  }
+
 }
 

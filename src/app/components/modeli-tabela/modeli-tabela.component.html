@@ -1,1 +1,20 @@
-<p>modeli-tabela works!</p>
+<h2 class="center-margin-bottom">Svi modeli</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Oznaka</th>
+        <th>Izmijeni</th>
+        <th>Ukloni</th>
+    </tr>
+    <tr *ngFor='let e of modeli'>
+        <td>{{ e.id }}</td>
+        <td>{{ e.oznaka }}</td>
+        <td>
+            <button class="btn btn-warning">Izmijeni</button>
+        </td>
+        <td>
+            <button class="btn btn-danger" (click)='ukloniModel(e)'>Ukloni</button>
+        </td>
+    </tr>
+</table>

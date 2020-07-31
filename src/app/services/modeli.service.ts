@@ -21,5 +21,9 @@ export class ModeliService {
     return this.http.post<OperationResponse>(this.serviceUrl, model);
   }
 
+  public deleteModel(id: number) {
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
+  }
+
 }
 
