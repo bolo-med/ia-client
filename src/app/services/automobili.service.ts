@@ -25,5 +25,9 @@ export class AutomobiliService {
     return this.http.post<OperationResponse>(this.serviceUrl, automobil);
   }
 
+  public deleteAutomobil(id: number) {
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
+  }
+
 }
 

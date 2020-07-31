@@ -17,6 +17,9 @@ import { ProModStaAdmComponent } from './components/pro-mod-sta-adm/pro-mod-sta-
 import { ProizvodjacAdmComponent } from './components/proizvodjac-adm/proizvodjac-adm.component';
 import { ModelAdmComponent } from './components/model-adm/model-adm.component';
 import { StatusAdmComponent } from './components/status-adm/status-adm.component';
+import { ProizvodjaciTabelaComponent } from './components/proizvodjaci-tabela/proizvodjaci-tabela.component';
+import { ModeliTabelaComponent } from './components/modeli-tabela/modeli-tabela.component';
+import { StatusiTabelaComponent } from './components/statusi-tabela/statusi-tabela.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { StatusAdmComponent } from './components/status-adm/status-adm.component
     ProModStaAdmComponent,
     ProizvodjacAdmComponent,
     ModelAdmComponent,
-    StatusAdmComponent
+    StatusAdmComponent,
+    ProizvodjaciTabelaComponent,
+    ModeliTabelaComponent,
+    StatusiTabelaComponent
   ],
   imports: [
     BrowserModule,

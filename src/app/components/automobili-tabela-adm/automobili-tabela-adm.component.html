@@ -1,1 +1,33 @@
-<p>automobili-tabela-adm works!</p>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>Proizvodjac</th>
+        <th>Model</th>
+        <th>Godiste</th>
+        <th>Motor</th>
+        <th>Mjenjac</th>
+        <th>Status</th>
+        <th>Fotografija</th>
+        <th>Cijena</th>
+        <th>Izmijeni</th>
+        <th>Ukloni</th>
+    </tr>
+    <tr *ngFor='let e of automobili'>
+        <td>{{ e.id }}</td>
+        <td>{{ e.proizvodjac.naziv }}</td>
+        <td>{{ e.model.oznaka }}</td>
+        <td>{{ e.godiste }}</td>
+        <td>{{ e.motor }}</td>
+        <td>{{ e.mjenjac }}</td>
+        <td>{{ e.status.tip }}</td>
+        <td>{{ e.fotografija }}</td>
+        <td>{{ e.cijena }}</td>
+        <td>
+            <button class="btn btn-warning">Izmijeni</button>
+        </td>
+        <td>
+            <button class="btn btn-danger" (click)='ukloniAutomobil(e)'>Ukloni</button>
+        </td>
+    </tr>
+</table>
+

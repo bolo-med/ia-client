@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Host } from '@angular/core';
 import { Proizvodjac } from 'src/app/models/Proizvodjac';
 import { Model } from 'src/app/models/Model';
 import { Status } from 'src/app/models/Status';
 import { Automobil } from 'src/app/models/Automobil';
 import { AutomobiliService } from 'src/app/services/automobili.service';
+import { AutomobiliAdmComponent } from '../automobili-adm/automobili-adm.component';
 
 @Component({
   selector: 'app-automobil-obrazac-adm',
@@ -23,7 +24,8 @@ export class AutomobilObrazacAdmComponent implements OnInit {
   @Input('statusi')
   statusi: Status[] = [];
 
-  constructor(private automobiliService: AutomobiliService) { }
+  constructor(private automobiliService: AutomobiliService, 
+              @Host() private parent: AutomobiliAdmComponent) { }
 
   ngOnInit(): void { }
 
@@ -31,10 +33,11 @@ export class AutomobilObrazacAdmComponent implements OnInit {
     if (confirm('Jeste li sigurni?')) {
       this.automobiliService.insertAutomobil(this.automobil).subscribe(data => {
         if (data.status === 0) {
-          alert('Automobil je dodat u bazu podataka!' + data.status);
+          alert('Automobil je dodat u bazu podataka!');
+          this.parent.ngOnInit();
         }
         else {
-          alert('Doslo je do greske!' + data.status);
+          alert('Doslo je do greske!');
         }
       });
     }

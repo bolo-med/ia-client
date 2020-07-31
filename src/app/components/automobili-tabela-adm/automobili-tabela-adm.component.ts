@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Host } from '@angular/core';
+import { Automobil } from '../../models/Automobil';
+import { AutomobiliAdmComponent } from '../automobili-adm/automobili-adm.component';
 
 @Component({
   selector: 'app-automobili-tabela-adm',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AutomobiliTabelaAdmComponent implements OnInit {
 
-  constructor() { }
+  @Input('automobili')
+  automobili: Automobil[] = [];
+
+  constructor(@Host() private parent: AutomobiliAdmComponent) { }
 
   ngOnInit(): void {
+  }
+
+  ukloniAutomobil(automobil: Automobil) {
+    this.parent.ukloniAutomobil(automobil);
   }
 
 }
