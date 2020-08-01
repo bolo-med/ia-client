@@ -25,5 +25,9 @@ export class ProizvodjaciService {
     return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
   }
 
+  public updateProizvodjac(proizvodjac: Proizvodjac) {
+    return this.http.put<OperationResponse>(this.serviceUrl, proizvodjac);
+  }
+
 }
 

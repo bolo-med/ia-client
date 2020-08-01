@@ -15,13 +15,25 @@ import { AutomobiliService } from 'src/app/services/automobili.service';
 })
 export class AutomobiliAdmComponent implements OnInit {
 
-  odabranUnos: boolean = true;
-  odabranaIzmjUklanj: boolean = false;
-  odabranaIzmjUklanjOst: boolean = false;
-  proizvodjaci: Proizvodjac[] = [];
-  modeli: Model[] = [];
-  statusi: Status[] = [];
-  automobili: Automobil[] = [];
+  odabranUnos: boolean = true; // Odabrano radio-dugme 'Dodaj automobil, proizvodjaca, model i/ili status'
+  odabranUnosA: boolean = true; // Vidljiva komponenta: automobil-obrazac-adm
+  odabranUnosPrMoSt: boolean = true; // Vidljiva komponenta: pro-mod-sta-adm
+  odabranaIzmjUklanj: boolean = false; // Vidljiva komponenta: automobili-tabela-adm
+  odabranaIzmjUklanjOst: boolean = false; // Vidljiva komponente: proizvodjaci-tabela, modeli-tabela, statusi-tabela
+  
+  proizvodjaci: Proizvodjac[] = []; // Svi redovi tabele Proizvodjaci
+  modeli: Model[] = []; // Svi redovi tabele Modeli
+  statusi: Status[] = []; // Svi redovi tabele Statusi
+  automobili: Automobil[] = []; // Svi redovi tabele Automobili
+
+  proizvodjacVidljiv: boolean; // Vidljiva komponenta: proizvodjac-adm
+  modelVidljiv: boolean; // Vidljiva komponenta: model-adm
+  statusVidljiv: boolean; // Vidljiva komponenta: status-adm
+
+  vidljivoDodajP: boolean; // Vidljivo dugme 'Dodaj proizvodjaca', komponente proizvodjac-adm
+  vidljivoIzmijeniP: boolean; // Vidljivo dugme 'Izmijeni proizvodjaca', komponente proizvodjac-adm
+
+  odabraniProizvodjac: Proizvodjac = new Proizvodjac;
 
   constructor(private proizvodjaciService: ProizvodjaciService,
               private modeliService: ModeliService,
@@ -45,30 +57,50 @@ export class AutomobiliAdmComponent implements OnInit {
     this.automobiliService.getAutomobili().subscribe(data => {
       this.automobili = data;
     });
-    
+
+    // Mora ovdje da mu se dodjeli vrijednost, da bi mogao da radi @Input
+    this.proizvodjacVidljiv = true;
+    this.modelVidljiv = true;
+    this.statusVidljiv = true;
+
+    this.vidljivoDodajP = true;
+    this.vidljivoIzmijeniP = false;
   }
 
   kliknutoDodaj() {
     if (!this.odabranUnos) {
       this.odabranUnos = true;
+      this.odabranUnosA = true;
+      this.odabranUnosPrMoSt = true;
       this.odabranaIzmjUklanj = false;
       this.odabranaIzmjUklanjOst = false;
+
+      this.modelVidljiv = true;
+      this.statusVidljiv = true;
+
+      this.ngOnInit();
     }
   }
 
   kliknutoIzmUkl() {
     if (!this.odabranaIzmjUklanj) {
       this.odabranUnos = false;
+      this.odabranUnosA = false;
+      this.odabranUnosPrMoSt = false;
       this.odabranaIzmjUklanj = true;
       this.odabranaIzmjUklanjOst = false;
+      this.ngOnInit();
     }
   }
 
   kliknutoIzmUklOst() {
     if (!this.odabranaIzmjUklanjOst) {
-      this.odabranaIzmjUklanjOst = true;
       this.odabranUnos = false;
+      this.odabranUnosA = false;
+      this.odabranUnosPrMoSt = false;
       this.odabranaIzmjUklanj = false;
+      this.odabranaIzmjUklanjOst = true;
+      this.ngOnInit();
     }
   }
 

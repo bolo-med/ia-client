@@ -11,10 +11,11 @@
         <td>{{ e.id }}</td>
         <td>{{ e.naziv }}</td>
         <td>
-            <button class="btn btn-warning">Izmijeni</button>
+            <button class="btn btn-warning" (click)='izmijeniProizvodjaca(e)'>Izmijeni</button>
         </td>
         <td>
             <button class="btn btn-danger" (click)='ukloniProizvodjaca(e)'>Ukloni</button>
         </td>
     </tr>
 </table>
+

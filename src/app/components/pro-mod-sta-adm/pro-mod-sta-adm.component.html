@@ -1,11 +1,13 @@
-<div>
-    <app-proizvodjac-adm></app-proizvodjac-adm>
+<div *ngIf='proizvodjacVidljiv'>
+    <app-proizvodjac-adm [vidljivoDodajP]='vidljivoDodajP' 
+                         [vidljivoIzmijeniP]='vidljivoIzmijeniP'
+                         [odabraniProizvodjac]='odabraniProizvodjac'></app-proizvodjac-adm>
 </div>
 
-<div>
+<div *ngIf='modelVidljiv'>
     <app-model-adm></app-model-adm>
 </div>
 
-<div>
+<div *ngIf='statusVidljiv'>
     <app-status-adm></app-status-adm>
 </div>

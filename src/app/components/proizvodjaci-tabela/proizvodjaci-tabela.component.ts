@@ -13,6 +13,12 @@ export class ProizvodjaciTabelaComponent implements OnInit {
   @Input('proizvodjaci')
   proizvodjaci: Proizvodjac[] = [];
 
+  @Input('vidljivoDodajP')
+  vidljivoDodajP: boolean;
+
+  @Input('vidljivoIzmijeniP')
+  vidljivoIzmijeniP: boolean;
+
   constructor(private proizvodjaciService: ProizvodjaciService, 
               @Host() private parent: AutomobiliAdmComponent) { }
 
@@ -30,6 +36,20 @@ export class ProizvodjaciTabelaComponent implements OnInit {
           alert('Doslo je do greske pri upisivanju u bazu podataka!');
         }
       });
+    }
+  }
+
+  izmijeniProizvodjaca(proizvodjac: Proizvodjac) {
+    if (confirm('Da li ste sigurni da zelite da izmijenite proizvodjaca?')) {
+      this.parent.odabranaIzmjUklanjOst = false;
+      this.parent.odabranUnosPrMoSt = true;
+      this.parent.modelVidljiv = false;
+      this.parent.statusVidljiv = false;
+
+      this.parent.vidljivoDodajP = false;
+      this.parent.vidljivoIzmijeniP = true;
+
+      this.parent.odabraniProizvodjac = proizvodjac;
     }
   }
 

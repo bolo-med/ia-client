@@ -18,15 +18,20 @@
 <br><br><br>
 
 <div class="row">
-    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranUnos'>
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranUnosA'>
         <app-automobil-obrazac-adm [proizvodjaci]='proizvodjaci'
                                    [modeli]='modeli' 
                                    [statusi]='statusi'>
         </app-automobil-obrazac-adm>
     </div>
 
-    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranUnos'>
-        <app-pro-mod-sta-adm></app-pro-mod-sta-adm>
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranUnosPrMoSt'>
+        <app-pro-mod-sta-adm [proizvodjacVidljiv]='proizvodjacVidljiv' 
+                             [modelVidljiv]='modelVidljiv' 
+                             [statusVidljiv]='statusVidljiv' 
+                             [vidljivoDodajP]='vidljivoDodajP' 
+                             [vidljivoIzmijeniP]='vidljivoIzmijeniP' 
+                             [odabraniProizvodjac]='odabraniProizvodjac'></app-pro-mod-sta-adm>
     </div>
 
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf='odabranaIzmjUklanj'>
@@ -34,7 +39,9 @@
     </div>
 
     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranaIzmjUklanjOst'>
-        <app-proizvodjaci-tabela [proizvodjaci]='proizvodjaci'></app-proizvodjaci-tabela>
+        <app-proizvodjaci-tabela [proizvodjaci]='proizvodjaci' 
+                                 [vidljivoDodajP]='vidljivoDodajP' 
+                                 [vidljivoIzmijeniP]='vidljivoIzmijeniP'></app-proizvodjaci-tabela>
     </div>
 
     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf='odabranaIzmjUklanjOst'>
@@ -44,3 +51,4 @@
         <app-statusi-tabela [statusi]='statusi'></app-statusi-tabela>
     </div>
 </div>
+

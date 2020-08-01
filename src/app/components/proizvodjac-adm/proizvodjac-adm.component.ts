@@ -1,4 +1,4 @@
-import { Component, OnInit, Host } from '@angular/core';
+import { Component, OnInit, Host, Input } from '@angular/core';
 import { ProizvodjaciService } from 'src/app/services/proizvodjaci.service';
 import { Proizvodjac } from 'src/app/models/Proizvodjac';
 import { ProModStaAdmComponent } from '../pro-mod-sta-adm/pro-mod-sta-adm.component';
@@ -11,6 +11,15 @@ import { ProModStaAdmComponent } from '../pro-mod-sta-adm/pro-mod-sta-adm.compon
 export class ProizvodjacAdmComponent implements OnInit {
 
   proizvodjac: Proizvodjac = new Proizvodjac();
+
+  @Input('vidljivoDodajP')
+  vidljivoDodajP: boolean;
+
+  @Input('vidljivoIzmijeniP')
+  vidljivoIzmijeniP: boolean;
+
+  @Input('odabraniProizvodjac')
+  odabraniProizvodjac: Proizvodjac = new Proizvodjac();
 
   constructor(private proizvodjaciService: ProizvodjaciService, 
               @Host() private parent: ProModStaAdmComponent) { }
@@ -27,6 +36,19 @@ export class ProizvodjacAdmComponent implements OnInit {
         }
         else {
           alert('Doslo je do greske pri upisivanju u bazu podataka!');
+        }
+      });
+    }
+  }
+
+  izmijeniProizvodjaca() {
+    if(confirm('Jeste li sigurni da zelite da izmijenite proizvodjaca?')) {
+      this.proizvodjaciService.updateProizvodjac(this.odabraniProizvodjac).subscribe(data => {
+        if (data.status === 0) {
+          alert('Proizvodjac je izmijenjen!');
+        }
+        else {
+          alert('Doslo je do greske pri izmjenjivanju proizvodjaca!');
         }
       });
     }

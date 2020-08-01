@@ -1,12 +1,22 @@
 <div class="okvir-adm">
+
+    <h4 class="center-margin-bottom-20">Proizvodjac</h4>
+
     <div>
-        <label>Unesite naziv novog proizvodjaca:</label>
-        <input type="text" class="form-control" [(ngModel)]='proizvodjac.naziv'>
+        <label>ID</label>
+        <input type="text" class="form-control" [disabled]='true' [ngModel]='odabraniProizvodjac.id'>
+    </div>
+    <br>
+    <div>
+        <label>Naziv</label>
+        <input type="text" class="form-control" [(ngModel)]='odabraniProizvodjac.naziv'>
     </div>
 
-    <br>
+    <br><br>
 
-    <button class="btn btn-success" (click)='klikNaDugme()'>Dodaj proizvodjaca</button>
+    <button class="btn btn-success" (click)='klikNaDugme()' *ngIf='vidljivoDodajP'>Dodaj proizvodjaca</button>
+
+    <button class="btn btn-success" (click)='izmijeniProizvodjaca()' *ngIf='vidljivoIzmijeniP'>Izmijeni proizvodjaca</button>
 
 </div>
 
