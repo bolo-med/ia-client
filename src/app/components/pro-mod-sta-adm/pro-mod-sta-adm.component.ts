@@ -35,4 +35,8 @@ export class ProModStaAdmComponent implements OnInit {
     this.parent.ngOnInit();
   }
 
+  parentKliknutoIzmUklOst() {
+    this.parent.kliknutoIzmUklOst();
+  }
+
 }
