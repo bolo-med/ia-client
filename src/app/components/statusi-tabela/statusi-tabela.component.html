@@ -13,7 +13,7 @@
         <td>{{ e.id }}</td>
         <td>{{ e.tip }}</td>
         <td>
-            <button class="btn btn-warning">Izmijeni</button>
+            <button class="btn btn-warning" (click)='izmijeniStatus(e)'>Izmijeni</button>
         </td>
         <td>
             <button class="btn btn-danger" (click)='ukloniStatus(e)'>Ukloni</button>

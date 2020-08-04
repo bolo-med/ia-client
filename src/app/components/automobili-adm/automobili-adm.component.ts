@@ -34,6 +34,11 @@ export class AutomobiliAdmComponent implements OnInit {
   vidljivoIzmijeniP: boolean; // Vidljivo dugme 'Izmijeni proizvodjaca', komponente proizvodjac-adm
 
   odabraniProizvodjac: Proizvodjac;
+  odabraniModel: Model;
+  odabraniStatus: Status;
+
+  dodajModelBtn: boolean;
+  dodajStatusBtn: boolean;
 
   constructor(private proizvodjaciService: ProizvodjaciService,
               private modeliService: ModeliService,
@@ -67,6 +72,11 @@ export class AutomobiliAdmComponent implements OnInit {
     this.vidljivoIzmijeniP = false;
 
     this.odabraniProizvodjac = new Proizvodjac();
+    this.odabraniModel = new Model();
+    this.odabraniStatus = new Status();
+
+    this.dodajModelBtn = true;
+    this.dodajStatusBtn = true;
   }
 
   kliknutoDodaj() {

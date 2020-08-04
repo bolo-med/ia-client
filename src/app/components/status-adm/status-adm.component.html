@@ -3,14 +3,19 @@
     <h4 class="center-margin-bottom-20">Status</h4>
 
     <div>
-        <label>Tip statusa</label>
+        <label>ID</label>
+        <input type="text" class="form-control" [disabled]='true' [ngModel]='status.id'>
+    </div>
+    <br>
+    <div>
+        <label>Tip</label>
         <input type="text" class="form-control" [(ngModel)]='status.tip'>
     </div>
 
     <br>
 
-    <button class="btn btn-success" (click)='dodajStatus()'>Dodaj status</button>
-
+    <button class="btn btn-success" *ngIf='dodajStatusBtn' (click)='dodajStatus()'>Dodaj tip statusa</button>
+    <button class="btn btn-success" *ngIf='!dodajStatusBtn' (click)='izmijeniStatus()'>Izmijeni tip statusa</button>
 </div>
 
 <br><br>

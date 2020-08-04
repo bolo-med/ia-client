@@ -25,5 +25,9 @@ export class StatusiService {
     return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
   }
 
+  public updateStatus(status: Status) {
+    return this.http.put<OperationResponse>(this.serviceUrl, status);
+  }
+
 }
 

@@ -3,14 +3,19 @@
     <h4 class="center-margin-bottom-20">Model</h4>
 
     <div>
-        <label>Oznaka modela</label>
+        <label>ID</label>
+        <input type="text" class="form-control" [disabled]='true' [ngModel]='model.id'>
+    </div>
+    <br>
+    <div>
+        <label>Oznaka</label>
         <input type="text" class="form-control" [(ngModel)]='model.oznaka'>
     </div>
 
     <br>
 
-    <button class="btn btn-success" (click)='dodajModel()'>Dodaj oznaku modela</button>
-
+    <button class="btn btn-success" *ngIf='dodajModelBtn' (click)='dodajModel()'>Dodaj oznaku modela</button>
+    <button class="btn btn-success" *ngIf='!dodajModelBtn' (click)='izmijeniModel()'>Izmijeni oznaku modela</button>
 </div>
 
 <br><br>

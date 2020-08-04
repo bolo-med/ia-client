@@ -33,4 +33,16 @@ export class ModeliTabelaComponent implements OnInit {
     }
   }
 
+  izmijeniModel(model: Model) {
+    if (confirm('Da li zelite da izmijenite model?')) {
+      this.parent.odabranaIzmjUklanjOst = false;
+      this.parent.odabranUnosPrMoSt = true;
+      this.parent.proizvodjacVidljiv = false;
+      this.parent.statusVidljiv = false;
+
+      this.parent.odabraniModel = model;
+      this.parent.dodajModelBtn = false;
+    }
+  }
+
 }

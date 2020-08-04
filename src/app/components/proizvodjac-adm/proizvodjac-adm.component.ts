@@ -49,8 +49,10 @@ export class ProizvodjacAdmComponent implements OnInit {
         }
         else {
           alert('Doslo je do greske pri izmjenjivanju proizvodjaca!');
+          this.parent.parentKliknutoIzmUklOst();
         }
       });
+      // this.parent.parentKliknutoIzmUklOst(); // Nece da je pozove odavde.
     }
   }
 }

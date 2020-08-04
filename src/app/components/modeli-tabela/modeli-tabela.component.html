@@ -11,7 +11,7 @@
         <td>{{ e.id }}</td>
         <td>{{ e.oznaka }}</td>
         <td>
-            <button class="btn btn-warning">Izmijeni</button>
+            <button class="btn btn-warning" (click)='izmijeniModel(e)'>Izmijeni</button>
         </td>
         <td>
             <button class="btn btn-danger" (click)='ukloniModel(e)'>Ukloni</button>

@@ -33,4 +33,16 @@ export class StatusiTabelaComponent implements OnInit {
     }
   }
 
+  izmijeniStatus(status: Status) {
+    if (confirm('Da li zelite da izmijenite status?')) {
+      this.parent.odabranaIzmjUklanjOst = false;
+      this.parent.odabranUnosPrMoSt = true;
+      this.parent.proizvodjacVidljiv = false;
+      this.parent.modelVidljiv = false;
+
+      this.parent.odabraniStatus = status;
+      this.parent.dodajStatusBtn = false;
+    }
+  }
+
 }
