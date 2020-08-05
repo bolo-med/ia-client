@@ -1,0 +1,114 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  .columns {
+    /*float: left;
+    width: 33.3%;*/
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .price {
+    list-style-type: none;
+    border: 1px solid #eee;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+  
+  .price:hover {
+    box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2)
+  }
+  
+  .price .header {
+    /* background-color: #111; */
+    color: white;
+    font-size: 25px;
+  }
+  
+  .price li {
+    border-bottom: 1px solid #eee;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .price .grey {
+    background-color: #eee;
+  }
+
+  .price {
+    font-size: 20px;
+  }
+
+  .grey {
+      font-size: 30px;
+      font-weight: bold;
+  }
+  
+  .button {
+    background-color: dodgerblue;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+  }
+
+  .button:hover {
+      background-color: #eee;
+      border: solid dodgerblue 1px;
+      color: dodgerblue
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .columns {
+      width: 100%;
+    }
+  }
+
+  .slobodan {
+      background-color: seagreen;
+  }
+
+  .rezervisan {
+      background-color: orange;
+  }
+
+  .iznajmljen {
+      background-color: indianred;
+  }
+
+/*********************************************************************/
+
+.okvir {
+    border: firebrick solid 1px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.fotografija {
+    width: 60%;
+}
+
+.podaci {
+    width: 40%;
+    padding-left: 20px;;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.centriranje-slike {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
+

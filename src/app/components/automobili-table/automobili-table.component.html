@@ -1,4 +1,35 @@
-<table class="table table-striped">
+<!-- <div>
+    <div class="columns" *ngFor='let e of automobili'>
+        <ul class="price">
+        <li class="header" [ngClass]="{'slobodan': [e.status.tip]=='slobodan', 
+                                        'rezervisan': [e.status.tip]=='rezervisan', 
+                                        'iznajmljen': [e.status.tip]=='iznajmljen'}">{{e.status.tip}}</li>
+        <li class="grey">{{e.cijena}} € / dan</li>
+        <li>10GB Storage</li>
+        <li>10 Emails</li>
+        <li>10 Domains</li>
+        <li>1GB Bandwidth</li>
+        <li class="grey"><a href="#" class="button">Detalji</a></li>
+        </ul>
+    </div>
+</div> -->
+
+<div>
+    <div *ngFor='let e of automobili' class="okvir">
+        <div class="fotografija">
+            <div class="centriranje-slike">
+                <img src="" alt="nema slike">
+            </div>
+        </div>
+        <div class="podaci">
+            <p>Zastava Yugo 45</p>
+            <p>Mjenjac: automatski</p>
+            <p>Motor: elektricni</p>
+        </div>
+    </div>
+</div>
+
+<!-- <table class="table table-striped">
     <tr>
         <th>ID</th>
         <th>Proizvodjac</th>
@@ -11,5 +42,5 @@
         <td>{{ e.model.oznaka }}</td>
         <td>{{ e.cijena }}</td>
     </tr>
-</table>
+</table> -->
 
