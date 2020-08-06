@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Host } from '@angular/core';
 import { Automobil } from 'src/app/models/Automobil';
 import { AutomobiliComponent } from '../automobili/automobili.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-automobili-table',
@@ -8,6 +9,8 @@ import { AutomobiliComponent } from '../automobili/automobili.component';
   styleUrls: ['./automobili-table.component.scss']
 })
 export class AutomobiliTableComponent implements OnInit {
+
+  apiUrl = environment.apiUrl;
 
   @Input('automobili')
   automobili: Automobil[];

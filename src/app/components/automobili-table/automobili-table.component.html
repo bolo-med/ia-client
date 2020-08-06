@@ -18,13 +18,14 @@
     <div *ngFor='let e of automobili' class="okvir">
         <div class="fotografija">
             <div class="centriranje-slike">
-                <img src="" alt="nema slike">
+                <img src="{{apiUrl}}/{{e.fotografija}}" alt="nema slike">
             </div>
         </div>
         <div class="podaci">
-            <p>Zastava Yugo 45</p>
-            <p>Mjenjac: automatski</p>
-            <p>Motor: elektricni</p>
+            <p>{{e.proizvodjac.naziv}}</p>
+            <p>{{e.model.oznaka}}</p>
+            <p>{{e.motor}}</p>
+            <p>{{e.status.tip}}</p>
         </div>
     </div>
 </div>
