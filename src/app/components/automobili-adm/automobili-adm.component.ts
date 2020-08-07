@@ -36,9 +36,11 @@ export class AutomobiliAdmComponent implements OnInit {
   odabraniProizvodjac: Proizvodjac;
   odabraniModel: Model;
   odabraniStatus: Status;
+  odabraniAutomobil: Automobil;
 
   dodajModelBtn: boolean;
   dodajStatusBtn: boolean;
+  dodajAutomobilBtn: boolean;
 
   constructor(private proizvodjaciService: ProizvodjaciService,
               private modeliService: ModeliService,
@@ -74,9 +76,11 @@ export class AutomobiliAdmComponent implements OnInit {
     this.odabraniProizvodjac = new Proizvodjac();
     this.odabraniModel = new Model();
     this.odabraniStatus = new Status();
+    this.odabraniAutomobil = new Automobil();
 
     this.dodajModelBtn = true;
     this.dodajStatusBtn = true;
+    this.dodajAutomobilBtn = true;
   }
 
   kliknutoDodaj() {

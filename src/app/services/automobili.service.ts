@@ -29,5 +29,9 @@ export class AutomobiliService {
     return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
   }
 
+  public updateAutomobil(automobil: Automobil) {
+    return this.http.put<OperationResponse>(this.serviceUrl, automobil);
+  }
+
 }
 

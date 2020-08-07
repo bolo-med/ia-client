@@ -44,23 +44,25 @@
     </div>
     <br>
     <div>
+        <label>Cijena</label>
+        <input type="text" class="form-control" [(ngModel)]='automobil.cijena' (ngModelChange)='toNumber()'>
+    </div>
+    <br>
+    <div>
         <label>Fotografija</label>
-        <input type="file" class="form-control" ng2FileSelect [uploader]='uploader'>
+        <input type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'>
         <!-- <input type="text" class="form-control" [(ngModel)]='automobil.fotografija'> -->
     </div>
     <br>
     <div>
-        <img src="{{apiUrl}}/{{automobil.fotografija}}">
+        <img src="{{apiUrl}}/{{automobil.fotografija}}" alt="">
     </div>
     <br>
-    <div>
-        <label>Cijena</label>
-        <input type="text" class="form-control" [(ngModel)]='automobil.cijena' (ngModelChange)='toNumber()'>
-    </div>
 
-    <br>
+    <button class="btn btn-success" *ngIf='dodajAutomobilBtn' (click)='dodajAutomobil()'>Dodaj automobil</button>
 
-    <button class="btn btn-success" (click)='dodajAutomobil()'>Dodaj automobil</button>
+    <button class="btn btn-success" *ngIf='!dodajAutomobilBtn' (click)='izmijenijAutomobil()'>Izmijeni automobil</button>
+
 </div>
 
 <br><br>

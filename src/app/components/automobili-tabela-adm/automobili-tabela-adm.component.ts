@@ -21,4 +21,21 @@ export class AutomobiliTabelaAdmComponent implements OnInit {
     this.parent.ukloniAutomobil(automobil);
   }
 
+  izmijeniAutomobil(automobil: Automobil) {
+    if (confirm('Da li zelite da izmijenite automobil?')) {
+      // Deselektuje radio-dugme i uklanja ovu komponentu
+      this.parent.odabranaIzmjUklanj = false;
+
+      // Dodaje komponentu automobil-obrazac-adm
+      this.parent.odabranUnosA = true;
+
+      // Dugme Izmijeni, umjesto Dodaj
+      this.parent.dodajAutomobilBtn = false;
+
+      // Prosledjuje automobil nadkomponenti
+      this.parent.odabraniAutomobil = automobil;
+    }
+  }
+  
 }
+

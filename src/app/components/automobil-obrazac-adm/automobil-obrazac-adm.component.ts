@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AutomobilObrazacAdmComponent implements OnInit {
 
-  automobil: Automobil = new Automobil();
+  // automobil: Automobil;
 
   apiUrl = environment.apiUrl;
 
@@ -33,10 +33,18 @@ export class AutomobilObrazacAdmComponent implements OnInit {
   @Input('statusi')
   statusi: Status[] = [];
 
+  @Input('dodajAutomobilBtn')
+  dodajAutomobilBtn: boolean;
+
+  @Input('odabraniAutomobil')
+  automobil: Automobil;
+
   constructor(private automobiliService: AutomobiliService, 
-              @Host() private parent: AutomobiliAdmComponent) { }
+              @Host() private parent: AutomobiliAdmComponent) {}
 
   ngOnInit(): void {
+
+    // this.automobil = new Automobil();
 
     this.uploader.onAfterAddingAll = (file) => {
       file.withCredentials = false;
@@ -62,6 +70,7 @@ export class AutomobilObrazacAdmComponent implements OnInit {
         if (data.status === 0) {
           alert('Automobil je dodat u bazu podataka!');
           this.parent.ngOnInit();
+          this.ngOnInit();
         }
         else {
           alert('Doslo je do greske!');
@@ -76,6 +85,21 @@ export class AutomobilObrazacAdmComponent implements OnInit {
     this.automobil.statusID = (+this.automobil.statusID);
     this.automobil.godiste = (+this.automobil.godiste);
     this.automobil.cijena = (+this.automobil.cijena);
+  }
+
+  izmijenijAutomobil() {
+    if (confirm('Da li zelite da izmijenite automobil?')) {
+      this.automobiliService.updateAutomobil(this.automobil).subscribe(data => {
+        if (data.status === 0) {
+          alert('Automobil je izmijenjen!');
+          this.parent.kliknutoIzmUkl();
+        }
+        else {
+          alert('Doslo je do neke greske!');
+          this.parent.kliknutoIzmUkl();
+        }
+      });
+    }
   }
 
 }
