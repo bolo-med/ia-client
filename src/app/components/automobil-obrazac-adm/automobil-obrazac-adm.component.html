@@ -45,7 +45,12 @@
     <br>
     <div>
         <label>Fotografija</label>
-        <input type="text" class="form-control" [(ngModel)]='automobil.fotografija'>
+        <input type="file" class="form-control" ng2FileSelect [uploader]='uploader'>
+        <!-- <input type="text" class="form-control" [(ngModel)]='automobil.fotografija'> -->
+    </div>
+    <br>
+    <div>
+        <img src="{{apiUrl}}/{{automobil.fotografija}}">
     </div>
     <br>
     <div>

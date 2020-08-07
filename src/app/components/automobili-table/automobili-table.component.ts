@@ -20,9 +20,9 @@ export class AutomobiliTableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private selektujAutomobil(a: Automobil) {
-    // alert(a.model);
-    this.parent.selektovaniAutomobil = a;
-  }
+  // private selektujAutomobil(a: Automobil) {
+  //   // alert(a.model);
+  //   this.parent.selektovaniAutomobil = a;
+  // }
 
 }

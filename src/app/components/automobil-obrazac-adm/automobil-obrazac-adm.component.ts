@@ -5,6 +5,8 @@ import { Status } from 'src/app/models/Status';
 import { Automobil } from 'src/app/models/Automobil';
 import { AutomobiliService } from 'src/app/services/automobili.service';
 import { AutomobiliAdmComponent } from '../automobili-adm/automobili-adm.component';
+import { FileUploader } from 'ng2-file-upload';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-automobil-obrazac-adm',
@@ -14,6 +16,13 @@ import { AutomobiliAdmComponent } from '../automobili-adm/automobili-adm.compone
 export class AutomobilObrazacAdmComponent implements OnInit {
 
   automobil: Automobil = new Automobil();
+
+  apiUrl = environment.apiUrl;
+
+  uploader: FileUploader = new FileUploader({
+    itemAlias: 'img',
+    url: `${this.apiUrl}/upload`
+  });
 
   @Input('proizvodjaci')
   proizvodjaci: Proizvodjac[] = [];
@@ -27,7 +36,25 @@ export class AutomobilObrazacAdmComponent implements OnInit {
   constructor(private automobiliService: AutomobiliService, 
               @Host() private parent: AutomobiliAdmComponent) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    this.uploader.onAfterAddingAll = (file) => {
+      file.withCredentials = false;
+      this.uploader.uploadAll();
+    };
+
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      response = JSON.parse(response);
+      if(response.status === 0) {
+        alert('Fajl je aploudovan!');
+        this.automobil.fotografija = response.filename;
+      }
+      else {
+        alert('Fajl nije aploudovan!');
+      }
+    };
+
+  }
 
   dodajAutomobil() {
     if (confirm('Jeste li sigurni?')) {
