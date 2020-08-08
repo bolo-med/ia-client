@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Automobil } from 'src/app/models/Automobil';
+import { Proizvodjac } from 'src/app/models/Proizvodjac';
+
+// Promijenjena namjena komponente, u filter.
 
 @Component({
   selector: 'app-automobil',
@@ -8,11 +11,14 @@ import { Automobil } from 'src/app/models/Automobil';
 })
 export class AutomobilComponent implements OnInit {
 
-  @Input('selektovaniAutomobil')
-  selektovaniAutomobil: Automobil = new Automobil();
+  @Input('proizvodjaciAbc')
+  proizvodjaciAbc: Proizvodjac[];
+
+  @Input('automobili')
+  automobili: Automobil[];
 
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
 }

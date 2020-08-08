@@ -2,17 +2,16 @@
     {{ naslovStranice }}
 </h2>
 
-<!-- <input type="text" [(ngModel)]='naslovStranice'> -->
-
 <div class="row">
+
     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-        <app-automobil></app-automobil>
+        <app-automobil [automobili]='automobili' 
+                       [proizvodjaciAbc]='proizvodjaciAbc'></app-automobil>
     </div>
+
     <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12">
         <app-automobili-table [automobili]='automobili'></app-automobili-table>
     </div>
-    <!-- <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <app-automobil [selektovaniAutomobil]='selektovaniAutomobil'></app-automobil>
-    </div> -->
+
 </div>
 
