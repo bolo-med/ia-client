@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Host } from '@angular/core';
 import { Automobil } from 'src/app/models/Automobil';
 import { Proizvodjac } from 'src/app/models/Proizvodjac';
+import { AutomobiliComponent } from '../automobili/automobili.component';
 
 // Promijenjena namjena komponente, u filter.
 
@@ -14,11 +15,29 @@ export class AutomobilComponent implements OnInit {
   @Input('proizvodjaciAbc')
   proizvodjaciAbc: Proizvodjac[];
 
-  @Input('automobili')
-  automobili: Automobil[];
+  @Input('proizvodjaciChecked')
+  proizvodjaciChecked: boolean[];
 
-  constructor() { }
+  // @Input('automobili')
+  // automobili: Automobil[];
+
+  constructor(@Host() private parent: AutomobiliComponent) { }
 
   ngOnInit(): void {}
+
+  prikaziFiltrirano() {
+    if (this.parent.allProizvodjaciUnChecked()) {
+      this.parent.ngOnInit();
+    }
+    else {
+      this.parent.prikaziOdabrane();
+    }
+    
+  }
+
+  unChecked(index: number) {
+    this.proizvodjaciChecked[index] = !this.proizvodjaciChecked[index];
+    // console.log(this.proizvodjaciChecked);
+  }
 
 }

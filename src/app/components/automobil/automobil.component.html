@@ -1,18 +1,9 @@
-<!-- <div>
-    <label>ID</label>
-    <input type="text" class="form-control">
-    <label>Proizvodjac</label>
-    <input type="text" class="form-control">
-    <label>Model</label>
-    <input type="text" class="form-control">
-    <label>Cijena</label>
-    <input type="text" class="form-control">
-</div> -->
-
-<div class="custom-control custom-checkbox" *ngFor='let e of proizvodjaciAbc'>
-    <input type="checkbox" class="custom-control-input" id="same-address{{e.id}}">
+<div class="custom-control custom-checkbox" *ngFor='let e of proizvodjaciAbc; index as i'>
+    <input type="checkbox" class="custom-control-input" id="same-address{{e.id}}" (click)='unChecked(i)'>
     <label class="custom-control-label" for="same-address{{e.id}}">{{e.naziv}}</label>
 </div>
 
 <hr class="mb-4">
+
+<button type="button" class="btn btn-info" (click)='prikaziFiltrirano()'>Prikaži</button>
 
