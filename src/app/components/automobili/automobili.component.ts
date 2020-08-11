@@ -96,8 +96,8 @@ export class AutomobiliComponent implements OnInit {
       for (let j: number = 0; j <= (l2-1); j++) {
         if (data[i].proizvodjac.naziv === cekiraniProizvodjaci[j]) {
           izdvojeniArr.push(data[i]);
+          break;
         }
-        // break;
       }
     }
     return izdvojeniArr;

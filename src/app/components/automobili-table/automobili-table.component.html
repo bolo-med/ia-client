@@ -1,19 +1,3 @@
-<!-- <div>
-    <div class="columns" *ngFor='let e of automobili'>
-        <ul class="price">
-        <li class="header" [ngClass]="{'slobodan': [e.status.tip]=='slobodan', 
-                                        'rezervisan': [e.status.tip]=='rezervisan', 
-                                        'iznajmljen': [e.status.tip]=='iznajmljen'}">{{e.status.tip}}</li>
-        <li class="grey">{{e.cijena}} € / dan</li>
-        <li>10GB Storage</li>
-        <li>10 Emails</li>
-        <li>10 Domains</li>
-        <li>1GB Bandwidth</li>
-        <li class="grey"><a href="#" class="button">Detalji</a></li>
-        </ul>
-    </div>
-</div> -->
-
 <div>
     <div *ngFor='let e of automobili' class="okvir">
         <div class="fotografija">
@@ -22,26 +6,12 @@
             </div>
         </div>
         <div class="podaci">
-            <p>{{e.proizvodjac.naziv}}</p>
-            <p>{{e.model.oznaka}}</p>
-            <p>{{e.motor}}</p>
-            <p>{{e.status.tip}}</p>
+            <p><b>Automobil:</b> {{e.proizvodjac.naziv}} - {{e.model.oznaka}}</p>
+            <p><b>Mjenjač:</b> {{e.mjenjac}}</p>
+            <p><b>Cijena:</b> {{e.cijena}} eur/dan</p>
+            <p><b>Status:</b> {{e.status.tip}}</p>
+            <button type="button" class="btn btn-info">Detaljnije</button>
         </div>
     </div>
 </div>
-
-<!-- <table class="table table-striped">
-    <tr>
-        <th>ID</th>
-        <th>Proizvodjac</th>
-        <th>Model</th>
-        <th>Cijena</th>
-    </tr>
-    <tr *ngFor='let e of automobili' (click)='selektujAutomobil(e)'>
-        <td>{{ e.id }}</td>
-        <td>{{ e.proizvodjac.naziv }}</td>
-        <td>{{ e.model.oznaka }}</td>
-        <td>{{ e.cijena }}</td>
-    </tr>
-</table> -->
 
