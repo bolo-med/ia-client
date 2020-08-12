@@ -21,6 +21,7 @@ import { StatusAdmComponent } from './components/status-adm/status-adm.component
 import { ProizvodjaciTabelaComponent } from './components/proizvodjaci-tabela/proizvodjaci-tabela.component';
 import { ModeliTabelaComponent } from './components/modeli-tabela/modeli-tabela.component';
 import { StatusiTabelaComponent } from './components/statusi-tabela/statusi-tabela.component';
+import { IznajmljivanjeUsrComponent } from './components/iznajmljivanje-usr/iznajmljivanje-usr.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { StatusiTabelaComponent } from './components/statusi-tabela/statusi-tabe
     StatusAdmComponent,
     ProizvodjaciTabelaComponent,
     ModeliTabelaComponent,
-    StatusiTabelaComponent
+    StatusiTabelaComponent,
+    IznajmljivanjeUsrComponent
   ],
   imports: [
     BrowserModule,

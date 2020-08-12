@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AutomobilComponent } from './components/automobil/automobil.component';
 import { AutomobiliAdmComponent } from './components/automobili-adm/automobili-adm.component';
+import { IznajmljivanjeUsrComponent } from './components/iznajmljivanje-usr/iznajmljivanje-usr.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'automobili-adm',
     component: AutomobiliAdmComponent
+  },
+  {
+    path: 'iznajmljivanje-usr',
+    component: IznajmljivanjeUsrComponent
   }
 ];
 

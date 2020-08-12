@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Host } from '@angular/core';
 import { Automobil } from 'src/app/models/Automobil';
 import { AutomobiliComponent } from '../automobili/automobili.component';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-automobili-table',
@@ -15,14 +16,9 @@ export class AutomobiliTableComponent implements OnInit {
   @Input('automobili')
   automobili: Automobil[];
 
-  constructor(@Host() private parent: AutomobiliComponent) { }
+  constructor(@Host() private parent: AutomobiliComponent, 
+              private router: Router) { }
 
-  ngOnInit(): void {
-  }
-
-  // private selektujAutomobil(a: Automobil) {
-  //   // alert(a.model);
-  //   this.parent.selektovaniAutomobil = a;
-  // }
+  ngOnInit(): void { }
 
 }
