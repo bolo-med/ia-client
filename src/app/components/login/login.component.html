@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class="row">
+
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
+
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        
+        <div>
+            <label>Korisničko ime</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.username'>
+        </div>
+
+        <br>
+
+        <div>
+            <label>Lozinka</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.password'>
+        </div>
+
+        <br>
+
+        <button class="btn btn-primary" (click)='login()'>Prijavite se</button>
+
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
+
+</div>

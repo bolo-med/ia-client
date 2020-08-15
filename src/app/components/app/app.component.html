@@ -6,14 +6,19 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/automobili">Svi automobili <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+      <!-- <li class="nav-item active"> -->
+        <!-- <a class="nav-link" routerLink="/automobili">Svi automobili <span class="sr-only">(current)</span></a> -->
+        <a class="nav-link" routerLink="/automobili">Svi automobili</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/login">Prijavite se</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/register">Registrujte se</a>
+      </li>
+      <li class="nav-item pokazivac">
+        <a class="nav-link" (click)='logout()'>Odjavite se</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/iznajmljivanje-usr">Korisnik</a>

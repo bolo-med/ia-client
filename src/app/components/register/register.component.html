@@ -1,1 +1,46 @@
-<p>register works!</p>
+<div class="row">
+
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
+
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <div>
+            <label>Ime</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.ime'>
+        </div>
+        <br>
+        <div>
+            <label>Prezime</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.prezime'>
+        </div>
+        <br>
+        <div>
+            <label>Godina rođenja</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.godRodjenja' (ngModelChange)='toNumber()'>
+        </div>
+        <br>
+        <div>
+            <label>Adresa</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.adresa'>
+        </div>
+        <br>
+        <div>
+            <label>Broj telefona</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.telefon'>
+        </div>
+        <br>
+        <div>
+            <label>Korisničko ime</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.username'>
+        </div>
+        <br>
+        <div>
+            <label>Lozinka</label>
+            <input type="text" class="form-control" [(ngModel)]='korisnik.password'>
+        </div>
+        <br>
+        <button class="btn btn-primary" (click)='register()'>Registrujte se</button>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
+
+</div>

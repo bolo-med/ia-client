@@ -17,9 +17,14 @@ export class AutomobiliService {
     return this.http.get<Automobil[]>(this.serviceUrl);
   }
 
-  // public getAutomobil(id: number) {
-  //   return this.http.get<Automobil>(`${this.serviceUrl}/${id}`);
-  // }
+  public getAutomobilByID(id: number) {
+    let korisnikovToken = window.localStorage.getItem('ia-token');
+    return this.http.get<Automobil>(`${this.serviceUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${korisnikovToken}`
+      }
+    });
+  }
 
   public insertAutomobil(automobil: Automobil) {
     return this.http.post<OperationResponse>(this.serviceUrl, automobil);

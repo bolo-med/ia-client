@@ -15,12 +15,15 @@ export class AutomobiliComponent implements OnInit {
   automobili: Automobil[];
   proizvodjaciAbc: Proizvodjac[];
   proizvodjaciChecked: boolean[];
+  svi: boolean = true;
+  odabraniAutomobil: Automobil;
 
   constructor(private automobiliService: AutomobiliService, 
               private proizvodjaciService: ProizvodjaciService) {
                 this.automobili = [];
                 this.proizvodjaciAbc = [];
                 this.proizvodjaciChecked = [];
+                // this.odabraniAutomobil = new Automobil();
               }
 
   ngOnInit(): void {
@@ -33,6 +36,8 @@ export class AutomobiliComponent implements OnInit {
     this.automobiliService.getAutomobili().subscribe(data => {
         this.automobili = data;
     });
+
+    this.svi = true;
 
   }
 
@@ -112,6 +117,14 @@ export class AutomobiliComponent implements OnInit {
       }
     }
     return izdvojeniProizvodjaci;
+  }
+
+  nadjiAutomobil(id: number) {
+    this.automobiliService.getAutomobilByID(id).subscribe(data => {
+      this.odabraniAutomobil = data;
+      console.log(this.odabraniAutomobil);
+      this.svi = false;
+    });
   }
 
 }
