@@ -1,11 +1,87 @@
-<div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+<div class="row">
 
-    <p>Proizvodjac: {{odabraniAutomobil.proizvodjac.naziv}}</p>
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
 
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
 
-    <button class="btn btn-success">Rezerviši</button>
+        <p>
+            <img src="{{apiUrl}}/{{odabraniAutomobil.fotografija}}" alt="nema slike">
+        </p>
 
-    <button class="btn btn-danger" (click)='odustani()'>Odustani</button>
+        <table class="table velicina">
+            <tbody>
+                <tr>
+                    <th scope="row" class="gornja-linija">Proizvođač:</th>
+                    <td class="gornja-linija">{{odabraniAutomobil.proizvodjac.naziv}}</td>
+                    <td class="gornja-linija"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Model:</th>
+                    <td>{{odabraniAutomobil.model.oznaka}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Godina proizvodnje:</th>
+                    <td>{{odabraniAutomobil.godiste}}.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Mjenjač:</th>
+                    <td>{{odabraniAutomobil.mjenjac}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Motor:</th>
+                    <td>{{odabraniAutomobil.motor}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Status:</th>
+                    <td>{{odabraniAutomobil.status.tip}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Cijena po danu:</th>
+                    <td>{{odabraniAutomobil.cijena}} eura</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Datum preuzimanja:</th>
+                    <td><input type="date" id="preuz" name="preuz" [(ngModel)]='rezervacija.datumPreuzimanja' (ngModelChange)='promjena()'>
+                        <div class="upozorenje" *ngIf='preuzimanjeAlert'>Odaberite datum.</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Datum vraćanja:</th>
+                    <td>
+                        <input type="date" id="vrac" name="vrac" [(ngModel)]='rezervacija.datumVracanja'  (ngModelChange)='promjena()'>
+                        <div class="upozorenje" *ngIf='vracanjeAlert'>Odaberite datum.</div>
+                        <div class="upozorenje" *ngIf='razlikaAlert'>Vraćanje mora biti nakon preuzimanja.</div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Cijena rezervacije:</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Cijena iznajlmjivanja:</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <button class="btn btn-success" (click)='rezervisi()'>Rezerviši</button>
+            <button class="btn btn-danger" (click)='odustani()'>Odustani</button>
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
 
 </div>
 

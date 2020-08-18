@@ -11,11 +11,11 @@ import { Proizvodjac } from 'src/app/models/Proizvodjac';
 })
 export class AutomobiliComponent implements OnInit {
 
-  naslovStranice: string = "Svi automobili iz ponude";
+  naslovStranice: string;
   automobili: Automobil[];
   proizvodjaciAbc: Proizvodjac[];
   proizvodjaciChecked: boolean[];
-  svi: boolean = true;
+  svi: boolean;
   odabraniAutomobil: Automobil;
 
   constructor(private automobiliService: AutomobiliService, 
@@ -28,6 +28,9 @@ export class AutomobiliComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.naslovStranice = "Svi automobili iz ponude";
+    this.svi = true;
+
     this.proizvodjaciService.getProizvodjaci().subscribe(data => {
       this.proizvodjaciChecked = this.proizvodjaciCheckedFn(data.length);
       this.proizvodjaciAbc = this.proizvodjaciAbcFn(data);
@@ -36,8 +39,6 @@ export class AutomobiliComponent implements OnInit {
     this.automobiliService.getAutomobili().subscribe(data => {
         this.automobili = data;
     });
-
-    this.svi = true;
 
   }
 
@@ -122,8 +123,9 @@ export class AutomobiliComponent implements OnInit {
   nadjiAutomobil(id: number) {
     this.automobiliService.getAutomobilByID(id).subscribe(data => {
       this.odabraniAutomobil = data;
-      console.log(this.odabraniAutomobil);
+      // console.log(this.odabraniAutomobil);
       this.svi = false;
+      this.naslovStranice = 'Detaljnije o iznajmljivanju';
     });
   }
 

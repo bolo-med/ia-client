@@ -1,0 +1,30 @@
+img {
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.velicina {
+    font-size: 20px;
+}
+
+.gornja-linija {
+    border-top: none;
+}
+
+tr:hover {
+    background-color: gainsboro;
+}
+
+.upozorenje {
+    border: darkred solid 2px;
+    border-radius: 5px;
+    background-color: lightpink;
+    margin-top: 10px;
+    font-size: 15px;
+    color: darkred;
+    text-align: center;
+    padding: 5px;
+}
+

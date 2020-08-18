@@ -1,4 +1,5 @@
 import { Automobil } from './Automobil';
+import { Korisnik } from './Korisnik';
 
 export class Rezervacija {
 
@@ -10,5 +11,5 @@ export class Rezervacija {
     realizovana: boolean;
     datumStvarnogVracanja: Date;
     automobil: Automobil;
-    // korisnik: Korisnik;
+    korisnik: Korisnik;
 }
