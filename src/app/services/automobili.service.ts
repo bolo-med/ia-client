@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Automobil } from './../models/Automobil';
 import { environment } from 'src/environments/environment';
 import { OperationResponse } from './../models/OperationResponse';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,19 +12,20 @@ export class AutomobiliService {
 
   serviceUrl = `${environment.apiUrl}/automobili`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, 
+              private authService: AuthService) { }
 
   public getAutomobili() {
     return this.http.get<Automobil[]>(this.serviceUrl);
   }
 
   public getAutomobilByID(id: number) {
-    let korisnikovToken = window.localStorage.getItem('ia-token');
-    return this.http.get<Automobil>(`${this.serviceUrl}/${id}`, {
-      headers: {
-        Authorization: `Bearer ${korisnikovToken}`
-      }
-    });
+      let korisnikovToken = window.localStorage.getItem('ia-token');
+      return this.http.get<Automobil>(`${this.serviceUrl}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${korisnikovToken}`
+        }
+      });
   }
 
   public insertAutomobil(automobil: Automobil) {

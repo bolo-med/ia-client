@@ -37,18 +37,32 @@
                 </tr>
                 <tr>
                     <th scope="row">Status:</th>
-                    <td>{{odabraniAutomobil.status.tip}}</td>
+                    <td>
+                        {{odabraniAutomobil.status.tip}}
+                    </td>
+                    <td></td>
+                </tr>
+                <tr *ngIf='rezervacijeAutomobilID.length > 0'>
+                    <th scope="row">
+                        <div >Nedostupan:</div>
+                    </th>
+                    <td>
+                        <div class="nedostupan" *ngFor='let e of rezervacijeAutomobilID'>
+                            od {{e.datumPreuzimanja | date:'dd. MMM yyyy.'}} do {{e.datumVracanja | date:'dd. MMM yyyy.'}}
+                        </div>
+                    </td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row">Cijena po danu:</th>
-                    <td>{{odabraniAutomobil.cijena}} eura</td>
+                    <td>{{odabraniAutomobil.cijena}} &euro;</td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row">Datum preuzimanja:</th>
                     <td><input type="date" id="preuz" name="preuz" [(ngModel)]='rezervacija.datumPreuzimanja' (ngModelChange)='promjena()'>
                         <div class="upozorenje" *ngIf='preuzimanjeAlert'>Odaberite datum.</div>
+                        <div class="upozorenje" *ngIf='proslostAlert'>Datum ne može biti u prošlosti.</div>
                     </td>
                     <td></td>
                 </tr>
@@ -62,19 +76,26 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <th scope="row">Cijena rezervacije:</th>
+                    <th scope="row">Broj dana:</th>
+                    <td>{{brDana}}</td>
                     <td></td>
+                </tr>
+                <tr>
+                    <th scope="row">Cijena rezervacije:</th>
+                    <td>{{cijenaRez}} &euro;</td>
                     <td></td>
                 </tr>
                 <tr>
                     <th scope="row">Cijena iznajlmjivanja:</th>
-                    <td></td>
+                    <td>{{cijenaIzn}} &euro;</td>
                     <td></td>
                 </tr>
             </tbody>
         </table>
 
-        <div>
+        <br>
+
+        <div class="dugmad">
             <button class="btn btn-success" (click)='rezervisi()'>Rezerviši</button>
             <button class="btn btn-danger" (click)='odustani()'>Odustani</button>
         </div>
@@ -84,4 +105,6 @@
     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
 
 </div>
+
+<br><br>
 

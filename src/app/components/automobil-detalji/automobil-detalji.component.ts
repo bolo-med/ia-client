@@ -3,6 +3,7 @@ import { AutomobiliComponent } from '../automobili/automobili.component';
 import { Automobil } from 'src/app/models/Automobil';
 import { environment } from 'src/environments/environment';
 import { Rezervacija } from 'src/app/models/Rezervacija';
+import { RezervacijeService } from './../../services/rezervacije.service';
 
 @Component({
   selector: 'app-automobil-detalji',
@@ -18,17 +19,30 @@ export class AutomobilDetaljiComponent implements OnInit {
   preuzimanjeAlert: boolean;
   vracanjeAlert: boolean;
   razlikaAlert: boolean;
+  proslostAlert: boolean;
+
+  brDana:number;
+  cijenaRez: number;
+  cijenaIzn: number;
 
   @Input('odabraniAutomobil')
   odabraniAutomobil: Automobil;
 
-  constructor(@Host() private parent: AutomobiliComponent) {
+  @Input('rezervacijeAutomobilID')
+  rezervacijeAutomobilID: Rezervacija[];
+
+  constructor(@Host() private parent: AutomobiliComponent, 
+              private rezervacijeService: RezervacijeService) {
     this.preuzimanjeAlert = false;
     this.vracanjeAlert = false;
     this.razlikaAlert = false;
+    this.proslostAlert = false;
+    this.brDana = 0;
+    this.cijenaRez = 0;
+    this.cijenaIzn = 0;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   odustani() {
     this.parent.ngOnInit();
@@ -36,18 +50,21 @@ export class AutomobilDetaljiComponent implements OnInit {
 
   rezervisi() {
     if (this.rezervacija.datumPreuzimanja && this.rezervacija.datumVracanja) {
-      let danasnjiDatumStr = this.danasnjiDatum.toISOString().split('T')[0];
-      let datumPreuzimanjaStr = new Date(this.rezervacija.datumPreuzimanja).toISOString().split('T')[0];
-      let datumVracanjaStr = new Date(this.rezervacija.datumVracanja).toISOString().split('T')[0];
 
-      if (datumPreuzimanjaStr <= datumVracanjaStr) {
-        console.log('Danas: ' + danasnjiDatumStr);
-        console.log('Preuzimanje: ' + datumPreuzimanjaStr);
-        console.log('Vracanje: ' + datumVracanjaStr);
-        
-        console.log('Danas >= Preuzimanje : ' + (danasnjiDatumStr >= datumPreuzimanjaStr));
-      }
-      
+      this.rezervacija.korisnikID = this.getUserID();
+      this.rezervacija.automobilID = this.odabraniAutomobil.id;
+      this.rezervacija.realizovana = null;
+      this.rezervacija.datumStvarnogVracanja = null;
+
+      this.rezervacijeService.insertRezervacija(this.rezervacija).subscribe(data => {
+        if (data.status === 0) {
+          alert('Rezervisali ste automobil!');
+          this.parent.ngOnInit();
+        }
+        else {
+          alert('Greska pri rezervisanju automobila!');
+        }
+      });
     }
     else {
       if (!this.rezervacija.datumPreuzimanja) {
@@ -66,16 +83,54 @@ export class AutomobilDetaljiComponent implements OnInit {
     if (this.rezervacija.datumVracanja) {
       this.vracanjeAlert = false;
     }
+
     if (this.rezervacija.datumPreuzimanja && this.rezervacija.datumVracanja) {
-      let preuzStr: string = new Date(this.rezervacija.datumPreuzimanja).toISOString().split('T')[0];;
+      let danasStr: string = this.danasnjiDatum.toISOString().split('T')[0];
+      let preuzStr: string = new Date(this.rezervacija.datumPreuzimanja).toISOString().split('T')[0];
       let vracStr: string = new Date(this.rezervacija.datumVracanja).toISOString().split('T')[0];
-      if (preuzStr > vracStr) {
-        this.razlikaAlert = true;
+
+      if (danasStr > preuzStr) {
+        this.proslostAlert = true;
+        this.cijeneNa0();
       }
       else {
-        this.razlikaAlert = false;
+        if (preuzStr > vracStr) {
+          this.razlikaAlert = true;
+          this.proslostAlert = false;
+          this.cijeneNa0();
+        }
+        else {
+          this.razlikaAlert = false;
+          this.proslostAlert = false;
+
+          this.cijene(preuzStr, vracStr);
+        }
       }
     }
+
+  }
+
+  cijene(pr: string, vr: string): void {
+    let preuzimanje: Date = new Date(pr);
+    let vracanje: Date = new Date(vr);
+    let razlika: number = vracanje.valueOf() - preuzimanje.valueOf();
+    this.brDana = (((razlika/1000)/60)/60)/24 + 1;
+    this.cijenaRez = this.brDana/2 * this.odabraniAutomobil.cijena;
+    this.cijenaIzn = this.brDana * this.odabraniAutomobil.cijena;
+  }
+
+  cijeneNa0() {
+    this.brDana = 0;
+    this.cijenaRez = 0;
+    this.cijenaIzn = 0;
+  }
+
+  getUserID(): number {
+    let token = window.localStorage.getItem('ia-token');
+    let userHash = token.split('.')[1];
+    let userString = window.atob(userHash);
+    let user = JSON.parse(userString);
+    return user.id;
   }
 
 }

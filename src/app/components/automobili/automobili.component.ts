@@ -3,6 +3,9 @@ import { Automobil } from './../../models/Automobil';
 import { AutomobiliService } from './../../services/automobili.service';
 import { ProizvodjaciService } from 'src/app/services/proizvodjaci.service';
 import { Proizvodjac } from 'src/app/models/Proizvodjac';
+import { AuthService } from 'src/app/services/auth.service';
+import { Rezervacija } from 'src/app/models/Rezervacija';
+import { RezervacijeService } from 'src/app/services/rezervacije.service';
 
 @Component({
   selector: 'app-automobili',
@@ -17,13 +20,15 @@ export class AutomobiliComponent implements OnInit {
   proizvodjaciChecked: boolean[];
   svi: boolean;
   odabraniAutomobil: Automobil;
+  rezervacijeAutomobilID: Rezervacija[]; // Mora ovako. Custom upit vraca samo raw podatke.
 
   constructor(private automobiliService: AutomobiliService, 
-              private proizvodjaciService: ProizvodjaciService) {
+              private proizvodjaciService: ProizvodjaciService, 
+              private authService: AuthService, 
+              private rezervacijeService: RezervacijeService) {
                 this.automobili = [];
                 this.proizvodjaciAbc = [];
                 this.proizvodjaciChecked = [];
-                // this.odabraniAutomobil = new Automobil();
               }
 
   ngOnInit(): void {
@@ -121,12 +126,33 @@ export class AutomobiliComponent implements OnInit {
   }
 
   nadjiAutomobil(id: number) {
-    this.automobiliService.getAutomobilByID(id).subscribe(data => {
-      this.odabraniAutomobil = data;
-      // console.log(this.odabraniAutomobil);
-      this.svi = false;
-      this.naslovStranice = 'Detaljnije o iznajmljivanju';
-    });
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+
+      this.automobiliService.getAutomobilByID(id).subscribe(data => {
+        this.odabraniAutomobil = data;
+        this.svi = false;
+        this.naslovStranice = 'Detaljnije o iznajmljivanju';
+      });
+
+      this.rezervacijeService.getRezervacije().subscribe(data => {
+        this.rezervacijeAutomobilID = this.izdvojRezervacije(data, id);
+      });
+    }
+    else {
+      alert('Morate biti prijavljeni!');
+    }
+    
+  }
+
+  izdvojRezervacije(rez: Rezervacija[], id: number): Rezervacija[] {
+    let rezAut: Rezervacija[] = [];
+    for (let i: number = 0; i < rez.length; i++) {
+      if (rez[i].automobilID === id) {
+        rezAut.push(rez[i]);
+      }
+    }
+    return rezAut;
   }
 
 }
