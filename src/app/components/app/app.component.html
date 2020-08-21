@@ -20,9 +20,16 @@
       <li class="nav-item pokazivac">
         <a class="nav-link" (click)='logout()'>Odjavite se</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/iznajmljivanje-usr">Korisnik</a>
+      
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Korisnik</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" routerLink="/">Aktuelno</a>
+          <a class="dropdown-item" href="#">Istorija</a>
+          <a class="dropdown-item" href="#">Lozinka</a>
+        </div>
       </li>
+
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrator</a>
         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -31,6 +38,7 @@
           <a class="dropdown-item" href="#">Iznajmljivanje</a>
         </div>
       </li>
+
     </ul>
   </div>
 </nav>

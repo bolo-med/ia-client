@@ -20,6 +20,7 @@ export class AutomobilDetaljiComponent implements OnInit {
   vracanjeAlert: boolean;
   razlikaAlert: boolean;
   proslostAlert: boolean;
+  periodAlert: boolean;
 
   brDana:number;
   cijenaRez: number;
@@ -37,6 +38,7 @@ export class AutomobilDetaljiComponent implements OnInit {
     this.vracanjeAlert = false;
     this.razlikaAlert = false;
     this.proslostAlert = false;
+    this.periodAlert = false;
     this.brDana = 0;
     this.cijenaRez = 0;
     this.cijenaIzn = 0;
@@ -91,23 +93,32 @@ export class AutomobilDetaljiComponent implements OnInit {
 
       if (danasStr > preuzStr) {
         this.proslostAlert = true;
+        this.periodAlert = false;
         this.cijeneNa0();
       }
       else {
         if (preuzStr > vracStr) {
           this.razlikaAlert = true;
           this.proslostAlert = false;
+          this.periodAlert = false;
           this.cijeneNa0();
         }
         else {
           this.razlikaAlert = false;
           this.proslostAlert = false;
 
-          this.cijene(preuzStr, vracStr);
+          // Preklapa li se period rezervacije sa nekim postojecim
+          if (this.unutarPerioda(this.rezervacijeAutomobilID)) {
+            this.periodAlert = true;
+            this.cijeneNa0();
+          }
+          else {
+            this.periodAlert = false;
+            this.cijene(preuzStr, vracStr);
+          }
         }
       }
     }
-
   }
 
   cijene(pr: string, vr: string): void {
@@ -131,6 +142,22 @@ export class AutomobilDetaljiComponent implements OnInit {
     let userString = window.atob(userHash);
     let user = JSON.parse(userString);
     return user.id;
+  }
+
+  unutarPerioda(rez: Rezervacija[]): boolean {
+    let preuzStr: string = new Date(this.rezervacija.datumPreuzimanja).toISOString().split('T')[0];
+    let vracStr: string = new Date(this.rezervacija.datumVracanja).toISOString().split('T')[0];
+    for (let i: number = 0; i < rez.length; i++) {
+      let preuzStrR: string = new Date(rez[i].datumPreuzimanja).toISOString().split('T')[0];
+      let vracStrR: string = new Date(rez[i].datumVracanja).toISOString().split('T')[0];
+      // Preklapa li se odabrani period sa nekim od postojecih
+      if ((preuzStr >= preuzStrR) && (preuzStr <= vracStrR)) return true;
+      if ((vracStr >= preuzStrR) && (vracStr <= vracStrR)) return true;
+      // Obuhvata li period neki od postojecih
+      if ((preuzStrR >= preuzStr) && (preuzStrR <= vracStr)) return true;
+    }
+    // Ako je odabran ispravan period
+    return false;
   }
 
 }
