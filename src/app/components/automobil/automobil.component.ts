@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Host } from '@angular/core';
-import { Automobil } from 'src/app/models/Automobil';
 import { Proizvodjac } from 'src/app/models/Proizvodjac';
 import { AutomobiliComponent } from '../automobili/automobili.component';
 
@@ -18,9 +17,6 @@ export class AutomobilComponent implements OnInit {
   @Input('proizvodjaciChecked')
   proizvodjaciChecked: boolean[];
 
-  // @Input('automobili')
-  // automobili: Automobil[];
-
   constructor(@Host() private parent: AutomobiliComponent) { }
 
   ngOnInit(): void {}
@@ -37,7 +33,6 @@ export class AutomobilComponent implements OnInit {
 
   unChecked(index: number) {
     this.proizvodjaciChecked[index] = !this.proizvodjaciChecked[index];
-    // console.log(this.proizvodjaciChecked);
   }
 
 }

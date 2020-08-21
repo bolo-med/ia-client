@@ -4,6 +4,8 @@ import { Automobil } from 'src/app/models/Automobil';
 import { environment } from 'src/environments/environment';
 import { Rezervacija } from 'src/app/models/Rezervacija';
 import { RezervacijeService } from './../../services/rezervacije.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-automobil-detalji',
@@ -21,6 +23,7 @@ export class AutomobilDetaljiComponent implements OnInit {
   razlikaAlert: boolean;
   proslostAlert: boolean;
   periodAlert: boolean;
+  onemoguciDugme: boolean;
 
   brDana:number;
   cijenaRez: number;
@@ -33,7 +36,9 @@ export class AutomobilDetaljiComponent implements OnInit {
   rezervacijeAutomobilID: Rezervacija[];
 
   constructor(@Host() private parent: AutomobiliComponent, 
-              private rezervacijeService: RezervacijeService) {
+              private rezervacijeService: RezervacijeService, 
+              private authService: AuthService, 
+              private router: Router) {
     this.preuzimanjeAlert = false;
     this.vracanjeAlert = false;
     this.razlikaAlert = false;
@@ -42,6 +47,7 @@ export class AutomobilDetaljiComponent implements OnInit {
     this.brDana = 0;
     this.cijenaRez = 0;
     this.cijenaIzn = 0;
+    this.onemoguciDugme = false;
   }
 
   ngOnInit(): void {}
@@ -58,15 +64,20 @@ export class AutomobilDetaljiComponent implements OnInit {
       this.rezervacija.realizovana = null;
       this.rezervacija.datumStvarnogVracanja = null;
 
-      this.rezervacijeService.insertRezervacija(this.rezervacija).subscribe(data => {
-        if (data.status === 0) {
-          alert('Rezervisali ste automobil!');
-          this.parent.ngOnInit();
-        }
-        else {
-          alert('Greska pri rezervisanju automobila!');
-        }
-      });
+      if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+        this.rezervacijeService.insertRezervacija(this.rezervacija).subscribe(data => {
+          if (data.status === 0) {
+            alert('Rezervisali ste automobil!');
+            this.router.navigateByUrl('/aktuelno-usr');
+          }
+          else {
+            alert('Greska pri rezervisanju automobila!');
+          }
+        });
+      }
+      else {
+        alert('Morate biti prijavljeni.');
+      }
     }
     else {
       if (!this.rezervacija.datumPreuzimanja) {
@@ -94,6 +105,7 @@ export class AutomobilDetaljiComponent implements OnInit {
       if (danasStr > preuzStr) {
         this.proslostAlert = true;
         this.periodAlert = false;
+        this.onemoguciDugme = true;
         this.cijeneNa0();
       }
       else {
@@ -101,6 +113,7 @@ export class AutomobilDetaljiComponent implements OnInit {
           this.razlikaAlert = true;
           this.proslostAlert = false;
           this.periodAlert = false;
+          this.onemoguciDugme = true;
           this.cijeneNa0();
         }
         else {
@@ -110,11 +123,13 @@ export class AutomobilDetaljiComponent implements OnInit {
           // Preklapa li se period rezervacije sa nekim postojecim
           if (this.unutarPerioda(this.rezervacijeAutomobilID)) {
             this.periodAlert = true;
+            this.onemoguciDugme = true;
             this.cijeneNa0();
           }
           else {
             this.periodAlert = false;
             this.cijene(preuzStr, vracStr);
+            this.onemoguciDugme = false;
           }
         }
       }

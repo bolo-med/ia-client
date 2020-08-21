@@ -23,6 +23,9 @@ import { ModeliTabelaComponent } from './components/modeli-tabela/modeli-tabela.
 import { StatusiTabelaComponent } from './components/statusi-tabela/statusi-tabela.component';
 import { IznajmljivanjeUsrComponent } from './components/iznajmljivanje-usr/iznajmljivanje-usr.component';
 import { AutomobilDetaljiComponent } from './components/automobil-detalji/automobil-detalji.component';
+import { AktuelnoUsrComponent } from './components/aktuelno-usr/aktuelno-usr.component';
+import { IstorijaUsrComponent } from './components/istorija-usr/istorija-usr.component';
+import { LozinkaUsrComponent } from './components/lozinka-usr/lozinka-usr.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { AutomobilDetaljiComponent } from './components/automobil-detalji/automo
     ModeliTabelaComponent,
     StatusiTabelaComponent,
     IznajmljivanjeUsrComponent,
-    AutomobilDetaljiComponent
+    AutomobilDetaljiComponent,
+    AktuelnoUsrComponent,
+    IstorijaUsrComponent,
+    LozinkaUsrComponent
   ],
   imports: [
     BrowserModule,

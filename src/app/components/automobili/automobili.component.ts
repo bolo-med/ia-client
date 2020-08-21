@@ -29,6 +29,7 @@ export class AutomobiliComponent implements OnInit {
                 this.automobili = [];
                 this.proizvodjaciAbc = [];
                 this.proizvodjaciChecked = [];
+                this.rezervacijeAutomobilID = [];
               }
 
   ngOnInit(): void {
@@ -138,6 +139,7 @@ export class AutomobiliComponent implements OnInit {
       this.rezervacijeService.getRezervacije().subscribe(data => {
         this.rezervacijeAutomobilID = this.izdvojRezervacije(data, id);
       });
+
     }
     else {
       alert('Morate biti prijavljeni!');

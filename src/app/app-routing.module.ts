@@ -5,7 +5,9 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { AutomobilComponent } from './components/automobil/automobil.component';
 import { AutomobiliAdmComponent } from './components/automobili-adm/automobili-adm.component';
-import { IznajmljivanjeUsrComponent } from './components/iznajmljivanje-usr/iznajmljivanje-usr.component';
+import { AktuelnoUsrComponent } from './components/aktuelno-usr/aktuelno-usr.component';
+import { IstorijaUsrComponent } from './components/istorija-usr/istorija-usr.component';
+import { LozinkaUsrComponent } from './components/lozinka-usr/lozinka-usr.component';
 
 
 const routes: Routes = [
@@ -34,8 +36,16 @@ const routes: Routes = [
     component: AutomobiliAdmComponent
   },
   {
-    path: 'iznajmljivanje-usr',
-    component: IznajmljivanjeUsrComponent
+    path: 'aktuelno-usr',
+    component: AktuelnoUsrComponent
+  },
+  {
+    path: 'istorija-usr',
+    component: IstorijaUsrComponent
+  },
+  {
+    path: 'lozinka-usr',
+    component: LozinkaUsrComponent
   }
 ];
 

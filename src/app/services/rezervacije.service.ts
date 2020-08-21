@@ -14,11 +14,21 @@ export class RezervacijeService {
   constructor(private http: HttpClient) { }
 
   public getRezervacije() {
-    return this.http.get<Rezervacija[]>(this.serviceUrl);
+    let korisnikovToken = window.localStorage.getItem('ia-token');
+    return this.http.get<Rezervacija[]>(this.serviceUrl, {
+      headers: {
+        Authorization: `Bearer ${korisnikovToken}`
+      }
+    });
   }
 
   public insertRezervacija(rezervacija: Rezervacija) {
-    return this.http.post<OperationResponse>(this.serviceUrl, rezervacija);
+    let korisnikovToken = window.localStorage.getItem('ia-token');
+    return this.http.post<OperationResponse>(this.serviceUrl, rezervacija, {
+      headers: {
+        Authorization: `Bearer ${korisnikovToken}`
+      }
+    });
   }
 
 }
