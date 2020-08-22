@@ -13,6 +13,8 @@ export class AktuelnoUsrComponent implements OnInit {
 
   rezervacijeSve: Rezervacija[];
   rezervacijeUserID: Rezervacija[];
+  rezervacijeUserIdAktivne: Rezervacija[];
+  rezervacijeUserIdAktivneAbc: Rezervacija[];
   userID: number;
 
   apiUrl: string = environment.apiUrl;
@@ -26,17 +28,23 @@ export class AktuelnoUsrComponent implements OnInit {
 
     this.userID = this.getUserID();
 
-    // Dodati provjeru, da li postoji token, i je li mu istekao rok trajanja /////////////////////////////////////////////////////////////
-    this.rezervacijeService.getRezervacije().subscribe(data => {
-      this.rezervacijeSve = data;
-      this.rezervacijeUserID = this.rezervacijeUrerIdFn(this.rezervacijeSve);
-    });
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.rezervacijeService.getRezervacije().subscribe(data => {
+        this.rezervacijeSve = data;
+        this.rezervacijeUserID = this.rezervacijeUserIdFn(this.rezervacijeSve);
+        this.rezervacijeUserIdAktivne = this.rezervacijeUserIdAktivneFn(this.rezervacijeUserID);
+        this.rezervacijeUserIdAktivneAbc = this.rezervacijeUserIdAktivneAbcFn(this.rezervacijeUserIdAktivne);
+      });
+    }
+    else {
+      alert('Morate biti prijavljeni.');
+    }
 
     this.danDat = new Date();
 
   }
 
-  rezervacijeUrerIdFn(rezSve: Rezervacija[]): Rezervacija[] {
+  rezervacijeUserIdFn(rezSve: Rezervacija[]): Rezervacija[] {
     let rezUsrID: Rezervacija[] = [];
     for (let i: number = 0; i < rezSve.length; i++) {
       if (rezSve[i].korisnikID === this.userID) rezUsrID.push(rezSve[i]);
@@ -56,6 +64,33 @@ export class AktuelnoUsrComponent implements OnInit {
     let razlikaMilisec: number = this.danDat.valueOf() - datVrac.valueOf();
     let razlikaDani: number = (((razlikaMilisec/1000)/60)/60)/24;
     return razlikaDani;
+  }
+
+  rezervacijeUserIdAktivneFn(r: Rezervacija[]): Rezervacija[] {
+    let rez: Rezervacija[] = [];
+    for (let i = 0; i < r.length; i++) {
+      if (r[i].datumStvarnogVracanja === null) rez.push(r[i]);
+    }
+    return rez;
+  }
+
+  rezervacijeUserIdAktivneAbcFn(r: Rezervacija[]): Rezervacija[] {
+    let rAbc = r.sort((a, b) => {
+      let datA: Date = new Date(a.datumPreuzimanja);
+      let datB: Date = new Date(b.datumPreuzimanja);
+      let datAStr: string = datA.toISOString().split('T')[0];
+      let datBStr: string = datB.toISOString().split('T')[0];
+      if (datAStr > datBStr) {
+        return 1;
+      }
+      else if (datAStr < datBStr) {
+        return -1;
+      }
+      else {
+        return 0;
+      }
+    });
+    return rAbc;
   }
 
 }

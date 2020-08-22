@@ -5,18 +5,18 @@
         <th scope="col">Vraćanje</th>
         <th scope="col">Automobil</th>
         <th scope="col">Fotografija</th>
-        <th scope="col">Status</th>
+        <th scope="col">Status rezervacije</th>
         <th scope="col">Kašnjenje u danima</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor='let e of rezervacijeUserID'>
+      <tr *ngFor='let e of rezervacijeUserIdAktivneAbc'>
         <td><div>{{e.datumPreuzimanja | date: 'dd. MMMM yyyy.'}}</div></td>
         <td><div>{{e.datumVracanja | date: 'dd. MMMM yyyy.'}}</div></td>
         <td><div>{{e.automobil.proizvodjac.naziv}} - {{e.automobil.model.oznaka}}</div></td>
         <td><img src="{{apiUrl}}/{{e.automobil.fotografija}}" alt="nema slike"></td>
-        <td><div>{{e.automobil.status.tip}}</div></td>
-        <td><div [ngClass]="{'tekst-crven': kasnjenje(e.datumVracanja) > 0, 
+        <td><div class="poravnanje tekst-plav">{{(e.realizovana === null) ? 'odobrena' : (e.realizovana === true) ? 'realizovana' : 'otkazana'}}</div></td>
+        <td><div class="poravnanje" [ngClass]="{'tekst-crven': kasnjenje(e.datumVracanja) > 0, 
                              'tekst-zelen': kasnjenje(e.datumVracanja) == 0, 
                              'tekst-plav': kasnjenje(e.datumVracanja) < 0}">{{kasnjenje(e.datumVracanja)}}</div></td>
       </tr>

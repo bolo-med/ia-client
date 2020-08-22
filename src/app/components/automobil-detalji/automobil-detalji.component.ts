@@ -6,6 +6,7 @@ import { Rezervacija } from 'src/app/models/Rezervacija';
 import { RezervacijeService } from './../../services/rezervacije.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { AutomobiliService } from 'src/app/services/automobili.service';
 
 @Component({
   selector: 'app-automobil-detalji',
@@ -38,7 +39,8 @@ export class AutomobilDetaljiComponent implements OnInit {
   constructor(@Host() private parent: AutomobiliComponent, 
               private rezervacijeService: RezervacijeService, 
               private authService: AuthService, 
-              private router: Router) {
+              private router: Router, 
+              private automobiliService: AutomobiliService) {
     this.preuzimanjeAlert = false;
     this.vracanjeAlert = false;
     this.razlikaAlert = false;
@@ -67,6 +69,17 @@ export class AutomobilDetaljiComponent implements OnInit {
       if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
         this.rezervacijeService.insertRezervacija(this.rezervacija).subscribe(data => {
           if (data.status === 0) {
+            
+            this.odabraniAutomobil.statusID = 2;
+            this.automobiliService.updateAutomobil(this.odabraniAutomobil).subscribe(data => {
+              if (data.status === 0) {
+                console.log('Azurirano polje - Status, u tabeli - Automobil.');
+              }
+              else {
+                console.log('Greska u azuriranju polja - Status, u tabeli - Automobil.');
+              }
+            });
+
             alert('Rezervisali ste automobil!');
             this.router.navigateByUrl('/aktuelno-usr');
           }

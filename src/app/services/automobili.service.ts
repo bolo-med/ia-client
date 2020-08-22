@@ -37,7 +37,12 @@ export class AutomobiliService {
   }
 
   public updateAutomobil(automobil: Automobil) {
-    return this.http.put<OperationResponse>(this.serviceUrl, automobil);
+    let korisnikovToken = window.localStorage.getItem('ia-token');
+    return this.http.put<OperationResponse>(this.serviceUrl, automobil, {
+      headers: {
+        Authorization: `Bearer ${korisnikovToken}`
+      }
+    });
   }
 
 }
