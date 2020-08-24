@@ -1,1 +1,41 @@
-<p>istorija-usr works!</p>
+<h2 class="naslov">Istorija rezervisanja</h2>
+
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Preuzimanje</th>
+        <th scope="col">Vraćanje</th>
+        <th scope="col">Automobil</th>
+        <th scope="col">Fotografija</th>
+        <th scope="col">Vraćen</th>
+        <th scope="col">Status rezervacije</th>
+        <th scope="col">Kašnjenje u danima</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let e of rezervacijeUserIdIstorijaAbc'>
+        <td><div>{{e.datumPreuzimanja | date: 'dd. MMM yyyy.'}}</div></td>
+        <td><div>{{e.datumVracanja | date:'dd. MMM yyyy.'}}</div></td>
+        <td><div>{{e.automobil.proizvodjac.naziv}} - {{e.automobil.model.oznaka}}</div></td>
+        <td><img src="{{apiUrl}}/{{e.automobil.fotografija}}" alt="nema slike"></td>
+        <td><div [ngClass]="{'tekst-crven poravnanje': (e.datumStvarnogVracanja===null)}">
+                {{(e.datumStvarnogVracanja===null) ? '-' : e.datumStvarnogVracanja | date: 'dd. MMM yyyy.'}}
+            </div>
+        </td>
+        <td><div class="poravnanje" [ngClass]="{'tekst-crven': e.realizovana===false, 
+                                                'tekst-plav': e.realizovana===null, 
+                                                'tekst-zelen': e.realizovana===true}">
+                {{e.realizovana===null ? 'odobrena' : e.realizovana===true ? 'realizovana' : 'otkazana'}}
+            </div>
+        </td>
+        <td><div class="poravnanje" [ngClass]="{'tekst-crven': (kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) > 0) || 
+                                                               (e.datumStvarnogVracanja===null), 
+                                                'tekst-zelen': kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) == 0, 
+                                                'tekst-plav': kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) < 0}">
+                {{(e.datumStvarnogVracanja===null) ? '-' : kasnjenje(e.datumVracanja, e.datumStvarnogVracanja)}}
+            </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+

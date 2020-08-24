@@ -12,8 +12,7 @@ export class AutomobiliService {
 
   serviceUrl = `${environment.apiUrl}/automobili`;
 
-  constructor(private http: HttpClient, 
-              private authService: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   public getAutomobili() {
     return this.http.get<Automobil[]>(this.serviceUrl);

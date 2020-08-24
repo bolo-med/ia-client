@@ -1,3 +1,5 @@
+<h2 class="naslov">Aktuelne rezervacije</h2>
+
 <table class="table table-hover">
     <thead>
       <tr>
@@ -11,14 +13,22 @@
     </thead>
     <tbody>
       <tr *ngFor='let e of rezervacijeUserIdAktivneAbc'>
-        <td><div>{{e.datumPreuzimanja | date: 'dd. MMMM yyyy.'}}</div></td>
-        <td><div>{{e.datumVracanja | date: 'dd. MMMM yyyy.'}}</div></td>
+        <td><div>{{e.datumPreuzimanja | date: 'dd. MMM yyyy.'}}</div></td>
+        <td><div>{{e.datumVracanja | date: 'dd. MMM yyyy.'}}</div></td>
         <td><div>{{e.automobil.proizvodjac.naziv}} - {{e.automobil.model.oznaka}}</div></td>
         <td><img src="{{apiUrl}}/{{e.automobil.fotografija}}" alt="nema slike"></td>
-        <td><div class="poravnanje tekst-plav">{{(e.realizovana === null) ? 'odobrena' : (e.realizovana === true) ? 'realizovana' : 'otkazana'}}</div></td>
+        <td><div class="poravnanje" [ngClass]="{'tekst-crven': e.realizovana===false, 
+                                                'tekst-plav': e.realizovana===null, 
+                                                'tekst-zelen': e.realizovana===true}">
+              {{(e.realizovana === null) ? 'odobrena' : (e.realizovana === true) ? 'realizovana' : 'otkazana'}}
+            </div>
+        </td>
         <td><div class="poravnanje" [ngClass]="{'tekst-crven': kasnjenje(e.datumVracanja) > 0, 
-                             'tekst-zelen': kasnjenje(e.datumVracanja) == 0, 
-                             'tekst-plav': kasnjenje(e.datumVracanja) < 0}">{{kasnjenje(e.datumVracanja)}}</div></td>
+                             'tekst-zelen': kasnjenje(e.datumVracanja) === 0, 
+                             'tekst-plav': (kasnjenje(e.datumVracanja) < 0) || (e.realizovana === null)}">
+              {{e.realizovana===null ? '-' : kasnjenje(e.datumVracanja)}}
+            </div>
+        </td>
       </tr>
     </tbody>
   </table>

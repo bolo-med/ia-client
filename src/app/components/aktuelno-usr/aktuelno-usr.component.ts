@@ -69,7 +69,7 @@ export class AktuelnoUsrComponent implements OnInit {
   rezervacijeUserIdAktivneFn(r: Rezervacija[]): Rezervacija[] {
     let rez: Rezervacija[] = [];
     for (let i = 0; i < r.length; i++) {
-      if (r[i].datumStvarnogVracanja === null) rez.push(r[i]);
+      if ((r[i].datumStvarnogVracanja === null) && (r[i].realizovana !== false)) rez.push(r[i]);
     }
     return rez;
   }
