@@ -28,11 +28,21 @@ export class AutomobiliService {
   }
 
   public insertAutomobil(automobil: Automobil) {
-    return this.http.post<OperationResponse>(this.serviceUrl, automobil);
+    let tok = window.localStorage.getItem('ia-token');
+    return this.http.post<OperationResponse>(this.serviceUrl, automobil, {
+      headers: {
+        Authorization: `Bearer ${tok}`
+      }
+    });
   }
 
   public deleteAutomobil(id: number) {
-    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`);
+    let tok = window.localStorage.getItem('ia-token');
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${tok}`
+      }
+    });
   }
 
   public updateAutomobil(automobil: Automobil) {

@@ -1,0 +1,29 @@
+<h2 class="naslov">Podaci o rezervacijama automobila</h2>
+
+<br>
+
+<div class="centar">
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" id="a" type="radio" name="adm-rez" value="" checked (click)='kliknutoA()'>
+        <label class="form-check-label" for="a">Aktuelne rezervacije</label>
+    </div>
+    
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" id="i" type="radio" name="adm-rez" value="" (click)='kliknutoI()'>
+        <label class="form-check-label" for="i">Istorija rezervisanja</label>
+    </div>
+</div>
+
+<br><br><br>
+
+<div class="row">
+
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf='odabrano'>
+        <app-rezervacije-adm-akt [rezervacijeSve]='rezervacijeSve'></app-rezervacije-adm-akt>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12"  *ngIf='!odabrano'>
+        <app-rezervacije-adm-ist [rezervacijeSve]='rezervacijeSve'></app-rezervacije-adm-ist>
+    </div>
+
+</div>

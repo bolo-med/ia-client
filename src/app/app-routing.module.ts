@@ -8,6 +8,7 @@ import { AutomobiliAdmComponent } from './components/automobili-adm/automobili-a
 import { AktuelnoUsrComponent } from './components/aktuelno-usr/aktuelno-usr.component';
 import { IstorijaUsrComponent } from './components/istorija-usr/istorija-usr.component';
 import { LozinkaUsrComponent } from './components/lozinka-usr/lozinka-usr.component';
+import { RezervacijeAdmComponent } from './components/rezervacije-adm/rezervacije-adm.component';
 
 
 const routes: Routes = [
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'lozinka-usr',
     component: LozinkaUsrComponent
+  },
+  {
+    path: 'rezervacije-adm',
+    component: RezervacijeAdmComponent
   }
 ];
 

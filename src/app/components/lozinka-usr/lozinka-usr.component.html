@@ -1,20 +1,22 @@
 <h2 class="naslov">Promjena lozinke</h2>
 
 <div class="row">
-    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
-    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12"></div>
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
         <div>
             <label>Trenutna lozinka:</label>
-            <input type="password" class="form-control" maxlength="30">
+            <input type="password" class="form-control" maxlength="30" [(ngModel)]='lozTrenutna'>
+            <div class="greska" *ngIf='greska'>Pogrešna lozinka!</div>
             <br>
             <label>Nova lozinka:</label>
-            <input type="password" class="form-control" maxlength="30">
+            <input type="password" class="form-control" maxlength="30" [(ngModel)]='lozNova'>
             <br>
             <label>Potvrdi novu lozinku:</label>
-            <input type="password" class="form-control" maxlength="30">
+            <input type="password" class="form-control" maxlength="30"  [(ngModel)]='lozNovaP'>
+            <div class="greska" *ngIf='greska2'>{{greska2Str}}</div>
             <br><br>
-            <button type="button" class="btn btn-warning form-control">Promijeni lozinku</button>
+            <button type="button" class="btn btn-warning form-control" (click)='promijeni()'>Promijeni lozinku</button>
         </div>
     </div>
-    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12"></div>
 </div>

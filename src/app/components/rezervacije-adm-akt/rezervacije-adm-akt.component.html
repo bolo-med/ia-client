@@ -1,0 +1,24 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Preuzimanje</th>
+            <th scope="col">Vraćanje</th>
+            <th scope="col">Ime i prezime</th>
+            <th scope="col">Automobil</th>
+            <th scope="col">Fotografija</th>
+            <th scope="col">Status rezervacije</th>
+            <th scope="col">Kašnjenje u danima</th>
+          </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let e of rezervacijeAktuelneAbc'>
+            <td><div>{{e.datumPreuzimanja | date: 'dd. MMM yyyy.'}}</div></td>
+            <td><div>{{e.datumVracanja | date: 'dd. MMM yyyy.'}}</div></td>
+            <td><div>{{e.korisnik.ime}} {{e.korisnik.prezime}}</div></td>
+            <td><div>{{e.automobil.proizvodjac.naziv}} - {{e.automobil.model.oznaka}}</div></td>
+            <td></td>
+            <td>{{e.realizovana}}</td>
+            <td><div></div></td>
+        </tr>
+    </tbody>
+</table>

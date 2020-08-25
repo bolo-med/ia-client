@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Korisnik } from '../models/Korisnik';
+import { OperationResponse } from '../models/OperationResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,14 @@ export class KorisniciService {
     });
   }
 
+  public updateKorisnik(korisnik: Korisnik) {
+    let tok = window.localStorage.getItem('ia-token');
+    return this.http.put<OperationResponse>(`${this.serviceUrl}`, korisnik, {
+      headers: {
+        Authorization: `Bearer ${tok}`
+      }
+    });
+  }
 
 }
 

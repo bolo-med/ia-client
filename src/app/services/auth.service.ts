@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Korisnik } from '../models/Korisnik';
 import { AuthenticationResponse } from './../models/AuthenticationResponse';
 import { Router } from '@angular/router';
+import { OperationResponse } from '../models/OperationResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,15 @@ export class AuthService {
     if (!korisnik) return false;
 
     return new Date(korisnik.expiry) > new Date();
+  }
+
+  checkPassword(korisnik: Korisnik) {
+    let tok = window.localStorage.getItem('ia-token');
+    return this.http.post<OperationResponse>(`${this.serviceUrl}/pass-usr`, korisnik, {
+      headers: {
+        Authorization: `Bearer ${tok}`
+      }
+    });
   }
 
 }
