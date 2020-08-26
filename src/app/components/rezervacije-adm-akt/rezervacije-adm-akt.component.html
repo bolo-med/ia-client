@@ -35,7 +35,7 @@
 
 <br><br>
 
-<div class="row">
+<div class="row" *ngIf='vidljivo'>
     <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
         <app-rezervacije-adm-kor [rezervacijaOdabrana]='rezervacijaOdabrana'></app-rezervacije-adm-kor>
     </div>
@@ -49,17 +49,17 @@
 
 <br><br>
 
-<div class="row">
+<div class="row" *ngIf='vidljivo'>
     <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <button type="button" class="btn btn-success form-control">Iznajmi automobil</button>
+        <button type="button" class="btn btn-danger form-control">Iznajmi automobil</button>
     </div>
     
     <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <button type="button" class="btn btn-success form-control">Otkazi rezervaciju</button>
+        <button type="button" class="btn btn-success form-control">Otkaži rezervaciju</button>
     </div>
     
     <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <button type="button" class="btn btn-success form-control">Vrati se nazad</button>
+        <button type="button" class="btn btn-secondary form-control" (click)='nazad()'>Vrati se nazad</button>
     </div>
 </div>
 

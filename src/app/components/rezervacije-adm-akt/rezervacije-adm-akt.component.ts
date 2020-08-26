@@ -14,6 +14,7 @@ export class RezervacijeAdmAktComponent implements OnInit {
 
   apiUrl: string = environment.apiUrl;
   rezervacijaOdabrana: Rezervacija;
+  vidljivo: boolean;
 
   @Input('rezervacijeSve')
   rezervacijeSve: Rezervacija[];
@@ -21,6 +22,8 @@ export class RezervacijeAdmAktComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    this.vidljivo = false;
 
     this.rezervacijeAktuelne = this.rezervacijeAktuelneFn();
     this.rezervacijeAktuelneAbc = this.rezervacijeAktuelneAbcFn();
@@ -71,7 +74,14 @@ export class RezervacijeAdmAktComponent implements OnInit {
   }
 
   detaljnije(r: Rezervacija): void {
+    this.rezervacijeAktuelneAbc = [];
+    this.rezervacijeAktuelneAbc.push(r);
+    this.rezervacijaOdabrana = r;
+    this.vidljivo = true;
+  }
 
+  nazad(): void {
+    this.ngOnInit();
   }
 
 }
