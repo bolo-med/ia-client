@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { RezervacijeService } from 'src/app/services/rezervacije.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Korisnik } from 'src/app/models/Korisnik';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-istorija-usr',
@@ -21,18 +22,27 @@ export class IstorijaUsrComponent implements OnInit {
   apiUrl: string = environment.apiUrl;
 
   constructor(private rezervacijeService: RezervacijeService, 
-              private authService: AuthService) {}
+              private authService: AuthService, 
+              private router: Router) {}
 
   ngOnInit(): void {
 
-    this.userID = this.getUserID();
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      
+      this.userID = this.getUserID();
 
-    this.rezervacijeService.getRezervacije().subscribe(data => {
-      this.rezervacijeSve = data;
-      this.rezervacijeUserID = this.rezervacijeUserIdFn(this.rezervacijeSve);
-      this.rezervacijeUserIdIstorija = this.rezervacijeUserIdIstorijaFn(this.rezervacijeUserID);
-      this.rezervacijeUserIdIstorijaAbc = this.rezervacijeUserIdIstorijaAbcFn(this.rezervacijeUserIdIstorija);
-    });
+      this.rezervacijeService.getRezervacije().subscribe(data => {
+        this.rezervacijeSve = data;
+        this.rezervacijeUserID = this.rezervacijeUserIdFn(this.rezervacijeSve);
+        this.rezervacijeUserIdIstorija = this.rezervacijeUserIdIstorijaFn(this.rezervacijeUserID);
+        this.rezervacijeUserIdIstorijaAbc = this.rezervacijeUserIdIstorijaAbcFn(this.rezervacijeUserIdIstorija);
+      });
+    }
+    else {
+      alert('Niste prijavljeni!');
+      this.router.navigateByUrl('/');
+    }
+
   }
 
   getUserID() {

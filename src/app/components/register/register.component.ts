@@ -18,12 +18,12 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  register() {
+  registruj() {
     if (confirm('Da li ste sigurni da želite da se REGISTRUJETE?')) {
       this.authService.register(this.korisnik).subscribe(data => {
         if (data.status === 0) {
           window.localStorage.setItem('ia-token', data.token);
-          // alert('Uspješna registracija!');
+          alert('Uspješna registracija!');
           this.router.navigateByUrl('/');
         }
         else {

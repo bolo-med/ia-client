@@ -5,9 +5,9 @@
             <th scope="col">Vraćanje</th>
             <th scope="col">Ime i prezime</th>
             <th scope="col">Automobil</th>
-            <th scope="col">Fotografija</th>
-            <th scope="col">Status rezervacije</th>
-            <th scope="col">Kašnjenje u danima</th>
+            <th scope="col" class="centar">Status</th>
+            <th scope="col" class="centar">Kašnjenje</th>
+            <th scope="col" class="centar">Detalji</th>
           </tr>
     </thead>
     <tbody>
@@ -16,9 +16,52 @@
             <td><div>{{e.datumVracanja | date: 'dd. MMM yyyy.'}}</div></td>
             <td><div>{{e.korisnik.ime}} {{e.korisnik.prezime}}</div></td>
             <td><div>{{e.automobil.proizvodjac.naziv}} - {{e.automobil.model.oznaka}}</div></td>
-            <td></td>
-            <td>{{e.realizovana}}</td>
-            <td><div></div></td>
+            <td><div class="centar" [ngClass]="{'tekst-plav' : (e.realizovana === null), 
+                                 'tekst-crven' : (e.realizovana === false), 
+                                 'tekst-zelen' : (e.realizovana === true)}">
+                    {{(e.realizovana === null) ? 'na čekanju' : (e.realizovana === true) ? 'realizovana' : 'otkazana'}}
+                </div>
+            </td>
+            <td><div class="centar" [ngClass]="{'tekst-plav': (kasnjenje(e.datumVracanja) < 0) || (e.realizovana === null), 
+                                                'tekst-crven': (kasnjenje(e.datumVracanja) > 0) && (e.realizovana !== null), 
+                                                'tekst-zelen': (kasnjenje(e.datumVracanja) === 0)  && (e.realizovana !== null)}">
+                    {{(e.realizovana === null) ? '-' : kasnjenje(e.datumVracanja)}}
+                </div>
+            </td>
+            <td><div class="centar"><button type="button" class="btn btn-info" (click)='detaljnije(e)'>Detaljnije</button></div></td>
         </tr>
     </tbody>
 </table>
+
+<br><br>
+
+<div class="row">
+    <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+        <app-rezervacije-adm-kor [rezervacijaOdabrana]='rezervacijaOdabrana'></app-rezervacije-adm-kor>
+    </div>
+
+    <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12"></div>
+
+    <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+        <app-rezervacije-adm-aut [rezervacijaOdabrana]='rezervacijaOdabrana'></app-rezervacije-adm-aut>
+    </div>
+</div>
+
+<br><br>
+
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+        <button type="button" class="btn btn-success form-control">Iznajmi automobil</button>
+    </div>
+    
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+        <button type="button" class="btn btn-success form-control">Otkazi rezervaciju</button>
+    </div>
+    
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+        <button type="button" class="btn btn-success form-control">Vrati se nazad</button>
+    </div>
+</div>
+
+<br><br>
+

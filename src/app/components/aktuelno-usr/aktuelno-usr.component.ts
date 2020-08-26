@@ -3,6 +3,7 @@ import { Rezervacija } from 'src/app/models/Rezervacija';
 import { RezervacijeService } from 'src/app/services/rezervacije.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-aktuelno-usr',
@@ -22,13 +23,15 @@ export class AktuelnoUsrComponent implements OnInit {
   danDat: Date;
 
   constructor(private rezervacijeService: RezervacijeService, 
-              private authService: AuthService) { }
+              private authService: AuthService, 
+              private router: Router) { }
 
   ngOnInit(): void {
 
-    this.userID = this.getUserID();
-
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+
+      this.userID = this.getUserID();
+
       this.rezervacijeService.getRezervacije().subscribe(data => {
         this.rezervacijeSve = data;
         this.rezervacijeUserID = this.rezervacijeUserIdFn(this.rezervacijeSve);
@@ -38,6 +41,7 @@ export class AktuelnoUsrComponent implements OnInit {
     }
     else {
       alert('Morate biti prijavljeni.');
+      this.router.navigateByUrl('/');
     }
 
     this.danDat = new Date();

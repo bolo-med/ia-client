@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 lijeva">
+        <div>ID:</div>
+        <div>Proizvođač:</div>
+        <div>Model"</div>
+        <div>Godište:</div>
+        <div>Motor:</div>
+        <div>Mjenjač:</div>
+        <div>Status automobila:</div>
+        <div>Cijena po danu:</div>
+        <div id="nb1">Fotografija:</div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 desna">
+        <div>{{rezervacijaOdabrana.automobil.id}}</div>
+        <div>{{rezervacijaOdabrana.automobil.proizvodjac.naziv}}</div>
+        <div>{{rezervacijaOdabrana.automobil.model.oznaka}}</div>
+        <div>{{rezervacijaOdabrana.automobil.godiste}}.</div>
+        <div>{{rezervacijaOdabrana.automobil.motor}}</div>
+        <div>{{rezervacijaOdabrana.automobil.mjenjac}}</div>
+        <div>{{rezervacijaOdabrana.automobil.status.tip}}</div>
+        <div>{{rezervacijaOdabrana.automobil.cijena}} &euro;</div>
+        <div id="nb2"><img src="{{apiUrl}}/{{rezervacijaOdabrana.automobil.fotografija}}" alt="nema slike"></div>
+    </div>
+</div>
+
+<br><br>
+

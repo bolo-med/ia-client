@@ -1,0 +1,33 @@
+.lijeva {
+    text-align: left;
+    padding: 0;
+    font-weight: bold;
+}
+
+.desna {
+    text-align: left;
+    padding: 0;
+}
+
+.lijeva > div {
+    font-size: 20px;
+    color: darkslategray;
+    padding: 15px;
+    border-bottom: 1px solid gainsboro;
+}
+
+.desna > div {
+    font-size: 20px;
+    color: sienna;
+    padding: 15px;
+    border-bottom: 1px solid gainsboro;
+}
+
+img {
+    max-height: 100px;
+}
+
+#nb1, #nb2 {
+    border-bottom: none;
+}
+

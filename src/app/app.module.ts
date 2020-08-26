@@ -29,6 +29,8 @@ import { LozinkaUsrComponent } from './components/lozinka-usr/lozinka-usr.compon
 import { RezervacijeAdmComponent } from './components/rezervacije-adm/rezervacije-adm.component';
 import { RezervacijeAdmAktComponent } from './components/rezervacije-adm-akt/rezervacije-adm-akt.component';
 import { RezervacijeAdmIstComponent } from './components/rezervacije-adm-ist/rezervacije-adm-ist.component';
+import { RezervacijeAdmAutComponent } from './components/rezervacije-adm-aut/rezervacije-adm-aut.component';
+import { RezervacijeAdmKorComponent } from './components/rezervacije-adm-kor/rezervacije-adm-kor.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { RezervacijeAdmIstComponent } from './components/rezervacije-adm-ist/rez
     LozinkaUsrComponent,
     RezervacijeAdmComponent,
     RezervacijeAdmAktComponent,
-    RezervacijeAdmIstComponent
+    RezervacijeAdmIstComponent,
+    RezervacijeAdmAutComponent,
+    RezervacijeAdmKorComponent
   ],
   imports: [
     BrowserModule,

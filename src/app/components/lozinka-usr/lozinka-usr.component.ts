@@ -35,12 +35,18 @@ export class LozinkaUsrComponent implements OnInit {
     this.greska = false;
     this.greska2 = false;
 
-    let k: Korisnik = this.authService.getKorisnikDetails();
-    this.korisnikID = k.id;
-    this.korisniciServices.getKorisnikByID(this.korisnikID).subscribe(data => {
-    this.korisnik = data;
-      
-    });
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      let k: Korisnik = this.authService.getKorisnikDetails();
+      this.korisnikID = k.id;
+      this.korisniciServices.getKorisnikByID(this.korisnikID).subscribe(data => {
+        this.korisnik = data;
+      });
+    }
+    else {
+      alert('Morate biti prijavljeni!');
+      this.router.navigateByUrl('/');
+    }
+
   }
 
   promijeni() {

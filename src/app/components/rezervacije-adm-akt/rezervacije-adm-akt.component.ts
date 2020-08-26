@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Rezervacija } from 'src/app/models/Rezervacija';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-rezervacije-adm-akt',
@@ -11,6 +12,9 @@ export class RezervacijeAdmAktComponent implements OnInit {
   rezervacijeAktuelne: Rezervacija[];
   rezervacijeAktuelneAbc: Rezervacija[];
 
+  apiUrl: string = environment.apiUrl;
+  rezervacijaOdabrana: Rezervacija;
+
   @Input('rezervacijeSve')
   rezervacijeSve: Rezervacija[];
 
@@ -20,6 +24,8 @@ export class RezervacijeAdmAktComponent implements OnInit {
 
     this.rezervacijeAktuelne = this.rezervacijeAktuelneFn();
     this.rezervacijeAktuelneAbc = this.rezervacijeAktuelneAbcFn();
+    
+    this.rezervacijaOdabrana = this.rezervacijeAktuelneAbc[0];
 
   }
 
@@ -53,6 +59,19 @@ export class RezervacijeAdmAktComponent implements OnInit {
       }
     });
     return rAbc;
+  }
+
+  kasnjenje(vracanje: Date): number {
+    let danas: Date = new Date();
+    let danasStr: string = danas.toISOString().split('T')[0];
+    danas = new Date(danasStr);
+    let vr: Date = new Date(vracanje);
+    let razlikaMilisec: number = danas.valueOf() - vr.valueOf();
+    return (((razlikaMilisec / 1000) / 60) / 60) / 24;
+  }
+
+  detaljnije(r: Rezervacija): void {
+
   }
 
 }
