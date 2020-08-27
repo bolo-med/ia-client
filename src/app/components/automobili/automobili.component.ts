@@ -21,6 +21,7 @@ export class AutomobiliComponent implements OnInit {
   svi: boolean;
   odabraniAutomobil: Automobil;
   rezervacijeAutomobilID: Rezervacija[]; // Mora ovako. Custom upit vraca samo raw podatke.
+  rezAutomIdAktivne: Rezervacija[];
 
   constructor(private automobiliService: AutomobiliService, 
               private proizvodjaciService: ProizvodjaciService, 
@@ -30,6 +31,7 @@ export class AutomobiliComponent implements OnInit {
                 this.proizvodjaciAbc = [];
                 this.proizvodjaciChecked = [];
                 this.rezervacijeAutomobilID = [];
+                this.rezAutomIdAktivne = [];
               }
 
   ngOnInit(): void {
@@ -138,6 +140,7 @@ export class AutomobiliComponent implements OnInit {
 
       this.rezervacijeService.getRezervacije().subscribe(data => {
         this.rezervacijeAutomobilID = this.izdvojRezervacije(data, id);
+        this.rezAutomIdAktivne = this.rezAutomIdAktivneFn(this.rezervacijeAutomobilID);
       });
 
     }
@@ -155,6 +158,16 @@ export class AutomobiliComponent implements OnInit {
       }
     }
     return rezAut;
+  }
+
+  rezAutomIdAktivneFn(rID: Rezervacija[]): Rezervacija[] {
+    let r: Rezervacija[] = [];
+    for (let i: number = 0; i < rID.length; i++) {
+      if ((rID[i].datumStvarnogVracanja === null) && (rID[i].realizovana !== false)) {
+        r.push(rID[i]);
+      }
+    }
+    return r;
   }
 
 }

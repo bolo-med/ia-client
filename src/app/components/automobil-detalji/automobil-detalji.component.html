@@ -42,12 +42,12 @@
                     </td>
                     <td></td>
                 </tr>
-                <tr *ngIf='rezervacijeAutomobilID.length > 0'>
+                <tr *ngIf='rezAutomIdAktivne.length > 0'>
                     <th scope="row">
                         <div >Nedostupan:</div>
                     </th>
                     <td>
-                        <div class="nedostupan" *ngFor='let e of rezervacijeAutomobilID'>
+                        <div class="nedostupan" *ngFor='let e of rezAutomIdAktivne'>
                             od {{e.datumPreuzimanja | date:'dd. MMM yyyy.'}} do {{e.datumVracanja | date:'dd. MMM yyyy.'}}
                         </div>
                     </td>

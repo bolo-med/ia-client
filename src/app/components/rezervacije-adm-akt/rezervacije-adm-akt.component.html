@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th scope="col">Preuzimanje</th>
+            <th scope="col">Rok</th>
             <th scope="col">Vraćanje</th>
             <th scope="col">Ime i prezime</th>
             <th scope="col">Automobil</th>
@@ -13,12 +14,19 @@
     <tbody>
         <tr *ngFor='let e of rezervacijeAktuelneAbc'>
             <td><div>{{e.datumPreuzimanja | date: 'dd. MMM yyyy.'}}</div></td>
+            <td>
+                <div class="centar" [ngClass]="{'tekst-plav': (razlikaRok(e.datumPreuzimanja, e.datumVracanja) === -1), 
+                                 'tekst-crven': (razlikaRok(e.datumPreuzimanja, e.datumVracanja) === 1), 
+                                 'tekst-zelen': (razlikaRok(e.datumPreuzimanja, e.datumVracanja) === 0) || (e.realizovana === true)}">
+                    {{(e.realizovana !== true) ? (rokPreuzimanja(e.datumPreuzimanja, e.datumVracanja) | date: 'dd. MMM yyyy.') : '-'}}
+                </div>
+            </td>
             <td><div>{{e.datumVracanja | date: 'dd. MMM yyyy.'}}</div></td>
             <td><div>{{e.korisnik.ime}} {{e.korisnik.prezime}}</div></td>
             <td><div>{{e.automobil.proizvodjac.naziv}} - {{e.automobil.model.oznaka}}</div></td>
             <td><div class="centar" [ngClass]="{'tekst-plav' : (e.realizovana === null), 
-                                 'tekst-crven' : (e.realizovana === false), 
-                                 'tekst-zelen' : (e.realizovana === true)}">
+                                                'tekst-crven' : (e.realizovana === false), 
+                                                'tekst-zelen' : (e.realizovana === true)}">
                     {{(e.realizovana === null) ? 'na čekanju' : (e.realizovana === true) ? 'realizovana' : 'otkazana'}}
                 </div>
             </td>

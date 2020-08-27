@@ -33,8 +33,8 @@ export class AutomobilDetaljiComponent implements OnInit {
   @Input('odabraniAutomobil')
   odabraniAutomobil: Automobil;
 
-  @Input('rezervacijeAutomobilID')
-  rezervacijeAutomobilID: Rezervacija[];
+  @Input('rezAutomIdAktivne')
+  rezAutomIdAktivne: Rezervacija[];
 
   constructor(@Host() private parent: AutomobiliComponent, 
               private rezervacijeService: RezervacijeService, 
@@ -134,7 +134,7 @@ export class AutomobilDetaljiComponent implements OnInit {
           this.proslostAlert = false;
 
           // Preklapa li se period rezervacije sa nekim postojecim
-          if (this.unutarPerioda(this.rezervacijeAutomobilID)) {
+          if (this.unutarPerioda(this.rezAutomIdAktivne)) {
             this.periodAlert = true;
             this.onemoguciDugme = true;
             this.cijeneNa0();
@@ -189,3 +189,4 @@ export class AutomobilDetaljiComponent implements OnInit {
   }
 
 }
+

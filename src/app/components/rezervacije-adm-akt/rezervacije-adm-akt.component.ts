@@ -84,4 +84,46 @@ export class RezervacijeAdmAktComponent implements OnInit {
     this.ngOnInit();
   }
 
+  rokPreuzimanja(preuzimanje: Date, vracanje: Date): Date {
+    let pr: Date = new Date(preuzimanje);
+    let vr: Date = new Date(vracanje);
+    let razlMs: number = vr.valueOf() - pr.valueOf();
+    let razlD: number = (((razlMs/1000)/60)/60)/24;
+    if (razlD < 2) {
+      return pr;
+    }
+    else {
+      let brDana: number = Math.ceil(razlD/2);
+      let rok: Date = new Date(pr.valueOf() + (((brDana*24)*60)*60)*1000);
+
+      // console.log('abc'); // PROBLEM: Za svaki poziv, f-ja se izvrsi 14 puta, umjesto jednom! ///////////////////////////////////////////////////
+      
+      return rok;
+    }
+  }
+
+  razlikaRok(preuzimanje: Date, vracanje: Date): number {
+    let rok: Date = this.rokPreuzimanja(preuzimanje, vracanje);
+    let danas: Date = new Date();
+    let preuz: Date = new Date(preuzimanje);
+
+    let rokStr: string = rok.toISOString().split('T')[0];
+    let danasStr: string = danas.toISOString().split('T')[0];
+    let preuzStr: string = preuz.toISOString().split('T')[0];
+
+    // console.log('danas: ' + danasStr);
+    // console.log('preuzimanje: ' + preuzStr);
+    // console.log('krajnji rok: ' + rokStr);
+
+    if (danasStr < preuzStr) {
+      return -1;
+    }
+    else if ((danasStr >= preuzStr) && (danasStr <= rokStr)) {
+      return 0;
+    }
+    else if (danasStr > rokStr) {
+      return 1;
+    }
+  }
+
 }
