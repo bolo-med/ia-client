@@ -31,4 +31,13 @@ export class RezervacijeService {
     });
   }
 
+  public updateRezervacija(rezervacija: Rezervacija) {
+    let token = window.localStorage.getItem('ia-token');
+    return this.http.put<OperationResponse>(this.serviceUrl, rezervacija, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+
 }

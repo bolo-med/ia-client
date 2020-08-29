@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th scope="col">Preuzimanje</th>
-            <th scope="col">Rok</th>
+            <th scope="col">Krajnji rok</th>
             <th scope="col">Vraćanje</th>
             <th scope="col">Ime i prezime</th>
             <th scope="col">Automobil</th>
@@ -16,7 +16,7 @@
             <td><div>{{e.datumPreuzimanja | date: 'dd. MMM yyyy.'}}</div></td>
             <td>
                 <div class="centar" [ngClass]="{'tekst-plav': (razlikaRok(e.datumPreuzimanja, e.datumVracanja) === -1), 
-                                 'tekst-crven': (razlikaRok(e.datumPreuzimanja, e.datumVracanja) === 1), 
+                                 'tekst-crven': ((razlikaRok(e.datumPreuzimanja, e.datumVracanja) === 1) && (e.realizovana !== true)), 
                                  'tekst-zelen': (razlikaRok(e.datumPreuzimanja, e.datumVracanja) === 0) || (e.realizovana === true)}">
                     {{(e.realizovana !== true) ? (rokPreuzimanja(e.datumPreuzimanja, e.datumVracanja) | date: 'dd. MMM yyyy.') : '-'}}
                 </div>
@@ -58,15 +58,25 @@
 <br><br>
 
 <div class="row" *ngIf='vidljivo'>
-    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <button type="button" class="btn btn-danger form-control">Iznajmi automobil</button>
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+        <button type="button" class="btn btn-danger form-control" [disabled]='disblIznajmiBtn()' (click)='iznajmi()'>
+            Iznajmi automobil
+        </button>
     </div>
     
-    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-        <button type="button" class="btn btn-success form-control">Otkaži rezervaciju</button>
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+        <button type="button" class="btn btn-success form-control" [disabled]='disblOtkaziBtn()' (click)='otkazi()'>
+            Otkaži rezervaciju
+        </button>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+        <button type="button" class="btn btn-warning form-control" [disabled]='disblVracenBtn()' (click)='vracen()'>
+            Vraćen automobil
+        </button>
     </div>
     
-    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
         <button type="button" class="btn btn-secondary form-control" (click)='nazad()'>Vrati se nazad</button>
     </div>
 </div>

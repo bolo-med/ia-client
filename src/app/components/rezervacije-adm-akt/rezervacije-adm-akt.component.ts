@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Rezervacija } from 'src/app/models/Rezervacija';
 import { environment } from 'src/environments/environment';
+import { RezervacijeService } from 'src/app/services/rezervacije.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-rezervacije-adm-akt',
@@ -19,7 +21,8 @@ export class RezervacijeAdmAktComponent implements OnInit {
   @Input('rezervacijeSve')
   rezervacijeSve: Rezervacija[];
 
-  constructor() { }
+  constructor(private rezervacijeService: RezervacijeService, 
+              private authService: AuthService) { }
 
   ngOnInit(): void {
 
@@ -111,10 +114,6 @@ export class RezervacijeAdmAktComponent implements OnInit {
     let danasStr: string = danas.toISOString().split('T')[0];
     let preuzStr: string = preuz.toISOString().split('T')[0];
 
-    // console.log('danas: ' + danasStr);
-    // console.log('preuzimanje: ' + preuzStr);
-    // console.log('krajnji rok: ' + rokStr);
-
     if (danasStr < preuzStr) {
       return -1;
     }
@@ -123,6 +122,110 @@ export class RezervacijeAdmAktComponent implements OnInit {
     }
     else if (danasStr > rokStr) {
       return 1;
+    }
+  }
+
+  disblOtkaziBtn(): boolean {
+    if (this.rezervacijaOdabrana.realizovana === null) {
+      return false;
+    }
+    else if ((this.rezervacijaOdabrana.realizovana === true) || (this.rezervacijaOdabrana.realizovana === false)) {
+      return true;
+    }
+  }
+
+  disblIznajmiBtn() {
+    if (this.rezervacijaOdabrana.realizovana === null) {
+      let danas: Date = new Date();
+      let danasStr: string = danas.toISOString().split('T')[0];
+      let preuz: Date = new Date(this.rezervacijaOdabrana.datumPreuzimanja);
+      let preuzStr: string = preuz.toISOString().split('T')[0];
+      let krRok: Date = new Date(this.rokPreuzimanja(this.rezervacijaOdabrana.datumPreuzimanja, this.rezervacijaOdabrana.datumVracanja));
+      let krRokStr: string = krRok.toISOString().split('T')[0];
+      if ((danasStr >= preuzStr) && (danasStr <= krRokStr)) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+    else if ((this.rezervacijaOdabrana.realizovana === true) || (this.rezervacijaOdabrana.realizovana === false)) {
+      return true;
+    }
+  }
+
+  disblVracenBtn() {
+    if (((this.rezervacijaOdabrana.realizovana === null) || (this.rezervacijaOdabrana.realizovana === false)) || 
+                                                            (this.rezervacijaOdabrana.datumStvarnogVracanja !== null)) {
+      return true;
+    }
+    else if ((this.rezervacijaOdabrana.realizovana === true) && (this.rezervacijaOdabrana.datumStvarnogVracanja === null)) {
+      return false;
+    }
+  }
+
+  otkazi() {
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
+                                                && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      this.rezervacijaOdabrana.realizovana = false;
+      this.rezervacijeService.updateRezervacija(this.rezervacijaOdabrana).subscribe(data => {
+        if (data.status === 0) {
+          alert('Rezervacije je otkazana!');
+          this.ngOnInit();
+        }
+        else {
+          alert ('Došlo je do greške pri otkazivanju rezervacije!')
+          this.ngOnInit();
+        }
+      });
+    }
+    else {
+      alert('Nemate administratorska prava!');
+      this.ngOnInit();
+    }
+  }
+
+  iznajmi() {
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
+                                                && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      this.rezervacijaOdabrana.realizovana = true;
+      this.rezervacijeService.updateRezervacija(this.rezervacijaOdabrana).subscribe(data => {
+        if (data.status === 0) {
+          alert('Automobil je iznajmljen!');
+          this.ngOnInit();
+        }
+        else {
+          alert ('Došlo je do greške pri iznajmljivanju automobila!')
+          this.ngOnInit();
+        }
+      });
+    }
+    else {
+      alert('Nemate administratorska prava!');
+      this.ngOnInit();
+    }
+  }
+
+  vracen() {
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
+                                                && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      let danas: Date = new Date();
+      let danasStr: string = danas.toISOString().split('T')[0];
+      this.rezervacijaOdabrana.datumStvarnogVracanjaStr = danasStr;
+      this.rezervacijeService.updateRezervacija(this.rezervacijaOdabrana).subscribe(data => {
+        if (data.status === 0) {
+          alert('Automobil je vraćen!');
+          this.ngOnInit();
+        }
+        else {
+          alert ('Došlo je do greške pri vraćanju automobila!')
+          this.ngOnInit();
+        }
+      });
+    }
+    else {
+      alert('Nemate administratorska prava!');
+      this.ngOnInit();
     }
   }
 
