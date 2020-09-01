@@ -69,17 +69,18 @@ export class AutomobilDetaljiComponent implements OnInit {
       if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
         this.rezervacijeService.insertRezervacija(this.rezervacija).subscribe(data => {
           if (data.status === 0) {
-            
-            this.odabraniAutomobil.statusID = 2;
-            this.automobiliService.updateAutomobil(this.odabraniAutomobil).subscribe(data => {
-              if (data.status === 0) {
-                console.log('Azurirano polje - Status, u tabeli - Automobil.');
-              }
-              else {
-                console.log('Greska u azuriranju polja - Status, u tabeli - Automobil.');
-              }
-            });
 
+            if (this.odabraniAutomobil.statusID === 1) {
+              this.odabraniAutomobil.statusID = 2;
+              this.automobiliService.updateAutomobil(this.odabraniAutomobil).subscribe(data => {
+                if (data.status === 0) {
+                  console.log('Azurirano polje - Status, u tabeli - Automobil.');
+                }
+                else {
+                  console.log('Greska u azuriranju polja - Status, u tabeli - Automobil.');
+                }
+              });
+            }
             alert('Rezervisali ste automobil!');
             this.router.navigateByUrl('/aktuelno-usr');
           }

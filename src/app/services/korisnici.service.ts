@@ -22,6 +22,10 @@ export class KorisniciService {
     });
   }
 
+  public getKorisnikByUsername(username: string) {
+    return this.http.get<OperationResponse>(`${this.serviceUrl}/username/${username}`);
+  }
+
   public updateKorisnik(korisnik: Korisnik) {
     let tok = window.localStorage.getItem('ia-token');
     return this.http.put<OperationResponse>(`${this.serviceUrl}`, korisnik, {

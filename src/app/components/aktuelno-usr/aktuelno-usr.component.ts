@@ -31,12 +31,17 @@ export class AktuelnoUsrComponent implements OnInit {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
 
       this.userID = this.getUserID();
+      console.log(this.getUserID());
+      
 
       this.rezervacijeService.getRezervacije().subscribe(data => {
+        
         this.rezervacijeSve = data;
         this.rezervacijeUserID = this.rezervacijeUserIdFn(this.rezervacijeSve);
         this.rezervacijeUserIdAktivne = this.rezervacijeUserIdAktivneFn(this.rezervacijeUserID);
         this.rezervacijeUserIdAktivneAbc = this.rezervacijeUserIdAktivneAbcFn(this.rezervacijeUserIdAktivne);
+        console.log(this.rezervacijeUserID);
+        
       });
     }
     else {

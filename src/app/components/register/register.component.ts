@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Korisnik } from './../../models/Korisnik';
 import { AuthService } from './../../services/auth.service';
 import { Router } from '@angular/router';
+import { KorisniciService } from 'src/app/services/korisnici.service';
 
 @Component({
   selector: 'app-register',
@@ -30,9 +31,11 @@ export class RegisterComponent implements OnInit {
   lozRe: RegExp;
 
   greska: string;
+  korUsr: number;
 
   constructor(private authService: AuthService, 
-              private router: Router) { }
+              private router: Router, 
+              private korisniciService: KorisniciService) { }
 
   ngOnInit(): void {
 
@@ -57,6 +60,12 @@ export class RegisterComponent implements OnInit {
   }
 
   registruj() {
+
+    // Mora ovako, jer bi se ovaj dio izvrsio tek posle if-bloka.
+    // this.korisniciService.getKorisnikByUsername(this.korisnik.username).subscribe(data => {
+    //   korUsr = data.status;
+    // });
+
     if (this.korisnik.ime === undefined || 
         this.korisnik.ime.trim() === "" || 
         this.korisnik.prezime === undefined || 
@@ -74,7 +83,6 @@ export class RegisterComponent implements OnInit {
       alert("Morate ispuniti sva polja!");
     }
     else if (!this.korisnik.ime.match(this.imeRe)) {
-      console.log('ime ' + this.korisnik.ime.match(this.imeRe));
       
       this.greska = 'Ime se sastoji samo od slova. Početno je veliko.';
       this.imeV = true;
@@ -116,20 +124,36 @@ export class RegisterComponent implements OnInit {
       this.korV = true;
     }
     else {
-      // if (confirm('Da li ste sigurni da želite da se REGISTRUJETE?')) {
-      //   this.authService.register(this.korisnik).subscribe(data => {
-      //     if (data.status === 0) {
-      //       window.localStorage.setItem('ia-token', data.token);
-      //       alert('Uspješna registracija!');
-      //       this.router.navigateByUrl('/');
-      //     }
-      //     else {
-      //       alert('Neuspješan pokušaj registrovanja!');
-      //     }
-      //   });
-      // }
-      console.log('aaa');//////////////////////////////////////////////////////////////////
-      this.ngOnInit(); ////////////////////////////////////////////////////////////////////
+      if (true) {
+        this.korisniciService.getKorisnikByUsername(this.korisnik.username).subscribe(data => {
+          this.korUsr = data.status;
+          if (this.korUsr === 0) {
+            this.greska = 'Korisničko ime već postoji. Izaberite neko drugo.';
+            this.imeV = false;
+            this.preV = false;
+            this.adrV = false;
+            this.telV = false;
+            this.korV = true;
+          }
+          else if (this.korUsr === -2) {
+            if (confirm('Da li ste sigurni da želite da se REGISTRUJETE?')) {
+              this.authService.register(this.korisnik).subscribe(data => {
+                if (data.status === 0) {
+                  window.localStorage.setItem('ia-token', data.token);
+                  alert('Uspješna registracija!');
+                  this.router.navigateByUrl('/');
+                }
+                else {
+                  alert('Neuspješan pokušaj registrovanja!');
+                }
+              });
+            }
+          }
+          else {
+            alert('Došlo je do greške pri provjeri korisničkog imena.');
+          }
+        });
+      }
     }
   }
 
