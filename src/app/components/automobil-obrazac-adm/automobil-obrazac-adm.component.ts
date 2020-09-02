@@ -21,6 +21,7 @@ export class AutomobilObrazacAdmComponent implements OnInit {
   apiUrl = environment.apiUrl;
 
   putnici: number[];
+  godista: number[];
 
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -67,6 +68,7 @@ export class AutomobilObrazacAdmComponent implements OnInit {
     };
 
     this.putnici = [1, 2, 3, 4, 5, 6, 7, 8];
+    this.godistaFn();
   }
 
   dodajAutomobil() {
@@ -120,6 +122,14 @@ export class AutomobilObrazacAdmComponent implements OnInit {
     }
     else {
       alert('Nemate administratorska prava!');
+    }
+  }
+
+  godistaFn() {
+    this.godista = [];
+    let tekucaGodina = +(new Date().toISOString().substring(0, 4));
+    for (let i: number = tekucaGodina ; i >= (tekucaGodina - 40); i--) {
+      this.godista.push(i);
     }
   }
 

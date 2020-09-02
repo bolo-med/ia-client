@@ -8,22 +8,24 @@
     </div>
     <br>
     <div>
-        <label>ProizvodjacID</label>
+        <label>Proizvođač</label>
         <select name="proizvodjaci" class="form-control" [(ngModel)]='automobil.proizvodjacID' (ngModelChange)='toNumber()'>
             <option *ngFor='let e of proizvodjaci' value="{{e.id}}">{{e.naziv}}</option>
         </select>
     </div>
     <br>
     <div>
-        <label>ModelID</label>
+        <label>Model</label>
         <select name="modeli" class="form-control" [(ngModel)]='automobil.modelID' (ngModelChange)='toNumber()'>
             <option *ngFor='let e of modeli' value="{{e.id}}">{{e.oznaka}}</option>
         </select>
     </div>
     <br>
     <div>
-        <label>Godiste</label>
-        <input type="text" class="form-control" [(ngModel)]='automobil.godiste' (ngModelChange)='toNumber()'>
+        <label>Godište</label>
+        <select name="godista" id="godista" class="form-control" [(ngModel)]='automobil.godiste' (ngModelChange)='toNumber'>
+            <option *ngFor='let e of godista' value="{{e}}">{{e}}.</option>
+        </select>
     </div>
     <br> 
     <div>
@@ -39,7 +41,7 @@
     </div>
     <br>
     <div>
-        <label>StatusID</label>
+        <label>Status</label>
         <select name="statusi" class="form-control" [(ngModel)]='automobil.statusID' (ngModelChange)='toNumber()'>
             <option *ngFor='let e of statusi' value="{{e.id}}">{{e.tip}}</option>
         </select>

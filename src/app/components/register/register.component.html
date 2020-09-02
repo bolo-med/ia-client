@@ -20,7 +20,7 @@
         <div>
             <label>Godina rođenja</label>
             <select name="godine" id="godine" class="form-control" [(ngModel)]='korisnik.godRodjenja' (ngModelChange)='toNumber()'>
-                <option *ngFor='let e of godine; index as i' value="{{e}}" [selected]="i==5">{{e}}.</option>
+                <option *ngFor='let e of godine; index as i' value="{{e}}" [selected]="i==0">{{e}}.</option>
                 <!-- Nece da postavi podrazumijevanu vrijednost! -->
             </select>
             <div class="greska" *ngIf='godV'>{{greska}}</div>
