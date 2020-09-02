@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Host } from '@angular/core';
 import { Model } from 'src/app/models/Model';
 import { ModeliService } from 'src/app/services/modeli.service';
 import { AutomobiliAdmComponent } from '../automobili-adm/automobili-adm.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-modeli-tabela',
@@ -14,34 +15,45 @@ export class ModeliTabelaComponent implements OnInit {
   modeli: Model[] = [];
 
   constructor(private modeliService: ModeliService, 
-              @Host() private parent: AutomobiliAdmComponent) { }
+              @Host() private parent: AutomobiliAdmComponent, 
+              private authService: AuthService) { }
 
   ngOnInit(): void {
   }
 
   ukloniModel(model: Model) {
-    if (confirm('Da li zelite da uklonite model?')) {
-      this.modeliService.deleteModel(model.id).subscribe(data => {
-        if (data.status === 0) {
-          alert('Model je uklonjen uz baze podataka!');
-          this.parent.ngOnInit();
-        }
-        else {
-          alert('Doslo je do greske pri uklanjanju iz baze podataka!');
-        }
-      });
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      if (confirm('Da li zelite da uklonite model?')) {
+        this.modeliService.deleteModel(model.id).subscribe(data => {
+          if (data.status === 0) {
+            alert('Model je uklonjen uz baze podataka!');
+            this.parent.ngOnInit();
+          }
+          else {
+            alert('Doslo je do greske pri uklanjanju iz baze podataka!');
+          }
+        });
+      }
+    }
+    else {
+      alert('Nemate administratorska prava!');
     }
   }
 
   izmijeniModel(model: Model) {
-    if (confirm('Da li zelite da izmijenite model?')) {
-      this.parent.odabranaIzmjUklanjOst = false;
-      this.parent.odabranUnosPrMoSt = true;
-      this.parent.proizvodjacVidljiv = false;
-      this.parent.statusVidljiv = false;
-
-      this.parent.odabraniModel = model;
-      this.parent.dodajModelBtn = false;
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      if (confirm('Da li zelite da izmijenite model?')) {
+        this.parent.odabranaIzmjUklanjOst = false;
+        this.parent.odabranUnosPrMoSt = true;
+        this.parent.proizvodjacVidljiv = false;
+        this.parent.statusVidljiv = false;
+  
+        this.parent.odabraniModel = model;
+        this.parent.dodajModelBtn = false;
+      }
+    }
+    else {
+      alert('Nemate administratorska prava!');
     }
   }
 

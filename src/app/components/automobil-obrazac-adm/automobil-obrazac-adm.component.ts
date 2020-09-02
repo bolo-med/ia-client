@@ -7,6 +7,7 @@ import { AutomobiliService } from 'src/app/services/automobili.service';
 import { AutomobiliAdmComponent } from '../automobili-adm/automobili-adm.component';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-automobil-obrazac-adm',
@@ -18,6 +19,8 @@ export class AutomobilObrazacAdmComponent implements OnInit {
   // automobil: Automobil;
 
   apiUrl = environment.apiUrl;
+
+  putnici: number[];
 
   uploader: FileUploader = new FileUploader({
     itemAlias: 'img',
@@ -40,7 +43,8 @@ export class AutomobilObrazacAdmComponent implements OnInit {
   automobil: Automobil;
 
   constructor(private automobiliService: AutomobiliService, 
-              @Host() private parent: AutomobiliAdmComponent) {}
+              @Host() private parent: AutomobiliAdmComponent, 
+              private authService: AuthService) {}
 
   ngOnInit(): void {
 
@@ -62,20 +66,28 @@ export class AutomobilObrazacAdmComponent implements OnInit {
       }
     };
 
+    this.putnici = [1, 2, 3, 4, 5, 6, 7, 8];
   }
 
   dodajAutomobil() {
-    if (confirm('Jeste li sigurni?')) {
-      this.automobiliService.insertAutomobil(this.automobil).subscribe(data => {
-        if (data.status === 0) {
-          alert('Automobil je dodat u bazu podataka!');
-          this.parent.ngOnInit();
-          this.ngOnInit();
-        }
-        else {
-          alert('Doslo je do greske!');
-        }
-      });
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
+                                                && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      
+      if (confirm('Jeste li sigurni?')) {
+        this.automobiliService.insertAutomobil(this.automobil).subscribe(data => {
+          if (data.status === 0) {
+            alert('Automobil je dodat u bazu podataka!');
+            this.parent.ngOnInit();
+            this.ngOnInit();
+          }
+          else {
+            alert('Doslo je do greske pri dodavanju automobila!');
+          }
+        });
+      }
+    }
+    else {
+      alert("Nemate administratorska prava!");
     }
   }
 
@@ -85,20 +97,29 @@ export class AutomobilObrazacAdmComponent implements OnInit {
     this.automobil.statusID = (+this.automobil.statusID);
     this.automobil.godiste = (+this.automobil.godiste);
     this.automobil.cijena = (+this.automobil.cijena);
+    this.automobil.brPutnika = (+this.automobil.brPutnika);
   }
 
   izmijenijAutomobil() {
-    if (confirm('Da li zelite da izmijenite automobil?')) {
-      this.automobiliService.updateAutomobil(this.automobil).subscribe(data => {
-        if (data.status === 0) {
-          alert('Automobil je izmijenjen!');
-          this.parent.kliknutoIzmUkl();
-        }
-        else {
-          alert('Doslo je do neke greske!');
-          this.parent.kliknutoIzmUkl();
-        }
-      });
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
+                                                && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+
+      if (confirm('Da li zelite da izmijenite automobil?')) {
+        this.automobiliService.updateAutomobil(this.automobil).subscribe(data => {
+          if (data.status === 0) {
+            alert('Automobil je izmijenjen!');
+            this.parent.kliknutoIzmUkl();
+          }
+          else {
+            alert('Doslo je do neke greske!');
+            this.parent.kliknutoIzmUkl();
+          }
+        });
+      }
+
+    }
+    else {
+      alert('Nemate administratorska prava!');
     }
   }
 

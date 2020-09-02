@@ -10,10 +10,13 @@ export class Automobil {
     modelID: number;
     godiste: number;
     motor: string;
-    mjenjac: string;
+    // mjenjac: string;
     statusID: number;
     fotografija: string;
     cijena: number;
+    automatskiMjenjac: boolean;
+    brPutnika: number;
+
     status: Status;
     proizvodjac: Proizvodjac;
     model: Model;

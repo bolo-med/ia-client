@@ -32,8 +32,10 @@
     </div>
     <br>
     <div>
-        <label>Mjenjac</label>
-        <input type="text" class="form-control" [(ngModel)]='automobil.mjenjac'>
+        <label>Broj putnika</label>
+        <select name="putnici" class="form-control" [(ngModel)]='automobil.brPutnika' (ngModelChange)='toNumber()'>
+            <option *ngFor='let e of putnici'>{{e}}</option>
+        </select>
     </div>
     <br>
     <div>
@@ -47,7 +49,12 @@
         <label>Cijena</label>
         <input type="text" class="form-control" [(ngModel)]='automobil.cijena' (ngModelChange)='toNumber()'>
     </div>
-    <br>
+    <br><br>
+    <div class="form-check">
+        <input type="checkbox" id="aut_mje" class="form-check-input" [(ngModel)]='automobil.automatskiMjenjac'>
+        <label for="aut_mje">Automobil ima automatski mjenjač</label>
+    </div>
+    <br><br>
     <div>
         <label>Fotografija</label>
         <input type="file" class="form-control-file" ng2FileSelect [uploader]='uploader'>

@@ -7,6 +7,8 @@ import { Model } from 'src/app/models/Model';
 import { Status } from 'src/app/models/Status';
 import { Automobil } from 'src/app/models/Automobil';
 import { AutomobiliService } from 'src/app/services/automobili.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-automobili-adm',
@@ -45,42 +47,53 @@ export class AutomobiliAdmComponent implements OnInit {
   constructor(private proizvodjaciService: ProizvodjaciService,
               private modeliService: ModeliService,
               private statusiService: StatusiService,
-              private automobiliService: AutomobiliService) { }
+              private automobiliService: AutomobiliService, 
+              private authService: AuthService, 
+              private router: Router) { }
 
   ngOnInit(): void {
 
-    this.proizvodjaciService.getProizvodjaci().subscribe(data => {
-      this.proizvodjaci = data;
-    });
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
+                                                && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      
+      this.proizvodjaciService.getProizvodjaci().subscribe(data => {
+        this.proizvodjaci = data;
+      });
 
-    this.modeliService.getModeli().subscribe(data => {
-      this.modeli = data;
-    });
+      this.modeliService.getModeli().subscribe(data => {
+        this.modeli = data;
+      });
 
-    this.statusiService.getStatusi().subscribe(data => {
-      this.statusi = data;
-    });
+      this.statusiService.getStatusi().subscribe(data => {
+        this.statusi = data;
+      });
 
-    this.automobiliService.getAutomobili().subscribe(data => {
-      this.automobili = data;
-    });
+      this.automobiliService.getAutomobili().subscribe(data => {
+        this.automobili = data;
+      });
 
-    // Mora ovdje da mu se dodjeli vrijednost, da bi mogao da radi @Input
-    this.proizvodjacVidljiv = true;
-    this.modelVidljiv = true;
-    this.statusVidljiv = true;
+      // Mora ovdje da mu se dodjeli vrijednost, da bi mogao da radi @Input
+      this.proizvodjacVidljiv = true;
+      this.modelVidljiv = true;
+      this.statusVidljiv = true;
 
-    this.vidljivoDodajP = true;
-    this.vidljivoIzmijeniP = false;
+      this.vidljivoDodajP = true;
+      this.vidljivoIzmijeniP = false;
 
-    this.odabraniProizvodjac = new Proizvodjac();
-    this.odabraniModel = new Model();
-    this.odabraniStatus = new Status();
-    this.odabraniAutomobil = new Automobil();
+      this.odabraniProizvodjac = new Proizvodjac();
+      this.odabraniModel = new Model();
+      this.odabraniStatus = new Status();
+      this.odabraniAutomobil = new Automobil();
 
-    this.dodajModelBtn = true;
-    this.dodajStatusBtn = true;
-    this.dodajAutomobilBtn = true;
+      this.dodajModelBtn = true;
+      this.dodajStatusBtn = true;
+      this.dodajAutomobilBtn = true;
+    }
+    else {
+      alert('Nemate administratorska prava!');
+      this.router.navigateByUrl('/');
+    }
+
   }
 
   kliknutoDodaj() {
