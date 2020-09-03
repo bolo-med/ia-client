@@ -59,6 +59,14 @@ export class RezervacijeAdmAktComponent implements OnInit {
       let datB: Date = new Date(b.datumPreuzimanja);
       let datAStr: string = datA.toISOString().split('T')[0];
       let datBStr: string = datB.toISOString().split('T')[0];
+
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      let datA2: Date = new Date(a.datumVracanja);
+      let datB2: Date = new Date(b.datumVracanja);
+      let datAStr2: string = datA2.toISOString().split('T')[0];
+      let datBStr2: string = datB2.toISOString().split('T')[0];
+      //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
       if (datAStr < datBStr) {
         return -1;
       }
@@ -66,7 +74,18 @@ export class RezervacijeAdmAktComponent implements OnInit {
         return 1;
       }
       else {
-        return 0;
+        // return 0;
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        if (datAStr2 < datBStr2) {
+          return -1;
+        }
+        else if (datAStr2 > datBStr2) {
+          return 1;
+        }
+        else {
+          return 0;
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
       }
     });
     return rAbc;
@@ -172,10 +191,37 @@ export class RezervacijeAdmAktComponent implements OnInit {
   otkazi() {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
                                                 && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      
       this.rezervacijaOdabrana.realizovana = false;
       this.rezervacijeService.updateRezervacija(this.rezervacijaOdabrana).subscribe(data => {
         if (data.status === 0) {
           alert('Rezervacije je otkazana!');
+
+          let automobil: Automobil;
+          this.automobilService.getAutomobilByID(this.rezervacijaOdabrana.automobilID).subscribe(data => {
+            if (data.status === 0) {
+              automobil = data.data;
+
+              let br: number;
+              let rez: Rezervacija[] = this.rezervacijeOdabranogAutomobilaFn(this.rezervacijeSve, automobil.id);
+              br = rez.length;
+              if (br === 0) {
+                automobil.statusID = 1;
+                this.automobilService.updateAutomobil(automobil).subscribe(data => {
+                  if (data.status === 0) {
+                    alert('Status automobila je azuriran!');
+                  }
+                  else {
+                    alert('Greska pri azuriranju statusa automobila!');
+                  }
+                });
+              }
+            }
+            else {
+              alert('Greska pri pretrazi automobila!');
+            }
+          });
+
           this.ngOnInit();
         }
         else {
@@ -296,7 +342,7 @@ export class RezervacijeAdmAktComponent implements OnInit {
     }
   }
 
-  // Sve aktivne rezervacije datog automobila.
+  // Sve AKTIVNE rezervacije datog automobila.
   rezervacijeOdabranogAutomobilaFn(rezSve: Rezervacija[], aID: number): Rezervacija[] {
     let rezOdab: Rezervacija[] = [];
     for (let i: number = 0; i < rezSve.length; i++) {
