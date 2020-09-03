@@ -20,7 +20,7 @@ export class AutomobiliService {
 
   public getAutomobilByID(id: number) {
       let korisnikovToken = window.localStorage.getItem('ia-token');
-      return this.http.get<Automobil>(`${this.serviceUrl}/${id}`, {
+      return this.http.get<OperationResponse>(`${this.serviceUrl}/${id}`, {
         headers: {
           Authorization: `Bearer ${korisnikovToken}`
         }

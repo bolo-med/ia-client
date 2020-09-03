@@ -133,9 +133,14 @@ export class AutomobiliComponent implements OnInit {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
 
       this.automobiliService.getAutomobilByID(id).subscribe(data => {
-        this.odabraniAutomobil = data;
-        this.svi = false;
-        this.naslovStranice = 'Detaljnije o iznajmljivanju';
+        if (data.status === 0) {
+          this.odabraniAutomobil = data.data;
+          this.svi = false;
+          this.naslovStranice = 'Detaljnije o iznajmljivanju';
+        }
+        else {
+          alert('Greska pri pretrazivanju automobila!');
+        }
       });
 
       this.rezervacijeService.getRezervacije().subscribe(data => {

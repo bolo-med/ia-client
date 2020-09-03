@@ -1,8 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Host } from '@angular/core';
 import { Rezervacija } from 'src/app/models/Rezervacija';
 import { environment } from 'src/environments/environment';
 import { RezervacijeService } from 'src/app/services/rezervacije.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { AutomobiliService } from 'src/app/services/automobili.service';
+import { Automobil } from 'src/app/models/Automobil';
+import { RezervacijeAdmComponent } from '../rezervacije-adm/rezervacije-adm.component';
 
 @Component({
   selector: 'app-rezervacije-adm-akt',
@@ -22,7 +25,9 @@ export class RezervacijeAdmAktComponent implements OnInit {
   rezervacijeSve: Rezervacija[];
 
   constructor(private rezervacijeService: RezervacijeService, 
-              private authService: AuthService) { }
+              private authService: AuthService, 
+              private automobilService: AutomobiliService, 
+              @Host() private parent: RezervacijeAdmComponent) { }
 
   ngOnInit(): void {
 
@@ -39,7 +44,7 @@ export class RezervacijeAdmAktComponent implements OnInit {
     let r: Rezervacija[] = this.rezervacijeSve;
     let rAkt: Rezervacija[] = [];
     for (let i = 0; i < this.rezervacijeSve.length; i++) {
-      if ((r[i].datumStvarnogVracanja === null) && !(r[i].realizovana === false)) {
+      if ((r[i].datumStvarnogVracanja === null) && (r[i].realizovana !== false)) {
         rAkt.push(r[i]);
       }
     }
@@ -188,17 +193,46 @@ export class RezervacijeAdmAktComponent implements OnInit {
   iznajmi() {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
                                                 && (this.authService.getKorisnikDetails().isAdmin === 1)) {
-      this.rezervacijaOdabrana.realizovana = true;
-      this.rezervacijeService.updateRezervacija(this.rezervacijaOdabrana).subscribe(data => {
+
+      // Izdvaja automobil koji treba da se iznajmi.
+      let automobil: Automobil;
+      this.automobilService.getAutomobilByID(this.rezervacijaOdabrana.automobilID).subscribe(data => {
         if (data.status === 0) {
-          alert('Automobil je iznajmljen!');
-          this.ngOnInit();
+          automobil = data.data;
+
+          // Provjerava je li automobil, vec iznajmljen, a jos uvijek nije vracen (usled kasnjenja klijenta).
+          if (automobil.statusID !== 3) {
+            this.rezervacijaOdabrana.realizovana = true;
+            this.rezervacijeService.updateRezervacija(this.rezervacijaOdabrana).subscribe(data => {
+              if (data.status === 0) {
+                alert('Automobil je iznajmljen!');
+                // Postavlja status automobila na 'iznajmljen' - 3.
+                automobil.statusID = 3;
+                this.automobilService.updateAutomobil(automobil).subscribe(data => {
+                  if (data.status === 0) {
+                    alert('Status automobila je azuriran!');
+                  }
+                  else {
+                    alert('Greska pri azuriranju automobila!');
+                  }
+                });
+                this.ngOnInit();
+              }
+              else {
+                alert ('Došlo je do greške pri iznajmljivanju automobila!')
+                this.ngOnInit();
+              }
+            });
+          }
+          else {
+            alert('Automobil jos uvijek nije vracen! Prethodni klijent kasni sa vracanjem!');
+          }
         }
         else {
-          alert ('Došlo je do greške pri iznajmljivanju automobila!')
-          this.ngOnInit();
+          alert('Greska pri pretrazivanju automobila!');
         }
       });
+
     }
     else {
       alert('Nemate administratorska prava!');
@@ -215,18 +249,62 @@ export class RezervacijeAdmAktComponent implements OnInit {
       this.rezervacijeService.updateRezervacija(this.rezervacijaOdabrana).subscribe(data => {
         if (data.status === 0) {
           alert('Automobil je vraćen!');
-          this.ngOnInit();
+
+          let automobil: Automobil;
+          let automobID: number = this.rezervacijaOdabrana.automobilID;
+          this.automobilService.getAutomobilByID(automobID).subscribe(data => {
+            if (data.status === 0) {
+              automobil = data.data;
+              let rezervacijeOdabranogAutomobila: Rezervacija[] = this.rezervacijeOdabranogAutomobilaFn(this.rezervacijeSve, automobID);
+              let br: number = rezervacijeOdabranogAutomobila.length;
+              
+              // Ako nema aktivnih rezervacija za dati automobil, u njegov status upisujemo 1 - slobodan. Inace 2 - rezervisan.
+              if (br < 1) {
+                automobil.statusID = 1;
+              }
+              else {
+                automobil.statusID = 2;
+              }
+
+              this.automobilService.updateAutomobil(automobil).subscribe(data => {
+                if (data.status === 0) {
+                  alert('Status automobila je azuriran!');
+                }
+                else {
+                  alert('Greska pri azuriranju automobila!');
+                }
+                this.ngOnInit();
+              });
+
+              this.ngOnInit();
+            }
+            else {
+              alert('Greska pri pretrazivanju automobila!');
+            }
+          });
         }
         else {
           alert ('Došlo je do greške pri vraćanju automobila!')
           this.ngOnInit();
         }
+        this.parent.ngOnInit(); // Nece da osvjezi, bez ovoga.
       });
     }
     else {
       alert('Nemate administratorska prava!');
       this.ngOnInit();
     }
+  }
+
+  // Sve aktivne rezervacije datog automobila.
+  rezervacijeOdabranogAutomobilaFn(rezSve: Rezervacija[], aID: number): Rezervacija[] {
+    let rezOdab: Rezervacija[] = [];
+    for (let i: number = 0; i < rezSve.length; i++) {
+      if ((rezSve[i].automobilID === aID) && (rezSve[i].datumStvarnogVracanja === null) && (rezSve[i].realizovana !== false)) {
+        rezOdab.push(rezSve[i]);
+      }
+    }
+    return rezOdab;
   }
 
 }
