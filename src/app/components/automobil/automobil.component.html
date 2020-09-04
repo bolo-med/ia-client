@@ -5,5 +5,25 @@
 
 <hr class="mb-4">
 
+<div class="custom-control custom-checkbox">
+    <!-- <input type="checkbox" class="custom-control-input" id="automatski" [(ngModel)]='autoMj'> -->
+    <input type="checkbox" class="custom-control-input" id="automatski" (click)='unCheckAM()'>
+    <label class="custom-control-label" for="automatski">Automatski</label>
+</div>
+<div class="custom-control custom-checkbox">
+    <!-- <input type="checkbox" class="custom-control-input" id="manuelni" [(ngModel)]='manuelMj'> -->
+    <input type="checkbox" class="custom-control-input" id="manuelni" (click)='unCheckMM()'>
+    <label class="custom-control-label" for="manuelni">Manuelni</label>
+</div>
+
+<hr class="mb-4">
+
+<div class="custom-control custom-checkbox" *ngFor='let e of brMjesta; index as i'>
+    <input type="checkbox" class="custom-control-input" id="mjesta{{i}}" (click)='unChecked2(i)'>
+    <label class="custom-control-label" for="mjesta{{i}}">Br. mjesta: {{e}}</label>
+</div>
+
+<hr class="mb-4">
+
 <button type="button" class="btn btn-info" (click)='prikaziFiltrirano()'>Prikaži</button>
 
