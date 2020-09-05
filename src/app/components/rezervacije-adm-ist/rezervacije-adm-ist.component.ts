@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Rezervacija } from 'src/app/models/Rezervacija';
-import { RezervacijeAdmAktComponent } from '../rezervacije-adm-akt/rezervacije-adm-akt.component';
+import { Korisnik } from 'src/app/models/Korisnik';
 
 @Component({
   selector: 'app-rezervacije-adm-ist',
@@ -12,8 +12,13 @@ export class RezervacijeAdmIstComponent implements OnInit {
   rezervacijeIstorija: Rezervacija[];
   rezervacijeIstorijaAbc: Rezervacija[];
 
+  korisniciSviAbc: Korisnik[];
+
   @Input('rezervacijeSve')
   rezervacijeSve: Rezervacija[];
+
+  @Input('korisniciSvi')
+  korisniciSvi: Korisnik[];
 
   constructor() { }
 
@@ -21,6 +26,13 @@ export class RezervacijeAdmIstComponent implements OnInit {
 
     this.rezervacijeIstorija = this.rezIstFn(this.rezervacijeSve);
     this.rezervacijeIstorijaAbc = this.rezIstAbcFn(this.rezervacijeIstorija);
+
+    this.korisniciSviAbc = this.korAbcFn(this.korisniciSvi);
+    let kor: Korisnik = new Korisnik();
+    kor.id = -1;
+    kor.ime = 'korisnici';
+    kor.prezime = 'Svi'
+    this.korisniciSviAbc.unshift(kor);
 
   }
 
@@ -79,6 +91,24 @@ export class RezervacijeAdmIstComponent implements OnInit {
     vratio = new Date(vratio);
     let razlikaMilisec: number = vratio.valueOf() - vracanje.valueOf();
     return (((razlikaMilisec / 1000) / 60) / 60) / 24;
+  }
+
+  korAbcFn(kor: Korisnik[]): Korisnik[] {
+    let korAbc: Korisnik[] = [];
+    korAbc = kor.sort((a, b) => {
+      let aPrez: string = a.prezime;
+      let bPrez: string = b.prezime;
+      if (aPrez < bPrez) {
+        return -1;
+      }
+      else if (aPrez > bPrez) {
+        return 1;
+      }
+      else {
+        return 0;
+      }
+    });
+    return korAbc;
   }
 
 }

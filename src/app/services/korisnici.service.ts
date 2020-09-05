@@ -13,6 +13,15 @@ export class KorisniciService {
 
   constructor(private http: HttpClient) {}
 
+  public getKorisnici() {
+    let tok = window.localStorage.getItem('ia-token');
+    return this.http.get<Korisnik[]>(this.serviceUrl, {
+      headers: {
+        Authorization: `Bearer ${tok}`
+      }
+    });
+  }
+
   public getKorisnikByID(id: number) {
     let korisnikovToken = window.localStorage.getItem('ia-token');
     return this.http.get<Korisnik>(`${this.serviceUrl}/${id}`, {
