@@ -235,11 +235,40 @@ export class AutomobiliComponent implements OnInit {
                                                         && (this.allMjestaUnChecked() === false)) {
       arr = this.automobiliPoBrojuMjesta(automobiliSvi);
     }
+    else if ((this.allProizvodjaciUnChecked() === true) && (this.allMjenjaciUnChecked() === false) 
+                                                        && (this.allMjestaUnChecked() === false)) {
+
+      if ((this.autoMj === true) && (this.manuelMj === false)) {
+        arr = this.automobiliIzabraniMjenjaciAut(automobiliSvi);
+        arr = this.automobiliPoBrojuMjesta(arr);
+      }
+      else {
+        arr = this.automobiliIzabraniMjenjaciMan(automobiliSvi);
+        arr = this.automobiliPoBrojuMjesta(arr);
+      }
+
+    }
+    else if ((this.allProizvodjaciUnChecked() === false) && (this.allMjenjaciUnChecked() === false) 
+                                                         && (this.allMjestaUnChecked() === false)) {
+
+      arr = this.automobiliIzabraniMjenjaciSvi(automobiliSvi);
+      
+      if ((this.autoMj === true) && (this.manuelMj === false)) {
+        arr = this.automobiliIzabraniMjenjaciAut(arr);
+      }
+      else {
+        arr = this.automobiliIzabraniMjenjaciMan(arr);
+      }
+
+      arr = this.automobiliPoBrojuMjesta(arr);
+
+    }
 
     return arr;
 
   }
 
+  // Iz niza tipa Automobil[], izdvaja automobile odabranih naziva proizvodjaca
   automobiliIzabraniMjenjaciSvi(automobiliSvi: Automobil[]): Automobil[] {
     let cekiraniProizvodjaci: string[] = this.izdvojCekiraneProizvodjace();
     let izdvojeniArr: Automobil[] = [];
@@ -257,6 +286,7 @@ export class AutomobiliComponent implements OnInit {
     return izdvojeniArr;
   }
 
+  // Iz niza tipa Automobil[], izdvaja automobile koji imaju automatski mjenjac
   automobiliIzabraniMjenjaciAut(arrMjSvi: Automobil[]): Automobil[] {
     let arrMjAut: Automobil[] = [];
     for (let i: number = 0; i < arrMjSvi.length; i++) {
@@ -267,6 +297,7 @@ export class AutomobiliComponent implements OnInit {
     return arrMjAut;
   }
 
+  // Iz niza tipa Automobil[], izdvaja automobile koji imaju manuelni mjenjac
   automobiliIzabraniMjenjaciMan(arrMjSvi: Automobil[]): Automobil[] {
     let arrMjMan: Automobil[] = [];
     for (let i: number = 0; i < arrMjSvi.length; i++) {
@@ -277,6 +308,7 @@ export class AutomobiliComponent implements OnInit {
     return arrMjMan;
   }
 
+  // Iz niza tipa Automobil[], izdvaja automobile koji imaju odabrani broj mjesta za putnike
   automobiliPoBrojuMjesta(a: Automobil[]): Automobil[] {
     let a2: Automobil[] = [];
     let brMjIzabrani: number[] = this.brMjIzabraniFn();
