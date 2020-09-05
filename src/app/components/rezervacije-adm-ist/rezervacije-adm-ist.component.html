@@ -1,1 +1,46 @@
-<p>rezervacije-adm-ist works!</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Preuzimanje</th>
+            <th scope="col">Vraćanje</th>
+            <th scope="col">Ime i prezime</th>
+            <th scope="col">Automobil</th>
+            <th scope="col" class="centar">Status</th>
+            <th scope="col" class="centar">Vraćen</th>
+            <th scope="col" class="centar">Kašnjenje</th>
+            <th scope="col" class="centar">Detalji</th>
+          </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let e of rezervacijeIstorijaAbc'>
+            <td><div>{{e.datumPreuzimanja | date: 'dd. MMM yyyy.'}}</div></td>
+            <td><div>{{e.datumVracanja | date: 'dd. MMM yyyy.'}}</div></td>
+            <td><div>{{e.korisnik.ime}} {{e.korisnik.prezime}}</div></td>
+            <td><div>{{e.automobil.proizvodjac.naziv}} - {{e.automobil.model.oznaka}}</div></td>
+            <td><div class="centar" [ngClass]="{'tekst-plav' : (e.realizovana === null), 
+                                                'tekst-crven' : (e.realizovana === false), 
+                                                'tekst-zelen' : (e.realizovana === true)}">
+                    {{(e.realizovana === null) ? 'na čekanju' : (e.realizovana === true) ? 'realizovana' : 'otkazana'}}
+                </div>
+            </td>
+            <td>
+                <div class="centar" [ngClass]="{
+                    'tekst-plav': (kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) < 0) && (e.realizovana !== false), 
+                    'tekst-crven': (kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) > 0) || (e.realizovana === false), 
+                    'tekst-zelen': (kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) === 0)  && (e.realizovana !== false)}">
+                    {{(e.realizovana === false) ? '-' : (e.datumStvarnogVracanja | date: 'dd. MMM yyyy.')}}
+                </div>
+            </td>
+            <td><div class="centar" [ngClass]="{
+                    'tekst-plav': (kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) < 0) && (e.realizovana !== false), 
+                    'tekst-crven': (kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) > 0) || (e.realizovana === false), 
+                    'tekst-zelen': (kasnjenje(e.datumVracanja, e.datumStvarnogVracanja) === 0)  && (e.realizovana !== false)}">
+                    {{(e.realizovana === false) ? '-' : kasnjenje(e.datumVracanja, e.datumStvarnogVracanja)}}
+                </div>
+            </td>
+            <td><div class="centar"><button type="button" class="btn btn-info" (click)='detaljnije(e)'>Detaljnije</button></div></td>
+        </tr>
+    </tbody>
+</table>
+
+<br><br>

@@ -60,12 +60,10 @@ export class RezervacijeAdmAktComponent implements OnInit {
       let datAStr: string = datA.toISOString().split('T')[0];
       let datBStr: string = datB.toISOString().split('T')[0];
 
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////
       let datA2: Date = new Date(a.datumVracanja);
       let datB2: Date = new Date(b.datumVracanja);
       let datAStr2: string = datA2.toISOString().split('T')[0];
       let datBStr2: string = datB2.toISOString().split('T')[0];
-      //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       if (datAStr < datBStr) {
         return -1;
@@ -74,8 +72,6 @@ export class RezervacijeAdmAktComponent implements OnInit {
         return 1;
       }
       else {
-        // return 0;
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         if (datAStr2 < datBStr2) {
           return -1;
         }
@@ -85,7 +81,6 @@ export class RezervacijeAdmAktComponent implements OnInit {
         else {
           return 0;
         }
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
       }
     });
     return rAbc;
@@ -197,13 +192,15 @@ export class RezervacijeAdmAktComponent implements OnInit {
         if (data.status === 0) {
           alert('Rezervacije je otkazana!');
 
-          let automobil: Automobil;
+          let automobil: Automobil = new Automobil();
           this.automobilService.getAutomobilByID(this.rezervacijaOdabrana.automobilID).subscribe(data => {
             if (data.status === 0) {
               automobil = data.data;
 
               let br: number;
-              let rez: Rezervacija[] = this.rezervacijeOdabranogAutomobilaFn(this.rezervacijeSve, automobil.id);
+              let rez: Rezervacija[] = this.rezervacijeOdabranogAutomobilaFn(this.rezervacijeSve, 
+                                                                             automobil.id, 
+                                                                             this.rezervacijaOdabrana.id);
               br = rez.length;
               if (br === 0) {
                 automobil.statusID = 1;
@@ -296,12 +293,15 @@ export class RezervacijeAdmAktComponent implements OnInit {
         if (data.status === 0) {
           alert('Automobil je vraćen!');
 
-          let automobil: Automobil;
+          let automobil: Automobil = new Automobil();
           let automobID: number = this.rezervacijaOdabrana.automobilID;
           this.automobilService.getAutomobilByID(automobID).subscribe(data => {
             if (data.status === 0) {
               automobil = data.data;
-              let rezervacijeOdabranogAutomobila: Rezervacija[] = this.rezervacijeOdabranogAutomobilaFn(this.rezervacijeSve, automobID);
+              let rezervacijeOdabranogAutomobila: Rezervacija[] = this.rezervacijeOdabranogAutomobilaFn(this.rezervacijeSve, 
+                                                                                                        automobID, 
+                                                                                                        this.rezervacijaOdabrana.id);
+
               let br: number = rezervacijeOdabranogAutomobila.length;
               
               // Ako nema aktivnih rezervacija za dati automobil, u njegov status upisujemo 1 - slobodan. Inace 2 - rezervisan.
@@ -343,10 +343,12 @@ export class RezervacijeAdmAktComponent implements OnInit {
   }
 
   // Sve AKTIVNE rezervacije datog automobila.
-  rezervacijeOdabranogAutomobilaFn(rezSve: Rezervacija[], aID: number): Rezervacija[] {
+  rezervacijeOdabranogAutomobilaFn(rezSve: Rezervacija[], aID: number, rID: number): Rezervacija[] {
     let rezOdab: Rezervacija[] = [];
     for (let i: number = 0; i < rezSve.length; i++) {
-      if ((rezSve[i].automobilID === aID) && (rezSve[i].datumStvarnogVracanja === null) && (rezSve[i].realizovana !== false)) {
+      if ((rezSve[i].automobilID === aID) && (rezSve[i].datumStvarnogVracanja === null) 
+                                          && (rezSve[i].realizovana !== false) 
+                                          && (rezSve[i].id !== rID)) {
         rezOdab.push(rezSve[i]);
       }
     }
