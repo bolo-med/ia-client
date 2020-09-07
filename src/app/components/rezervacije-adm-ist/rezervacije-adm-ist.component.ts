@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Rezervacija } from 'src/app/models/Rezervacija';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { Automobil } from 'src/app/models/Automobil';
+import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-rezervacije-adm-ist',
@@ -22,7 +23,7 @@ export class RezervacijeAdmIstComponent implements OnInit {
   godineSve: number[];
   godinaID: number = -1;
 
-  mjeseciSvi: any;
+  mjeseciSvi: any[];
   mjesecID: number = -1;
 
   @Input('rezervacijeSve')
@@ -45,60 +46,9 @@ export class RezervacijeAdmIstComponent implements OnInit {
 
     this.automobiliSviAbc = this.autAbcFn(this.automobiliSvi);
 
-    this.mjeseciSvi = {
-      svi: {
-        id: -1,
-        naziv: 'Svi mjeseci'
-      },
-      jan: {
-        id: 1,
-        naziv: 'Januar'
-      },
-      feb: {
-        id: 2,
-        naziv: 'Februar'
-      },
-      mar: {
-        id: 3,
-        naziv: 'Mart'
-      },
-      apr: {
-        id: 4,
-        naziv: 'April'
-      },
-      maj: {
-        id: 5,
-        naziv: 'Maj'
-      },
-      jun: {
-        id: 6,
-        naziv: 'Jun'
-      },
-      jul: {
-        id: 7,
-        naziv: 'Jul'
-      },
-      avg: {
-        id: 8,
-        naziv: 'Avgust'
-      },
-      sep: {
-        id: 9,
-        naziv: 'Septembar'
-      },
-      okt: {
-        id: 10,
-        naziv: 'Oktobar'
-      },
-      nov: {
-        id: 11,
-        naziv: 'Novembar'
-      },
-      dec: {
-        id: 12,
-        naziv: 'Decembar'
-      }
-    };
+    this.mjeseciSvi = this.sviMjeseciFn();
+
+    this.godineSve = this.godineSveFn();
 
   }
 
@@ -129,10 +79,10 @@ export class RezervacijeAdmIstComponent implements OnInit {
       let datBStr2: string = datB2.toISOString().split('T')[0];
 
       if (datAStr < datBStr) {
-        return -1;
+        return 1;
       }
       else if (datAStr > datBStr) {
-        return 1;
+        return -1;
       }
       else {
         if (datAStr2 < datBStr2) {
@@ -209,17 +159,61 @@ export class RezervacijeAdmIstComponent implements OnInit {
 
     this.ngOnInit();
 
-    if ((+this.korisnikID !== -1) && (+this.automobilID === -1)) {
+    console.log('-----------------------');
+    console.log('korisnikID: ' + this.korisnikID);
+    console.log('automobilID: ' + this.automobilID);
+    console.log('godinaID: ' + this.godinaID);
+    console.log('mjesecID: ' + this.mjesecID);
+
+    if ((+this.korisnikID !== -1) && (+this.automobilID === -1) && (+this.godinaID === -1) && (+this.mjesecID === -1)) {
       this.rezervacijePoKorisniku();
     }
-    else if ((+this.korisnikID === -1) && (+this.automobilID !== -1)) {
+    else if ((+this.korisnikID === -1) && (+this.automobilID !== -1) && (+this.godinaID === -1)  && (+this.mjesecID === -1)) {
       this.rezervacijePoAutomobilu();
     }
-    else if ((+this.korisnikID !== -1) && (+this.automobilID !== -1)) {
+    else if ((+this.korisnikID !== -1) && (+this.automobilID !== -1) && (+this.godinaID === -1)  && (+this.mjesecID === -1)) {
       this.rezervacijePoKorisniku();
       this.rezervacijePoAutomobilu();
     }
-    
+    else if ((+this.korisnikID === -1) && (+this.automobilID === -1) && (+this.godinaID === -1) && (+this.mjesecID !== -1)) {
+      this.rezervacijePoMjesecu();
+    }
+    else if ((+this.korisnikID === -1) && (+this.automobilID !== -1) && (+this.godinaID === -1) && (+this.mjesecID !== -1)) {
+      this.rezervacijePoAutomobilu();
+      this.rezervacijePoMjesecu();
+    }
+    else if ((+this.korisnikID !== -1) && (+this.automobilID !== -1) && (+this.godinaID === -1) && (+this.mjesecID !== -1)) {
+      this.rezervacijePoKorisniku();
+      this.rezervacijePoAutomobilu();
+      this.rezervacijePoMjesecu();
+    }
+    else if ((+this.korisnikID === -1) && (+this.automobilID === -1) && (+this.godinaID !== -1) && (+this.mjesecID === -1)) {
+      this.rezervacijePoGodini();
+    }
+    else if ((+this.korisnikID !== -1) && (+this.automobilID === -1) && (+this.godinaID !== -1) && (+this.mjesecID === -1)) {
+      this.rezervacijePoKorisniku();
+      this.rezervacijePoGodini();
+    }
+    else if ((+this.korisnikID !== -1) && (+this.automobilID !== -1) && (+this.godineSve !== -1) && (+this.mjesecID === -1)) {
+      this.rezervacijePoKorisniku();
+      this.rezervacijePoAutomobilu();
+      this.rezervacijePoGodini();
+    }
+    else if ((+this.korisnikID !== -1) && (+this.automobilID !== -1) && (+this.godinaID !== -1) && (+this.mjesecID !== -1)) {
+      this.rezervacijePoKorisniku();
+      this.rezervacijePoAutomobilu();
+      this.rezervacijePoGodini();
+      this.rezervacijePoMjesecu();
+    }
+    else if ((+this.korisnikID === -1) && (+this.automobilID !== -1) && (+this.godinaID !== -1) && (+this.mjesecID !== -1)) {
+      this.rezervacijePoAutomobilu();
+      this.rezervacijePoGodini();
+      this.rezervacijePoMjesecu();
+    }
+    else if ((+this.korisnikID === -1) && (+this.automobilID !== -1) && (+this.godinaID !== -1) && (+this.mjesecID === -1)) {
+      this.rezervacijePoAutomobilu();
+      this.rezervacijePoGodini();
+    }
   }
 
   rezervacijePoKorisniku() {
@@ -240,6 +234,69 @@ export class RezervacijeAdmIstComponent implements OnInit {
         }
       }
       this.rezervacijeIstorijaAbc = r;
+  }
+
+  rezervacijePoMjesecu() {
+    let r: Rezervacija[] = [];
+    for (let i: number = 0; i < this.rezervacijeIstorijaAbc.length; i++) {
+      let d: Date = new Date(this.rezervacijeIstorijaAbc[i].datumPreuzimanja);
+      let m: number = d.getMonth() + 1;
+      if (m === (+this.mjesecID)) {
+        r.push(this.rezervacijeIstorijaAbc[i]);
+      }
+    }
+    this.rezervacijeIstorijaAbc = r;
+  }
+
+  rezervacijePoGodini() {
+    let r: Rezervacija[] = [];
+    for (let i: number = 0; i < this.rezervacijeIstorijaAbc.length; i++) {
+      let dat: Date = new Date(this.rezervacijeIstorijaAbc[i].datumPreuzimanja);
+      let god: number = dat.getFullYear();
+      if (god === (+this.godinaID)) {
+        r.push(this.rezervacijeIstorijaAbc[i]);
+      }
+    }
+    this.rezervacijeIstorijaAbc = r;
+  }
+
+  sviMjeseciFn(): any {
+    let arr1: any[] = [];
+    arr1.push({id: 1, naziv: 'Januar'});
+    arr1.push({id: 2, naziv: 'Februar'});
+    arr1.push({id: 3, naziv: 'Mart'});
+    arr1.push({id: 4, naziv: 'April'});
+    arr1.push({id: 5, naziv: 'Maj'});
+    arr1.push({id: 6, naziv: 'Jun'});
+    arr1.push({id: 7, naziv: 'Jul'});
+    arr1.push({id: 8, naziv: 'Avgust'});
+    arr1.push({id: 9, naziv: 'Septembar'});
+    arr1.push({id: 10, naziv: 'Oktobar'});
+    arr1.push({id: 11, naziv: 'Novembar'});
+    arr1.push({id: 12, naziv: 'Decembar'});
+    return arr1;
+  }
+
+  godineSveFn(): any[] {
+
+    let r: any[] = [];
+    let rP: number[] = [];
+
+    for (let i:number = 0; i < this.rezervacijeIstorijaAbc.length; i++) {
+      let dat: Date = new Date(this.rezervacijeIstorijaAbc[i].datumPreuzimanja);
+      let god: number = dat.getFullYear();
+      rP.push(god);
+    }
+    
+    rP = rP.filter((value, index, self) => {
+      return self.indexOf(value) === index;
+    });
+
+    for (let i: number = 0; i < rP.length; i++) {
+      r.push({id: rP[i], godina: (rP[i] + ".")});
+    }
+    
+    return r;
   }
 
 }

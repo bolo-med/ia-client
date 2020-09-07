@@ -13,12 +13,14 @@
     </div>
     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
         <select class="form-control" [(ngModel)]='godinaID' (ngModelChange)='pretraga()'>
-            <option>Sve godine</option>
+            <option value="-1" selected>Sve godine</option>
+            <option *ngFor="let e of godineSve" value="{{e.id}}">{{e.godina}}</option>
         </select>
     </div>
     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
         <select class="form-control" [(ngModel)]='mjesecID' (ngModelChange)='pretraga()'>
-            <option>Svi mjeseci</option>
+            <option value="-1" selected>Svi mjeseci</option>
+            <option *ngFor="let e of mjeseciSvi" value="{{e.id}}">{{e.naziv}}</option>
         </select>
     </div>
 </div>
