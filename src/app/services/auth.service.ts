@@ -26,6 +26,7 @@ export class AuthService {
 
   logout() {
     window.localStorage.removeItem('ia-token');
+    alert('Odjavili ste se!');
     this.router.navigateByUrl('/');
   }
 

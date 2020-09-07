@@ -1,21 +1,23 @@
 <div class="row">
     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-        <select class="form-control">
-            <option *ngFor='let e of korisniciSviAbc'>{{e.prezime}} {{e.ime}}</option>
+        <select class="form-control" [(ngModel)]='korisnikID' (ngModelChange)='pretraga()'>
+            <option value="-1" selected>Svi korisnici</option>
+            <option *ngFor='let e of korisniciSviAbc' value="{{e.id}}">{{e.prezime}} {{e.ime}} - {{e.username}}</option>
         </select>
     </div>
     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-        <select class="form-control">
-            <option>Svi automobili</option>
+        <select class="form-control" [(ngModel)]='automobilID'  (ngModelChange)='pretraga()'>
+            <option value="-1" selected>Svi automobili</option>
+            <option *ngFor='let e of automobiliSviAbc' value="{{e.id}}">{{e.proizvodjac.naziv}} - {{e.model.oznaka}} ({{e.id}})</option>
         </select>
     </div>
     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-        <select class="form-control">
+        <select class="form-control" [(ngModel)]='godinaID' (ngModelChange)='pretraga()'>
             <option>Sve godine</option>
         </select>
     </div>
     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-        <select class="form-control">
+        <select class="form-control" [(ngModel)]='mjesecID' (ngModelChange)='pretraga()'>
             <option>Svi mjeseci</option>
         </select>
     </div>
@@ -63,7 +65,7 @@
                     {{(e.realizovana === false) ? '-' : kasnjenje(e.datumVracanja, e.datumStvarnogVracanja)}}
                 </div>
             </td>
-            <td><div class="centar"><button type="button" class="btn btn-info" (click)='detaljnije(e)'>Detaljnije</button></div></td>
+            <td><div class="centar"><button type="button" class="btn btn-info">Detaljnije</button></div></td>
         </tr>
     </tbody>
 </table>

@@ -22,9 +22,15 @@
         <app-rezervacije-adm-akt [rezervacijeSve]='rezervacijeSve'></app-rezervacije-adm-akt>
     </div>
 
-    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12"  *ngIf='!odabrano'>
+    <!-- <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf='!odabrano'>
         <app-rezervacije-adm-ist [rezervacijeSve]='rezervacijeSve' 
                                  [korisniciSvi]='korisniciSvi'></app-rezervacije-adm-ist>
+    </div> -->
+
+    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf='!odabrano && rezervacijeSve && automobiliSvi'>
+        <app-rezervacije-adm-ist [rezervacijeSve]='rezervacijeSve' 
+                                 [korisniciSvi]='korisniciSvi' 
+                                 [automobiliSvi]='automobiliSvi'></app-rezervacije-adm-ist>
     </div>
 
 </div>

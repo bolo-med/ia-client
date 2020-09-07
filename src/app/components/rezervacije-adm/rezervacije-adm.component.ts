@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { KorisniciService } from 'src/app/services/korisnici.service';
+import { Automobil } from 'src/app/models/Automobil';
+import { AutomobiliService } from 'src/app/services/automobili.service';
 
 @Component({
   selector: 'app-rezervacije-adm',
@@ -16,11 +18,13 @@ export class RezervacijeAdmComponent implements OnInit {
   odabrano: boolean;
   rezervacijeSve: Rezervacija[];
   korisniciSvi: Korisnik[];
+  automobiliSvi: Automobil[];
 
   constructor(private rezervacijeService: RezervacijeService, 
               private authService: AuthService, 
               private router: Router, 
-              private korisniciService: KorisniciService) { }
+              private korisniciService: KorisniciService, 
+              private automobiliService: AutomobiliService) { }
 
   ngOnInit(): void {
 
@@ -34,6 +38,10 @@ export class RezervacijeAdmComponent implements OnInit {
 
       this.korisniciService.getKorisnici().subscribe(data => {
         this.korisniciSvi = data;
+      });
+
+      this.automobiliService.getAutomobili().subscribe(data => {
+        this.automobiliSvi = data;
       });
     }
     else {

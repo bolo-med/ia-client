@@ -263,6 +263,13 @@ export class AutomobiliComponent implements OnInit {
       arr = this.automobiliPoBrojuMjesta(arr);
 
     }
+    else if ((this.allProizvodjaciUnChecked() === false) && (this.allMjenjaciUnChecked() === true) 
+                                                         && (this.allMjestaUnChecked() === false)) {
+                                                          
+      arr = this.automobiliIzabraniMjenjaciSvi(automobiliSvi);
+      arr = this.automobiliPoBrojuMjesta(arr);
+
+    }
 
     return arr;
 
