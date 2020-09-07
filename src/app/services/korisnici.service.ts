@@ -44,5 +44,14 @@ export class KorisniciService {
     });
   }
 
+  public deleteKorisnik(id: number) {
+    let tok = window.localStorage.getItem('ia-token');
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${tok}`
+      }
+    });
+  }
+
 }
 

@@ -1,1 +1,86 @@
-<p>korisnici-adm works!</p>
+<h2 class="naslov">Podaci o korisnicima</h2>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Ime</th>
+            <th scope="col">Prezime</th>
+            <th scope="col">Korisničko ime</th>
+            <th scope="col">Godina rođenja</th>
+            <th scope="col">Adresa</th>
+            <th scope="col">Broj telefona</th>
+            <th scope="col">Prava</th>
+            <th scope="col">Detalji</th>
+          </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor='let e of korisniciSviAbc'>
+            <td><div>{{e.ime}}</div></td>
+            <td><div>{{e.prezime}}</div></td>
+            <td><div>{{e.username}}</div></td>
+            <td><div>{{e.godRodjenja}}.</div></td>
+            <td><div>{{e.adresa}}</div></td>
+            <td><div>{{e.telefon}}</div></td>
+            <td><div>{{(e.isAdmin === 1) ? 'administrator' : 'običan korisnik'}}</div></td>
+            <td><div><button type="button" class="btn btn-info" (click)='detaljiFn(e)'>Detaljnije</button></div></td>
+        </tr>
+    </tbody>
+</table>
+
+<br><br>
+
+<div class="row" *ngIf='detalji'>
+
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
+
+    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+
+        <div class="row">
+            <h3 class="col-lg-12 col-md-12 col-xs-12 col-sm-12 naslov">Detalji o korisniku</h3>
+            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 lijeva">
+                <div>ID:</div>
+                <div>Ime:</div>
+                <div>Prezime:</div>
+                <div>Korisničko ime:</div>
+                <div>Godina rođenja:</div>
+                <div>Broj telefona:</div>
+                <div>Adresa:</div>
+                <div id="nb1">Prava:</div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 desna">
+                <div>{{korisniciSviAbc[0].id}}</div>
+                <div>{{korisniciSviAbc[0].ime}}</div>
+                <div>{{korisniciSviAbc[0].prezime}}</div>
+                <div>{{korisniciSviAbc[0].username}}</div>
+                <div>{{korisniciSviAbc[0].godRodjenja}}.</div>
+                <div>{{korisniciSviAbc[0].telefon}}</div>
+                <div>{{korisniciSviAbc[0].adresa}}</div>
+                <div id="nb2" [innerHTML]=''>{{(korisniciSviAbc[0].isAdmin === 1) ? 'administrator' : 'običan korisnik'}}</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12"></div>
+
+</div>
+
+<br><br>
+
+<div class="row" *ngIf='detalji'>
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+        <button class="btn btn-primary form-control" (click)='prava(korisniciSviAbc[0])'>Promijeni prava</button>
+    </div>
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+        <button class="btn btn-warning form-control" (click)='lozinka(korisniciSviAbc[0])'>Resetuj lozinku</button>
+    </div>
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+        <button class="btn btn-danger form-control" (click)='obrisi(korisniciSviAbc[0])'>Obriši korisnika</button>
+    </div>
+    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+        <button class="btn btn-success form-control" (click)='nazad()'>Vrati se na početak</button>
+    </div>
+</div>
+
+<br><br>
+

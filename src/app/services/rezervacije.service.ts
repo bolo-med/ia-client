@@ -40,4 +40,13 @@ export class RezervacijeService {
     });
   }
 
+  public deleteRezervacija(id: number) {
+    let token = window.localStorage.getItem('ia-token');
+    return this.http.delete<OperationResponse>(`${this.serviceUrl}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+  }
+
 }
