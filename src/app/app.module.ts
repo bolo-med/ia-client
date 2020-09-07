@@ -31,6 +31,9 @@ import { RezervacijeAdmAktComponent } from './components/rezervacije-adm-akt/rez
 import { RezervacijeAdmIstComponent } from './components/rezervacije-adm-ist/rezervacije-adm-ist.component';
 import { RezervacijeAdmAutComponent } from './components/rezervacije-adm-aut/rezervacije-adm-aut.component';
 import { RezervacijeAdmKorComponent } from './components/rezervacije-adm-kor/rezervacije-adm-kor.component';
+import { RezervacijeAdmIstKorComponent } from './components/rezervacije-adm-ist-kor/rezervacije-adm-ist-kor.component';
+import { RezervacijeAdmIstAutComponent } from './components/rezervacije-adm-ist-aut/rezervacije-adm-ist-aut.component';
+import { KorisniciAdmComponent } from './components/korisnici-adm/korisnici-adm.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,10 @@ import { RezervacijeAdmKorComponent } from './components/rezervacije-adm-kor/rez
     RezervacijeAdmAktComponent,
     RezervacijeAdmIstComponent,
     RezervacijeAdmAutComponent,
-    RezervacijeAdmKorComponent
+    RezervacijeAdmKorComponent,
+    RezervacijeAdmIstKorComponent,
+    RezervacijeAdmIstAutComponent,
+    KorisniciAdmComponent
   ],
   imports: [
     BrowserModule,

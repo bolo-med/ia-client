@@ -9,6 +9,7 @@ import { AktuelnoUsrComponent } from './components/aktuelno-usr/aktuelno-usr.com
 import { IstorijaUsrComponent } from './components/istorija-usr/istorija-usr.component';
 import { LozinkaUsrComponent } from './components/lozinka-usr/lozinka-usr.component';
 import { RezervacijeAdmComponent } from './components/rezervacije-adm/rezervacije-adm.component';
+import { KorisniciAdmComponent } from './components/korisnici-adm/korisnici-adm.component';
 
 
 const routes: Routes = [
@@ -51,6 +52,10 @@ const routes: Routes = [
   {
     path: 'rezervacije-adm',
     component: RezervacijeAdmComponent
+  },
+  {
+    path: 'korisnici-adm',
+    component: KorisniciAdmComponent
   }
 ];
 

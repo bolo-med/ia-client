@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Rezervacija } from 'src/app/models/Rezervacija';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { Automobil } from 'src/app/models/Automobil';
-import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
 
 @Component({
   selector: 'app-rezervacije-adm-ist',
@@ -25,6 +24,9 @@ export class RezervacijeAdmIstComponent implements OnInit {
 
   mjeseciSvi: any[];
   mjesecID: number = -1;
+
+  rezervacijaOdabrana: Rezervacija;
+  vidljivo: boolean;
 
   @Input('rezervacijeSve')
   rezervacijeSve: Rezervacija[];
@@ -49,6 +51,9 @@ export class RezervacijeAdmIstComponent implements OnInit {
     this.mjeseciSvi = this.sviMjeseciFn();
 
     this.godineSve = this.godineSveFn();
+
+    this.rezervacijaOdabrana = new Rezervacija();
+    this.vidljivo = false;
 
   }
 
@@ -158,12 +163,6 @@ export class RezervacijeAdmIstComponent implements OnInit {
   pretraga(): void {
 
     this.ngOnInit();
-
-    console.log('-----------------------');
-    console.log('korisnikID: ' + this.korisnikID);
-    console.log('automobilID: ' + this.automobilID);
-    console.log('godinaID: ' + this.godinaID);
-    console.log('mjesecID: ' + this.mjesecID);
 
     if ((+this.korisnikID !== -1) && (+this.automobilID === -1) && (+this.godinaID === -1) && (+this.mjesecID === -1)) {
       this.rezervacijePoKorisniku();
@@ -297,6 +296,17 @@ export class RezervacijeAdmIstComponent implements OnInit {
     }
     
     return r;
+  }
+
+  detaljnije(r: Rezervacija): void {
+    this.rezervacijeIstorijaAbc = [];
+    this.rezervacijeIstorijaAbc.push(r);
+    this.rezervacijaOdabrana = r;
+    this.vidljivo = true;
+  }
+
+  nazad(): void {
+    this.ngOnInit();
   }
 
 }
