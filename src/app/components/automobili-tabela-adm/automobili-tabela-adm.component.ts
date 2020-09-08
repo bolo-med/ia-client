@@ -12,45 +12,14 @@ import { environment } from 'src/environments/environment';
 export class AutomobiliTabelaAdmComponent implements OnInit {
 
   apiUrl: string = environment.apiUrl;
-  automobiliAbc: Automobil[];
 
-  @Input('automobili')
-  automobili: Automobil[] = [];
+  @Input('automobiliAbc')
+  automobiliAbc: Automobil[] = [];
 
   constructor(@Host() private parent: AutomobiliAdmComponent, 
               private authService: AuthService) { }
 
-  ngOnInit(): void {
-    this.automobiliAbc = this.automobiliAbcFn(this.automobili);
-  }
-
-  automobiliAbcFn(aSvi: Automobil[]): Automobil[] {
-    let aAbc: Automobil[];
-    aAbc = aSvi.sort((a, b) => {
-      let aProizvodjac: string = a.proizvodjac.naziv;
-      let bProizvodjac: string = b.proizvodjac.naziv;
-      let aModel: string = a.model.oznaka;
-      let bModel: string = b.model.oznaka;
-      if (aProizvodjac < bProizvodjac) {
-        return -1;
-      }
-      else if (aProizvodjac > bProizvodjac) {
-        return 1;
-      }
-      else {
-        if (aModel < bModel) {
-          return -1;
-        }
-        else if (aModel > bModel) {
-          return 1;
-        }
-        else {
-          return 0;
-        }
-      }
-    });
-    return aAbc;
-  }
+  ngOnInit(): void {}
 
   ukloniAutomobil(automobil: Automobil) {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {

@@ -70,7 +70,7 @@ export class AutomobilDetaljiComponent implements OnInit {
         this.rezervacijeService.insertRezervacija(this.rezervacija).subscribe(data => {
           if (data.status === 0) {
 
-            if (this.odabraniAutomobil.statusID === 1) {
+            if ((this.odabraniAutomobil.statusID !== 2) && (this.odabraniAutomobil.statusID !== 3)) {
               this.odabraniAutomobil.statusID = 2;
               this.automobiliService.updateAutomobil(this.odabraniAutomobil).subscribe(data => {
                 if (data.status === 0) {

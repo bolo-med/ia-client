@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Rezervacija } from 'src/app/models/Rezervacija';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { Automobil } from 'src/app/models/Automobil';
+import { AuthService } from 'src/app/services/auth.service';
+import { RezervacijeService } from 'src/app/services/rezervacije.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rezervacije-adm-ist',
@@ -37,7 +40,9 @@ export class RezervacijeAdmIstComponent implements OnInit {
   @Input('automobiliSvi')
   automobiliSvi: Automobil[];
 
-  constructor() { }
+  constructor(private authService: AuthService, 
+              private rezervacijeService: RezervacijeService, 
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -307,6 +312,24 @@ export class RezervacijeAdmIstComponent implements OnInit {
 
   nazad(): void {
     this.ngOnInit();
+  }
+
+  ukloni() {
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+      this.rezervacijeService.deleteRezervacija(this.rezervacijaOdabrana.id).subscribe(data => {
+        if (data.status === 0) {
+          this.ngOnInit();
+          alert("Rezervacija je uklonjena!");
+        }
+        else {
+          alert('Greska pri uklanjanju rezervacije!');
+        }
+      });
+    }
+    else {
+      alert('Nemate administratorska prava!');
+      this.router.navigateByUrl('/');
+    }
   }
 
 }

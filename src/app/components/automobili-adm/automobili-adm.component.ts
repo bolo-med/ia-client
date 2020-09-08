@@ -27,6 +27,7 @@ export class AutomobiliAdmComponent implements OnInit {
   modeli: Model[] = []; // Svi redovi tabele Modeli
   statusi: Status[] = []; // Svi redovi tabele Statusi
   automobili: Automobil[] = []; // Svi redovi tabele Automobili
+  automobiliAbc: Automobil[] = []; // Svi redovi tabele Automobili, u abecednom redosledu
 
   proizvodjacVidljiv: boolean; // Vidljiva komponenta: proizvodjac-adm
   modelVidljiv: boolean; // Vidljiva komponenta: model-adm
@@ -70,9 +71,10 @@ export class AutomobiliAdmComponent implements OnInit {
 
       this.automobiliService.getAutomobili().subscribe(data => {
         this.automobili = data;
+        this.automobiliAbc = this.automobiliAbcFn(this.automobili);
       });
 
-      // Mora ovdje da mu se dodjeli vrijednost, da bi mogao da radi @Input
+      // Mora ovdje da mu se dodjeli vrijednost, da bi mogao da radi @Input   ?????
       this.proizvodjacVidljiv = true;
       this.modelVidljiv = true;
       this.statusVidljiv = true;
@@ -96,6 +98,34 @@ export class AutomobiliAdmComponent implements OnInit {
 
   }
 
+  automobiliAbcFn(aSvi: Automobil[]): Automobil[] {
+    let aAbc: Automobil[];
+    aAbc = aSvi.sort((a, b) => {
+      let aProizvodjac: string = a.proizvodjac.naziv;
+      let bProizvodjac: string = b.proizvodjac.naziv;
+      let aModel: string = a.model.oznaka;
+      let bModel: string = b.model.oznaka;
+      if (aProizvodjac < bProizvodjac) {
+        return -1;
+      }
+      else if (aProizvodjac > bProizvodjac) {
+        return 1;
+      }
+      else {
+        if (aModel < bModel) {
+          return -1;
+        }
+        else if (aModel > bModel) {
+          return 1;
+        }
+        else {
+          return 0;
+        }
+      }
+    });
+    return aAbc;
+  }
+
   kliknutoDodaj() {
     if (!this.odabranUnos) {
       this.odabranUnos = true;
@@ -112,13 +142,14 @@ export class AutomobiliAdmComponent implements OnInit {
   }
 
   kliknutoIzmUkl() {
+    this.ngOnInit();
     if (!this.odabranaIzmjUklanj) {
       this.odabranUnos = false;
       this.odabranUnosA = false;
       this.odabranUnosPrMoSt = false;
       this.odabranaIzmjUklanj = true;
       this.odabranaIzmjUklanjOst = false;
-      this.ngOnInit();
+      //this.ngOnInit();
     }
   }
 

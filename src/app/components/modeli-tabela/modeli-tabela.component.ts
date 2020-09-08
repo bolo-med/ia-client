@@ -30,7 +30,7 @@ export class ModeliTabelaComponent implements OnInit {
             this.parent.ngOnInit();
           }
           else if (data.status === -1) {
-            alert('Prvo morate ukloniti sve rezervacije automobila ovog statusa, a zatim i sve automobile ovog statusa!');
+            alert('Prvo morate ukloniti sve rezervacije automobila ovog modela, a zatim i sve automobile ovog modela!');
           }
           else {
             alert('Doslo je do greske pri uklanjanju modela!');

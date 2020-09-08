@@ -118,7 +118,6 @@ export class AutomobilObrazacAdmComponent implements OnInit {
           }
         });
       }
-
     }
     else {
       alert('Nemate administratorska prava!');
