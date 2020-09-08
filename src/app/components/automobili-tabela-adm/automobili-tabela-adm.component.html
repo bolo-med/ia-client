@@ -1,32 +1,36 @@
 <table class="table table-striped">
     <tr>
         <th>ID</th>
-        <th>Proizvodjac</th>
+        <th>Proizvođač</th>
         <th>Model</th>
-        <th>Godiste</th>
+        <th>Godište</th>
         <th>Motor</th>
-        <th>Mjenjac</th>
+        <th>Mjenjač</th>
         <th>Status</th>
         <th>Fotografija</th>
-        <th>Cijena</th>
-        <th>Izmijeni</th>
-        <th>Ukloni</th>
+        <th class="cntr">Cijena</th>
+        <th class="cntr">Izmijeni</th>
+        <th class="cntr">Ukloni</th>
     </tr>
-    <tr *ngFor='let e of automobili'>
-        <td>{{ e.id }}</td>
-        <td>{{ e.proizvodjac.naziv }}</td>
-        <td>{{ e.model.oznaka }}</td>
-        <td>{{ e.godiste }}</td>
-        <td>{{ e.motor }}</td>
-        <td>{{ e.mjenjac }}</td>
-        <td>{{ e.status.tip }}</td>
-        <td>{{ e.fotografija }}</td>
-        <td>{{ e.cijena }}</td>
-        <td>
-            <button class="btn btn-warning" (click)='izmijeniAutomobil(e)'>Izmijeni</button>
+    <tr *ngFor='let e of automobiliAbc'>
+        <td><div>{{ e.id }}</div></td>
+        <td><div>{{ e.proizvodjac.naziv }}</div></td>
+        <td><div>{{ e.model.oznaka }}</div></td>
+        <td><div>{{ e.godiste }}</div></td>
+        <td><div>{{ e.motor }}</div></td>
+        <td><div>{{ e.automatskiMjenjac ? 'automarski' : 'manuelni' }}</div></td>
+        <td><div>{{ e.status.tip }}</div></td>
+        <td><img src="{{apiUrl}}/{{e.fotografija}}" alt="nema slike"></td>
+        <td class="cntr"><div>{{ e.cijena }} &euro;</div></td>
+        <td class="cntr">
+            <div>
+                <button class="btn btn-warning" (click)='izmijeniAutomobil(e)'>Izmijeni</button>
+            </div>
         </td>
-        <td>
-            <button class="btn btn-danger" (click)='ukloniAutomobil(e)'>Ukloni</button>
+        <td class="cntr">
+            <div>
+                <button class="btn btn-danger" (click)='ukloniAutomobil(e)'>Ukloni</button>
+            </div>
         </td>
     </tr>
 </table>

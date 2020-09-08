@@ -130,14 +130,20 @@ export class KorisniciAdmComponent implements OnInit {
       if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
                                                 && (this.authService.getKorisnikDetails().isAdmin === 1)) {
 
-        let rezSve: Rezervacija[] = [];
-        let rezKor: Rezervacija[] = [];
+        // let rezSve: Rezervacija[] = [];
+        // let rezKor: Rezervacija[] = [];
         
         this.rezervacijeService.getRezervacije().subscribe(data => {
-          rezSve = data;
-          rezKor = this.rezervacijePoKorisnikuFn(rezSve, korOdabr.id);
+          let rezSve: Rezervacija[] = data;
+          let rezKor: Rezervacija[] = this.rezervacijePoKorisnikuFn(rezSve, korOdabr.id);
           if (rezKor.length > 0) {
-            if (this.brisiRezervacije(rezKor) === true) {
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+            let rezultatFje: boolean;
+            rezultatFje = this.brisiRezervacije(rezKor);
+            console.log('rezultat brisanja rezervacija: ' + rezultatFje);
+            console.log('Duzina niza sa korisnikovim rezervacijama: ' + rezKor.length);
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////
+            if (/*this.brisiRezervacije(rezKor)*/ rezultatFje === true) {
               this.brisiKorisnika(korOdabr.id);
             }
           }
@@ -171,11 +177,12 @@ export class KorisniciAdmComponent implements OnInit {
       for (let i: number = 0; i < r.length; i++) {
         this.rezervacijeService.deleteRezervacija(r[i].id).subscribe(data => {
           if (data.status !== 0) {
-            alert('Greška pri brisanju reyervacija!');
+            alert('Greška pri brisanju rezervacija!');
             return false; // brisanje se nije izvrsilo
           }
         });
       }
+      alert('Rezervacije su obrisane!');
       return true; // uspjesno obrisane rezervacije
     }
     else {

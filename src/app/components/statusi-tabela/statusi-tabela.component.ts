@@ -29,8 +29,11 @@ export class StatusiTabelaComponent implements OnInit {
             alert('Status je uklonjen iz baze podataka!');
             this.parent.ngOnInit();
           }
+          else if (data.status === -1) {
+            alert('Prvo morate ukloniti sve rezervacije automobila ovog statusa, a zatim i sve automobile ovog statusa!');
+          }
           else {
-            alert('Doslo je do greske pri uklanjanju iz baze podataka!');
+            alert('Doslo je do greske pri uklanjanju statusa!');
           }
         });
       }
