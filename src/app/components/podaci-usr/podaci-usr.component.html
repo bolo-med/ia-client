@@ -1,0 +1,49 @@
+<h2 class="naslov">Obrazac za izmjenu korisnikovih podataka</h2>
+
+<div class="row">
+
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12"></div>
+
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+        <div>
+            <label>Ime</label>
+            <input type="text" class="form-control" maxlength="20" [(ngModel)]='korisnik.ime'>
+            <div class="greska" *ngIf='imeV'>{{greska}}</div>
+        </div>
+        <br>
+        <div>
+            <label>Prezime</label>
+            <input type="text" class="form-control" maxlength="20" [(ngModel)]='korisnik.prezime'>
+            <div class="greska" *ngIf='preV'>{{greska}}</div>
+        </div>
+        <br>
+        <div>
+            <label>Godina rođenja</label>
+            <select name="godine" id="godine" class="form-control" [(ngModel)]='korisnik.godRodjenja' (ngModelChange)='toNumber()'>
+                <option *ngFor='let e of godine; index as i' value="{{e}}" [selected]="i==0">{{e}}.</option>
+                <!-- Nece da postavi podrazumijevanu vrijednost! -->
+            </select>
+            <div class="greska" *ngIf='godV'>{{greska}}</div>
+        </div>
+        <br>
+        <div>
+            <label>Adresa</label>
+            <input type="text" class="form-control" maxlength="30" [(ngModel)]='korisnik.adresa'>
+            <div class="greska" *ngIf='adrV'>{{greska}}</div>
+        </div>
+        <br>
+        <div>
+            <label>Broj telefona</label>
+            <input type="text" class="form-control" maxlength="20" [(ngModel)]='korisnik.telefon'>
+            <div class="greska" *ngIf='telV'>{{greska}}</div>
+        </div>
+        <br><br>
+        <button class="btn btn-warning form-control" (click)='izmijeni()'>Izmijeni podatke</button>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12"></div>
+
+</div>
+
+<br><br>
+

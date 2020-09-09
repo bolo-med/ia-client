@@ -10,6 +10,7 @@ import { IstorijaUsrComponent } from './components/istorija-usr/istorija-usr.com
 import { LozinkaUsrComponent } from './components/lozinka-usr/lozinka-usr.component';
 import { RezervacijeAdmComponent } from './components/rezervacije-adm/rezervacije-adm.component';
 import { KorisniciAdmComponent } from './components/korisnici-adm/korisnici-adm.component';
+import { PodaciUsrComponent } from './components/podaci-usr/podaci-usr.component';
 
 
 const routes: Routes = [
@@ -56,6 +57,10 @@ const routes: Routes = [
   {
     path: 'korisnici-adm',
     component: KorisniciAdmComponent
+  },
+  {
+    path: 'podaci-usr',
+    component: PodaciUsrComponent
   }
 ];
 

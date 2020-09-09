@@ -171,6 +171,9 @@ export class AutomobiliAdmComponent implements OnInit {
           alert('Automobil je uklonjen iz baze podataka!');
           this.ngOnInit();
         }
+        else if (data.status === -1) {
+          alert('Prvo morate obrisati sve rezervacije ovog automobila!');
+        }
         else {
           alert('Doslo je do greske pri upisu u bazu podataka!');
         }

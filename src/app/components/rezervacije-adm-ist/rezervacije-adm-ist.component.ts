@@ -324,14 +324,11 @@ export class RezervacijeAdmIstComponent implements OnInit {
         if (data.status === 0) {
           this.ngOnInit();
           alert("Rezervacija je uklonjena!");
-          this.parent.ngOnInit();
         }
         else {
           alert('Greska pri uklanjanju rezervacije!');
-          this.parent.ngOnInit();
         }
-        this.parent.kliknutoI();
-        this.ngOnInit();
+        // this.ngOnInit();
       });
     }
     else {
