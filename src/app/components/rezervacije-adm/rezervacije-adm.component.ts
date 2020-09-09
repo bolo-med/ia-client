@@ -7,7 +7,6 @@ import { Korisnik } from 'src/app/models/Korisnik';
 import { KorisniciService } from 'src/app/services/korisnici.service';
 import { Automobil } from 'src/app/models/Automobil';
 import { AutomobiliService } from 'src/app/services/automobili.service';
-import { race } from 'rxjs';
 
 @Component({
   selector: 'app-rezervacije-adm',
@@ -17,12 +16,11 @@ import { race } from 'rxjs';
 export class RezervacijeAdmComponent implements OnInit {
 
   odabrano: boolean;
+
   rezervacijeSve: Rezervacija[];
-  //////////////////////////////////////////////////////////////////////////////////////////////////
   rezervacijeSveAbc: Rezervacija[];
   rezervacijeAbcAkt: Rezervacija[];
-  rezervacijeAbcIst: Rezervacija[];
-  //////////////////////////////////////////////////////////////////////////////////////////////////
+
   korisniciSvi: Korisnik[];
   automobiliSvi: Automobil[];
 
@@ -39,11 +37,9 @@ export class RezervacijeAdmComponent implements OnInit {
 
       this.rezervacijeService.getRezervacije().subscribe(data => {
         this.rezervacijeSve = data;
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
         this.rezervacijeSveAbc = this.rezervacijeSveAbcFn(this.rezervacijeSve);
         this.rezervacijeAbcAkt = this.rezervacijeAktFn(this.rezervacijeSveAbc);
-        this.rezervacijeAbcIst = this.rezervacijeIstFn(this.rezervacijeSveAbc);
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         this.odabrano = true;
       });
 
@@ -59,10 +55,8 @@ export class RezervacijeAdmComponent implements OnInit {
       alert('Nemate administratorska prava!');
       this.router.navigateByUrl('/');
     }
-
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   rezervacijeSveAbcFn(rSve: Rezervacija[]): Rezervacija[] {
 
     let rAbc: Rezervacija[] = rSve.sort((a ,b) => {
@@ -109,16 +103,88 @@ export class RezervacijeAdmComponent implements OnInit {
     return rAkt;
   }
 
-  rezervacijeIstFn(r: Rezervacija[]): Rezervacija[] {
-    let rIst: Rezervacija[] = [];
-    for (let i: number = 0; i < r.length; i++) {
-      if ((r[i].datumStvarnogVracanja !== null) || (r[i].realizovana === false)) {
-        rIst.push(r[i]);
-      }
-    }
-    return rIst;
-  }
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // rezervacijeIstFn(r: Rezervacija[]): Rezervacija[] {
+  //   let rIst: Rezervacija[] = [];
+  //   for (let i: number = 0; i < r.length; i++) {
+  //     if ((r[i].datumStvarnogVracanja !== null) || (r[i].realizovana === false)) {
+  //       rIst.push(r[i]);
+  //     }
+  //   }
+  //   return rIst;
+  // }
+
+  // korisniciAbcFn(k: Korisnik[]): Korisnik[] {
+
+  //   let kAbc: Korisnik[] = k.sort((a, b) => {
+
+  //     let aPrez: string = a.prezime;
+  //     let bPrez: string = b.prezime;
+
+  //     if (aPrez < bPrez) {
+  //       return -1;
+  //     }
+  //     else if (aPrez > bPrez) {
+  //       return 1;
+  //     }
+  //     else {
+  //       return 0;
+  //     }
+  //   });
+
+  //   return kAbc;
+  // }
+
+  // automobiliAbcFn(a: Automobil[]): Automobil[] {
+
+  //   let aAbc: Automobil[] = [];
+
+  //   aAbc = a.sort((a, b) => {
+  //     let aNaziv: string = a.proizvodjac.naziv.toLowerCase();
+  //     let bNaziv: string = b.proizvodjac.naziv.toLowerCase();
+  //     let aModel: string = a.model.oznaka.toLowerCase();
+  //     let bModel: string = b.model.oznaka.toLowerCase();
+  //     if (aNaziv < bNaziv) {
+  //       return -1;
+  //     }
+  //     else if (aNaziv > bNaziv) {
+  //       return 1;
+  //     }
+  //     else {
+  //       if (aModel < bModel) {
+  //         return -1;
+  //       }
+  //       else if (aModel > bModel) {
+  //         return 1;
+  //       }
+  //       else {
+  //         return 0;
+  //       }
+  //     }
+  //   });
+  //   return aAbc;
+  // }
+
+  // godineSveFn(r: Rezervacija[]): any[] {
+
+  //   let gObjekat: any[] = [];
+  //   let gBroj: number[] = [];
+
+  //   for (let i:number = 0; i < r.length; i++) {
+  //     let dat: Date = new Date(r[i].datumPreuzimanja);
+  //     let god: number = dat.getFullYear();
+  //     gBroj.push(god);
+  //   }
+    
+  //   gBroj = gBroj.filter((value, index, self) => {
+  //     return self.indexOf(value) === index;
+  //   });
+
+  //   for (let i: number = 0; i < gBroj.length; i++) {
+  //     gObjekat.push({id: gBroj[i], godina: (gBroj[i] + ".")});
+  //   }
+    
+  //   return gObjekat;
+  // }
 
   kliknutoA() {
     this.odabrano = true;

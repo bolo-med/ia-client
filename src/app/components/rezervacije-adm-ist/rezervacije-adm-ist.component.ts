@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Host } from '@angular/core';
 import { Rezervacija } from 'src/app/models/Rezervacija';
 import { Korisnik } from 'src/app/models/Korisnik';
 import { Automobil } from 'src/app/models/Automobil';
 import { AuthService } from 'src/app/services/auth.service';
 import { RezervacijeService } from 'src/app/services/rezervacije.service';
 import { Router } from '@angular/router';
+import { RezervacijeAdmComponent } from '../rezervacije-adm/rezervacije-adm.component';
 
 @Component({
   selector: 'app-rezervacije-adm-ist',
@@ -22,7 +23,7 @@ export class RezervacijeAdmIstComponent implements OnInit {
   automobiliSviAbc: Automobil[];
   automobilID: number = -1;
 
-  godineSve: number[];
+  godineSve: any[];
   godinaID: number = -1;
 
   mjeseciSvi: any[];
@@ -42,7 +43,8 @@ export class RezervacijeAdmIstComponent implements OnInit {
 
   constructor(private authService: AuthService, 
               private rezervacijeService: RezervacijeService, 
-              private router: Router) { }
+              private router: Router, 
+              @Host() private parent: RezervacijeAdmComponent) { }
 
   ngOnInit(): void {
 
@@ -55,11 +57,12 @@ export class RezervacijeAdmIstComponent implements OnInit {
 
     this.mjeseciSvi = this.sviMjeseciFn();
 
-    this.godineSve = this.godineSveFn();
+    this.godineSve = this.godineSveFn(this.rezervacijeIstorijaAbc);
 
     this.rezervacijaOdabrana = new Rezervacija();
-    this.vidljivo = false;
 
+    this.vidljivo = false;
+      
   }
 
   rezIstFn(rSve: Rezervacija[]): Rezervacija[] {
@@ -71,6 +74,7 @@ export class RezervacijeAdmIstComponent implements OnInit {
     }
     return rIst;
   }
+
 
   rezIstAbcFn(rezIst: Rezervacija[]): Rezervacija[] {
 
@@ -198,7 +202,7 @@ export class RezervacijeAdmIstComponent implements OnInit {
       this.rezervacijePoKorisniku();
       this.rezervacijePoGodini();
     }
-    else if ((+this.korisnikID !== -1) && (+this.automobilID !== -1) && (+this.godineSve !== -1) && (+this.mjesecID === -1)) {
+    else if ((+this.korisnikID !== -1) && (+this.automobilID !== -1) && (+this.godinaID !== -1) && (+this.mjesecID === -1)) {
       this.rezervacijePoKorisniku();
       this.rezervacijePoAutomobilu();
       this.rezervacijePoGodini();
@@ -281,26 +285,26 @@ export class RezervacijeAdmIstComponent implements OnInit {
     return arr1;
   }
 
-  godineSveFn(): any[] {
+  godineSveFn(r: Rezervacija[]): any[] {
 
-    let r: any[] = [];
-    let rP: number[] = [];
+    let gObjekat: any[] = [];
+    let gBroj: number[] = [];
 
-    for (let i:number = 0; i < this.rezervacijeIstorijaAbc.length; i++) {
-      let dat: Date = new Date(this.rezervacijeIstorijaAbc[i].datumPreuzimanja);
+    for (let i:number = 0; i < r.length; i++) {
+      let dat: Date = new Date(r[i].datumPreuzimanja);
       let god: number = dat.getFullYear();
-      rP.push(god);
+      gBroj.push(god);
     }
     
-    rP = rP.filter((value, index, self) => {
+    gBroj = gBroj.filter((value, index, self) => {
       return self.indexOf(value) === index;
     });
 
-    for (let i: number = 0; i < rP.length; i++) {
-      r.push({id: rP[i], godina: (rP[i] + ".")});
+    for (let i: number = 0; i < gBroj.length; i++) {
+      gObjekat.push({id: gBroj[i], godina: (gBroj[i] + ".")});
     }
     
-    return r;
+    return gObjekat;
   }
 
   detaljnije(r: Rezervacija): void {
@@ -320,10 +324,14 @@ export class RezervacijeAdmIstComponent implements OnInit {
         if (data.status === 0) {
           this.ngOnInit();
           alert("Rezervacija je uklonjena!");
+          this.parent.ngOnInit();
         }
         else {
           alert('Greska pri uklanjanju rezervacije!');
+          this.parent.ngOnInit();
         }
+        this.parent.kliknutoI();
+        this.ngOnInit();
       });
     }
     else {

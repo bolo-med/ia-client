@@ -32,7 +32,7 @@ export class RezervacijeAdmAktComponent implements OnInit {
   constructor(private rezervacijeService: RezervacijeService, 
               private authService: AuthService, 
               private automobilService: AutomobiliService, 
-              @Host() private parent: RezervacijeAdmComponent) { }
+              @Host() private parent: RezervacijeAdmComponent) {}
 
   ngOnInit(): void {
 
