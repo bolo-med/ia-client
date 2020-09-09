@@ -164,7 +164,7 @@ export class RegisterComponent implements OnInit {
   godineFn() {
     this.godine = [];
     let tekucaGodina = +(new Date().toISOString().substring(0, 4));
-    for (let i: number = tekucaGodina - 18; i >= (tekucaGodina - 118); i--) {
+    for (let i: number = tekucaGodina - 18; i >= (tekucaGodina - 95); i--) {
       this.godine.push(i);
     }
   }

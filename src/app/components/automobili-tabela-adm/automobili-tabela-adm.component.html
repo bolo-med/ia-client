@@ -7,7 +7,7 @@
         <th>Motor</th>
         <th>Mjenjač</th>
         <!-- <th>Status</th> -->
-        <th>Putnici</th>
+        <th class="cntr">Putnici</th>
         <th>Fotografija</th>
         <th class="cntr">Cijena</th>
         <th class="cntr">Izmijeni</th>
@@ -21,7 +21,7 @@
         <td><div>{{ e.motor }}</div></td>
         <td><div>{{ e.automatskiMjenjac ? 'automarski' : 'manuelni' }}</div></td>
         <!-- <td><div>{{ e.status.tip }}</div></td> -->
-        <td><div>{{e.brPutnika}}</div></td>
+        <td class="cntr"><div>{{e.brPutnika}}</div></td>
         <td><img src="{{apiUrl}}/{{e.fotografija}}" alt="nema slike"></td>
         <td class="cntr"><div>{{ e.cijena }} &euro;</div></td>
         <td class="cntr">

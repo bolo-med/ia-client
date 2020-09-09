@@ -75,17 +75,32 @@ export class AutomobilObrazacAdmComponent implements OnInit {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
                                                 && (this.authService.getKorisnikDetails().isAdmin === 1)) {
       
-      if (confirm('Jeste li sigurni?')) {
-        this.automobiliService.insertAutomobil(this.automobil).subscribe(data => {
-          if (data.status === 0) {
-            alert('Automobil je dodat u bazu podataka!');
-            this.parent.ngOnInit();
-            this.ngOnInit();
-          }
-          else {
-            alert('Doslo je do greske pri dodavanju automobila!');
-          }
-        });
+      if (this.automobil.proizvodjacID === undefined || 
+          this.automobil.modelID === undefined || 
+          this.automobil.godiste === undefined || 
+          this.automobil.motor === undefined || 
+          this.automobil.motor.trim() === "" || 
+          this.automobil.brPutnika === undefined || 
+          this.automobil.statusID === undefined || 
+          this.automobil.cijena === undefined || 
+          this.automobil.cijena === NaN || 
+          this.uploader.progress === 0) {
+
+        alert('Morate popuniti sva polja!');
+      }
+      else {
+        if (confirm('Jeste li sigurni?')) {
+          this.automobiliService.insertAutomobil(this.automobil).subscribe(data => {
+            if (data.status === 0) {
+              alert('Automobil je dodat u bazu podataka!');
+              this.parent.ngOnInit();
+              this.ngOnInit();
+            }
+            else {
+              alert('Doslo je do greske pri dodavanju automobila!');
+            }
+          });
+        }
       }
     }
     else {

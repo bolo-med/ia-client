@@ -28,16 +28,22 @@ export class ModelAdmComponent implements OnInit {
 
   dodajModel() {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
-      if (confirm('Da li zaista zelite da dodate novo oznaku modela?')) {
-        this.modeliService.insertModel(this.model).subscribe(data => {
-          if (data.status === 0) {
-            alert('Nova oznaka modela je dodata u bazu podataka!');
-            this.parent.parentNgOnInit();
-          }
-          else {
-            alert('Doslo je do greske prilikom upisivanja u bazu podataka!');
-          }
-        });
+
+      if (this.model.oznaka === undefined || this.model.oznaka.trim() === "") {
+        alert('Popunite polje!');
+      }
+      else {
+        if (confirm('Da li zaista zelite da dodate novo oznaku modela?')) {
+          this.modeliService.insertModel(this.model).subscribe(data => {
+            if (data.status === 0) {
+              alert('Nova oznaka modela je dodata u bazu podataka!');
+              this.parent.parentNgOnInit();
+            }
+            else {
+              alert('Doslo je do greske prilikom upisivanja u bazu podataka!');
+            }
+          });
+        }
       }
     }
     else {

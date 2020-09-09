@@ -26,16 +26,22 @@ export class StatusAdmComponent implements OnInit {
 
   dodajStatus() {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
-      if (confirm('Da li stvarno zelite da dodate nov status?')) {
-        this.statusiService.insertStatus(this.status).subscribe(data => {
-          if (data.status === 0) {
-            alert('Nov status je dodat u bazu podataka!');
-          }
-          else {
-            alert('Doslo je do greske prilikom upisivanja u bazu podataka!');
-          }
-          this.parent.parentNgOnInit();
-        });
+
+      if (this.status.tip === undefined || this.status.tip.trim() === "") {
+        alert('Popunite polje!');
+      }
+      else {
+        if (confirm('Da li stvarno zelite da dodate nov status?')) {
+          this.statusiService.insertStatus(this.status).subscribe(data => {
+            if (data.status === 0) {
+              alert('Nov status je dodat u bazu podataka!');
+            }
+            else {
+              alert('Doslo je do greske prilikom upisivanja u bazu podataka!');
+            }
+            this.parent.parentNgOnInit();
+          });
+        }
       }
     }
     else {
@@ -45,6 +51,7 @@ export class StatusAdmComponent implements OnInit {
 
   izmijeniStatus() {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+
       if (confirm('Da li zelite da izmijenite tip statusa?')) {
         this.statusiService.updateStatus(this.status).subscribe(data => {
           if (data.status === 0) {

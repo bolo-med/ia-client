@@ -8,19 +8,19 @@
         
         <div>
             <label>Korisničko ime</label>
-            <input type="text" class="form-control" [(ngModel)]='korisnik.username'>
+            <input type="text" class="form-control" maxlength="15" [(ngModel)]='korisnik.username'>
         </div>
 
         <br>
 
         <div>
             <label>Lozinka</label>
-            <input type="password" class="form-control" [(ngModel)]='korisnik.password'>
+            <input type="password" class="form-control" maxlength="20" [(ngModel)]='korisnik.password'>
         </div>
 
-        <br>
+        <br><br>
 
-        <button class="btn btn-primary" (click)='login()'>Prijavite se</button>
+        <button class="btn btn-info form-control" (click)='login()'>Prijavite se</button>
 
     </div>
 

@@ -125,35 +125,43 @@ export class KorisniciAdmComponent implements OnInit {
 
   obrisi(korOdabr: Korisnik) {
 
-    if (confirm('Da li želite da uklonite korisnika i sve njegove rezervacije?')) {
+    if (confirm('Da li želite da uklonite korisnika?')) {
 
       if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
                                                 && (this.authService.getKorisnikDetails().isAdmin === 1)) {
-
-        // let rezSve: Rezervacija[] = [];
-        // let rezKor: Rezervacija[] = [];
         
-        this.rezervacijeService.getRezervacije().subscribe(data => {
-          let rezSve: Rezervacija[] = data;
-          let rezKor: Rezervacija[] = this.rezervacijePoKorisnikuFn(rezSve, korOdabr.id);
-          if (rezKor.length > 0) {
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            let rezultatFje: boolean;
-            rezultatFje = this.brisiRezervacije(rezKor);
-            console.log('rezultat brisanja rezervacija: ' + rezultatFje);
-            console.log('Duzina niza sa korisnikovim rezervacijama: ' + rezKor.length);
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////
-            if (/*this.brisiRezervacije(rezKor)*/ rezultatFje === true) {
-              this.brisiKorisnika(korOdabr.id);
-            }
+        this.korisniciService.deleteKorisnik(korOdabr.id).subscribe(data => {
+          if (data.status === 0) {
+            alert('Korisnik je uklonjen!');
           }
-          else if (rezKor.length === 0) {
-            this.brisiKorisnika(korOdabr.id);
+          else if (data.status === -1) {
+            alert('Prvo morate ukloniti korisnikove rezervacije!');
           }
           else {
-            console.log('Greska pri izdvajanju rezervacija datog korisnika.');
+            alert('Greška pri brisanju korisnika!')
           }
+          this.ngOnInit();
         });
+
+        // Ukloni korisnika, tako sto prvo ukloni sve korisnikove rezervacije - i aktivne, i istoriju.
+        // this.rezervacijeService.getRezervacije().subscribe(data => {
+        //   let rezSve: Rezervacija[] = data;
+        //   let rezKor: Rezervacija[] = this.rezervacijePoKorisnikuFn(rezSve, korOdabr.id);
+        //   if (rezKor.length > 0) {
+        //     let rezultatFje: boolean;
+        //     rezultatFje = this.brisiRezervacije(rezKor);
+        //     if (rezultatFje === true) {
+        //       this.brisiKorisnika(korOdabr.id);
+        //     }
+        //   }
+        //   else if (rezKor.length === 0) {
+        //     this.brisiKorisnika(korOdabr.id);
+        //   }
+        //   else {
+        //     console.log('Greska pri izdvajanju rezervacija datog korisnika.');
+        //   }
+        // });
+
       }
       else {
         alert('Nemate administratorska prava!');
@@ -162,51 +170,51 @@ export class KorisniciAdmComponent implements OnInit {
     }
   }
 
-  rezervacijePoKorisnikuFn(r: Rezervacija[], korID: number): Rezervacija[] {
-    let rKor: Rezervacija[] = [];
-    for (let i: number = 0; i < r.length; i++) {
-      if (r[i].korisnikID === korID) {
-        rKor.push(r[i]);
-      }
-    }
-    return rKor;
-  }
+  // rezervacijePoKorisnikuFn(r: Rezervacija[], korID: number): Rezervacija[] {
+  //   let rKor: Rezervacija[] = [];
+  //   for (let i: number = 0; i < r.length; i++) {
+  //     if (r[i].korisnikID === korID) {
+  //       rKor.push(r[i]);
+  //     }
+  //   }
+  //   return rKor;
+  // }
 
-  brisiRezervacije(r: Rezervacija[]): boolean {
-    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
-      for (let i: number = 0; i < r.length; i++) {
-        this.rezervacijeService.deleteRezervacija(r[i].id).subscribe(data => {
-          if (data.status !== 0) {
-            alert('Greška pri brisanju rezervacija!');
-            return false; // brisanje se nije izvrsilo
-          }
-        });
-      }
-      alert('Rezervacije su obrisane!');
-      return true; // uspjesno obrisane rezervacije
-    }
-    else {
-      alert('Nemate administratorska prava!');
-      this.router.navigateByUrl('/');
-    }
-  }
+  // brisiRezervacije(r: Rezervacija[]): boolean {
+  //   if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+  //     for (let i: number = 0; i < r.length; i++) {
+  //       this.rezervacijeService.deleteRezervacija(r[i].id).subscribe(data => {
+  //         if (data.status !== 0) {
+  //           alert('Greška pri brisanju rezervacija!');
+  //           return false; // brisanje se nije izvrsilo
+  //         }
+  //       });
+  //     }
+  //     alert('Rezervacije su obrisane!');
+  //     return true; // uspjesno obrisane rezervacije
+  //   }
+  //   else {
+  //     alert('Nemate administratorska prava!');
+  //     this.router.navigateByUrl('/');
+  //   }
+  // }
 
-  brisiKorisnika(korID: number) {
-    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
-      this.korisniciService.deleteKorisnik(korID).subscribe(data => {
-        if (data.status === 0) {
-          alert('Korisnik je izbrisan!');
-        }
-        else {
-          alert('Greška pri brisanju korisnika!')
-        }
-        this.ngOnInit();
-      });
-    }
-    else {
-      alert('Nemate administratorska prava!');
-      this.router.navigateByUrl('/');
-    }
-  }
+  // brisiKorisnika(korID: number) {
+  //   if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
+  //     this.korisniciService.deleteKorisnik(korID).subscribe(data => {
+  //       if (data.status === 0) {
+  //         alert('Korisnik je izbrisan!');
+  //       }
+  //       else {
+  //         alert('Greška pri brisanju korisnika!')
+  //       }
+  //       this.ngOnInit();
+  //     });
+  //   }
+  //   else {
+  //     alert('Nemate administratorska prava!');
+  //     this.router.navigateByUrl('/');
+  //   }
+  // }
 
 }

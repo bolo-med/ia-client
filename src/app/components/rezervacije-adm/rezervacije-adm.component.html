@@ -19,7 +19,8 @@
 <div class="row">
 
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf='odabrano'>
-        <app-rezervacije-adm-akt [rezervacijeSve]='rezervacijeSve'></app-rezervacije-adm-akt>
+        <app-rezervacije-adm-akt [rezervacijeAbcAkt]='rezervacijeAbcAkt' 
+                                 [rezervacijeSve]='rezervacijeSve'></app-rezervacije-adm-akt>
     </div>
 
     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf='!odabrano && rezervacijeSve && automobiliSvi'>

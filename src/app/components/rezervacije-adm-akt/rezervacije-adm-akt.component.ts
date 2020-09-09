@@ -14,8 +14,8 @@ import { RezervacijeAdmComponent } from '../rezervacije-adm/rezervacije-adm.comp
 })
 export class RezervacijeAdmAktComponent implements OnInit {
 
-  rezervacijeAktuelne: Rezervacija[];
-  rezervacijeAktuelneAbc: Rezervacija[];
+  // rezervacijeAktuelne: Rezervacija[];
+  // rezervacijeAktuelneAbc: Rezervacija[];
 
   apiUrl: string = environment.apiUrl;
   rezervacijaOdabrana: Rezervacija;
@@ -23,6 +23,11 @@ export class RezervacijeAdmAktComponent implements OnInit {
 
   @Input('rezervacijeSve')
   rezervacijeSve: Rezervacija[];
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  @Input('rezervacijeAbcAkt')
+  rezervacijeAbcAkt: Rezervacija[];
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   constructor(private rezervacijeService: RezervacijeService, 
               private authService: AuthService, 
@@ -33,58 +38,59 @@ export class RezervacijeAdmAktComponent implements OnInit {
 
     this.vidljivo = false;
 
-    this.rezervacijeAktuelne = this.rezervacijeAktuelneFn();
-    this.rezervacijeAktuelneAbc = this.rezervacijeAktuelneAbcFn();
+    // this.rezervacijeAktuelne = this.rezervacijeAktuelneFn();
+    // this.rezervacijeAktuelneAbc = this.rezervacijeAktuelneAbcFn();
     
-    this.rezervacijaOdabrana = this.rezervacijeAktuelneAbc[0];
+    // this.rezervacijaOdabrana = this.rezervacijeAktuelneAbc[0];
+    this.rezervacijaOdabrana = this.rezervacijeAbcAkt[0];
 
   }
 
-  rezervacijeAktuelneFn(): Rezervacija[] {
-    let r: Rezervacija[] = this.rezervacijeSve;
-    let rAkt: Rezervacija[] = [];
-    for (let i = 0; i < this.rezervacijeSve.length; i++) {
-      if ((r[i].datumStvarnogVracanja === null) && (r[i].realizovana !== false)) {
-        rAkt.push(r[i]);
-      }
-    }
-    return rAkt;
-  }
+  // rezervacijeAktuelneFn(): Rezervacija[] {
+  //   let r: Rezervacija[] = this.rezervacijeSve;
+  //   let rAkt: Rezervacija[] = [];
+  //   for (let i = 0; i < this.rezervacijeSve.length; i++) {
+  //     if ((r[i].datumStvarnogVracanja === null) && (r[i].realizovana !== false)) {
+  //       rAkt.push(r[i]);
+  //     }
+  //   }
+  //   return rAkt;
+  // }
 
-  rezervacijeAktuelneAbcFn(): Rezervacija[] {
-    let r: Rezervacija[] = this.rezervacijeAktuelne;
-    let rAbc: Rezervacija[] = [];
-    rAbc = r.sort((a, b) => {
-      let datA: Date = new Date(a.datumPreuzimanja);
-      let datB: Date = new Date(b.datumPreuzimanja);
-      let datAStr: string = datA.toISOString().split('T')[0];
-      let datBStr: string = datB.toISOString().split('T')[0];
+  // rezervacijeAktuelneAbcFn(): Rezervacija[] {
+  //   let r: Rezervacija[] = this.rezervacijeAktuelne;
+  //   let rAbc: Rezervacija[] = [];
+  //   rAbc = r.sort((a, b) => {
+  //     let datA: Date = new Date(a.datumPreuzimanja);
+  //     let datB: Date = new Date(b.datumPreuzimanja);
+  //     let datAStr: string = datA.toISOString().split('T')[0];
+  //     let datBStr: string = datB.toISOString().split('T')[0];
 
-      let datA2: Date = new Date(a.datumVracanja);
-      let datB2: Date = new Date(b.datumVracanja);
-      let datAStr2: string = datA2.toISOString().split('T')[0];
-      let datBStr2: string = datB2.toISOString().split('T')[0];
+  //     let datA2: Date = new Date(a.datumVracanja);
+  //     let datB2: Date = new Date(b.datumVracanja);
+  //     let datAStr2: string = datA2.toISOString().split('T')[0];
+  //     let datBStr2: string = datB2.toISOString().split('T')[0];
 
-      if (datAStr < datBStr) {
-        return -1;
-      }
-      else if (datAStr > datBStr) {
-        return 1;
-      }
-      else {
-        if (datAStr2 < datBStr2) {
-          return -1;
-        }
-        else if (datAStr2 > datBStr2) {
-          return 1;
-        }
-        else {
-          return 0;
-        }
-      }
-    });
-    return rAbc;
-  }
+  //     if (datAStr < datBStr) {
+  //       return -1;
+  //     }
+  //     else if (datAStr > datBStr) {
+  //       return 1;
+  //     }
+  //     else {
+  //       if (datAStr2 < datBStr2) {
+  //         return -1;
+  //       }
+  //       else if (datAStr2 > datBStr2) {
+  //         return 1;
+  //       }
+  //       else {
+  //         return 0;
+  //       }
+  //     }
+  //   });
+  //   return rAbc;
+  // }
 
   kasnjenje(vracanje: Date): number {
     let danas: Date = new Date();
@@ -96,13 +102,16 @@ export class RezervacijeAdmAktComponent implements OnInit {
   }
 
   detaljnije(r: Rezervacija): void {
-    this.rezervacijeAktuelneAbc = [];
-    this.rezervacijeAktuelneAbc.push(r);
+    // this.rezervacijeAktuelneAbc = [];
+    // this.rezervacijeAktuelneAbc.push(r);
+    this.rezervacijeAbcAkt = [];
+    this.rezervacijeAbcAkt.push(r);
     this.rezervacijaOdabrana = r;
     this.vidljivo = true;
   }
 
   nazad(): void {
+    this.parent.ngOnInit();
     this.ngOnInit();
   }
 
@@ -206,10 +215,12 @@ export class RezervacijeAdmAktComponent implements OnInit {
                 automobil.statusID = 1;
                 this.automobilService.updateAutomobil(automobil).subscribe(data => {
                   if (data.status === 0) {
-                    alert('Status automobila je azuriran!');
+                    // alert('Status automobila je azuriran!');
+                    this.parent.ngOnInit();
                   }
                   else {
                     alert('Greska pri azuriranju statusa automobila!');
+                    this.parent.ngOnInit();
                   }
                 });
               }
@@ -223,13 +234,13 @@ export class RezervacijeAdmAktComponent implements OnInit {
         }
         else {
           alert ('Došlo je do greške pri otkazivanju rezervacije!')
-          this.ngOnInit();
+          // this.ngOnInit();
         }
       });
     }
     else {
       alert('Nemate administratorska prava!');
-      this.ngOnInit();
+      // this.ngOnInit();
     }
   }
 
@@ -253,22 +264,27 @@ export class RezervacijeAdmAktComponent implements OnInit {
                 automobil.statusID = 3;
                 this.automobilService.updateAutomobil(automobil).subscribe(data => {
                   if (data.status === 0) {
-                    alert('Status automobila je azuriran!');
+                    // alert('Status automobila je azuriran!');
+                    this.parent.ngOnInit();
                   }
                   else {
-                    alert('Greska pri azuriranju automobila!');
+                    alert('Greska pri azuriranju statusa automobila!');
+                    this.parent.ngOnInit();
                   }
                 });
+                
                 this.ngOnInit();
               }
               else {
                 alert ('Došlo je do greške pri iznajmljivanju automobila!')
+                this.parent.ngOnInit();
                 this.ngOnInit();
               }
             });
           }
           else {
             alert('Automobil jos uvijek nije vracen! Prethodni klijent kasni sa vracanjem!');
+            this.ngOnInit();
           }
         }
         else {
@@ -314,31 +330,34 @@ export class RezervacijeAdmAktComponent implements OnInit {
 
               this.automobilService.updateAutomobil(automobil).subscribe(data => {
                 if (data.status === 0) {
-                  alert('Status automobila je azuriran!');
+                  // alert('Status automobila je azuriran!');
+                  this.parent.ngOnInit();
                 }
                 else {
                   alert('Greska pri azuriranju automobila!');
+                  this.parent.ngOnInit();
                 }
-                this.ngOnInit();
+                //this.ngOnInit();
               });
 
-              this.ngOnInit();
+              //this.ngOnInit();
             }
             else {
               alert('Greska pri pretrazivanju automobila!');
             }
           });
+          this.ngOnInit();
         }
         else {
           alert ('Došlo je do greške pri vraćanju automobila!')
-          this.ngOnInit();
+          // this.ngOnInit();
         }
         this.parent.ngOnInit(); // Nece da osvjezi, bez ovoga.
       });
     }
     else {
       alert('Nemate administratorska prava!');
-      this.ngOnInit();
+      // this.ngOnInit();
     }
   }
 

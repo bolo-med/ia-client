@@ -30,16 +30,22 @@ export class ProizvodjacAdmComponent implements OnInit {
 
   dodajProizvodjaca() {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
-      if (confirm('Jeste li sigurni da zelite da dodate novog proizvodjaca u bazu podataka?')) {
-        this.proizvodjaciService.insertProizvodjac(this.odabraniProizvodjac).subscribe(data => {
-          if (data.status === 0) {
-            alert('Nov proizvodjac je dodat u bazu podataka!');
-            this.parent.parentNgOnInit();
-          }
-          else {
-            alert('Doslo je do greske pri upisivanju u bazu podataka!');
-          }
-        });
+
+      if ((this.odabraniProizvodjac.naziv === undefined) || (this.odabraniProizvodjac.naziv.trim() === "")) {
+        alert('Popunite polje!');
+      }
+      else {
+        if (confirm('Da li zelite da dodate novog proizvodjaca u bazu podataka?')) {
+          this.proizvodjaciService.insertProizvodjac(this.odabraniProizvodjac).subscribe(data => {
+            if (data.status === 0) {
+              alert('Nov proizvodjac je dodat u bazu podataka!');
+              this.parent.parentNgOnInit();
+            }
+            else {
+              alert('Doslo je do greske pri upisivanju u bazu podataka!');
+            }
+          });
+        }
       }
     }
     else {
