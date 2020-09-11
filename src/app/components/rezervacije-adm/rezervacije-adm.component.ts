@@ -24,6 +24,9 @@ export class RezervacijeAdmComponent implements OnInit {
   korisniciSvi: Korisnik[];
   automobiliSvi: Automobil[];
 
+  v2: boolean;
+  usrInf: string;
+
   constructor(private rezervacijeService: RezervacijeService, 
               private authService: AuthService, 
               private router: Router, 
@@ -55,6 +58,12 @@ export class RezervacijeAdmComponent implements OnInit {
       alert('Nemate administratorska prava!');
       this.router.navigateByUrl('/');
     }
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.v2 = true;
+      this.usrInf = 'Ulogovani ste kao: ' + this.authService.getKorisnikDetails().username;
+    }
+
   }
 
   rezervacijeSveAbcFn(rSve: Rezervacija[]): Rezervacija[] {

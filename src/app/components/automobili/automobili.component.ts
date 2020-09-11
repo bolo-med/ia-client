@@ -27,6 +27,9 @@ export class AutomobiliComponent implements OnInit {
   brMjesta: number[];
   brMjestaChecked: boolean[];
 
+  v2: boolean;
+  usrInf: string;
+
   constructor(private automobiliService: AutomobiliService, 
               private proizvodjaciService: ProizvodjaciService, 
               private authService: AuthService, 
@@ -56,6 +59,11 @@ export class AutomobiliComponent implements OnInit {
           this.proizvodjaciAbc = this.proizvodjaciAbcFn(data);
       });
     });
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.v2 = true;
+      this.usrInf = 'Ulogovani ste kao: ' + this.authService.getKorisnikDetails().username;
+    }
 
   }
 

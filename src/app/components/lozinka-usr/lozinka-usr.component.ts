@@ -22,6 +22,9 @@ export class LozinkaUsrComponent implements OnInit {
   greska2: boolean;
   greska2Str: string;
 
+  v2: boolean;
+  usrInf: string;
+
   constructor(private korisniciServices: KorisniciService, 
               private authService: AuthService, 
               private router: Router) {}
@@ -45,6 +48,11 @@ export class LozinkaUsrComponent implements OnInit {
     else {
       alert('Morate biti prijavljeni!');
       this.router.navigateByUrl('/');
+    }
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.v2 = true;
+      this.usrInf = 'Ulogovani ste kao: ' + this.authService.getKorisnikDetails().username;
     }
 
   }

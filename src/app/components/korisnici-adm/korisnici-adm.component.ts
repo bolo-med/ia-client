@@ -18,6 +18,9 @@ export class KorisniciAdmComponent implements OnInit {
   korisnikProba: Korisnik;
   detalji: boolean;
 
+  v2: boolean;
+  usrInf: string;
+
   constructor(private authService: AuthService, 
               private korisniciService: KorisniciService, 
               private router: Router, 
@@ -43,6 +46,12 @@ export class KorisniciAdmComponent implements OnInit {
       alert('Nemate administratorska prava!');
       this.router.navigateByUrl('/');
     }
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.v2 = true;
+      this.usrInf = 'Ulogovani ste kao: ' + this.authService.getKorisnikDetails().username;
+    }
+
   }
 
   korisniciAbcFn(kor: Korisnik[]): Korisnik[] {

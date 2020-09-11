@@ -22,6 +22,9 @@ export class AktuelnoUsrComponent implements OnInit {
 
   danDat: Date;
 
+  v2: boolean;
+  usrInf: string;
+
   constructor(private rezervacijeService: RezervacijeService, 
               private authService: AuthService, 
               private router: Router) { }
@@ -46,6 +49,11 @@ export class AktuelnoUsrComponent implements OnInit {
     }
 
     this.danDat = new Date();
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.v2 = true;
+      this.usrInf = 'Ulogovani ste kao: ' + this.authService.getKorisnikDetails().username;
+    }
 
   }
 

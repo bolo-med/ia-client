@@ -28,6 +28,9 @@ export class PodaciUsrComponent implements OnInit {
 
   greska: string;
 
+  v2: boolean;
+  usrInf: string;
+
   constructor(private authService: AuthService, 
               private router: Router, 
               private korisniciService: KorisniciService) { }
@@ -58,6 +61,12 @@ export class PodaciUsrComponent implements OnInit {
     this.telRe = /^[+][0-9]{11,12}$/;
 
     this.greska = '';
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.v2 = true;
+      this.usrInf = 'Ulogovani ste kao: ' + this.authService.getKorisnikDetails().username;
+    }
+
   }
 
   izmijeni() {

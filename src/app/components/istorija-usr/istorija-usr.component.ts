@@ -21,6 +21,9 @@ export class IstorijaUsrComponent implements OnInit {
 
   apiUrl: string = environment.apiUrl;
 
+  v2: boolean;
+  usrInf: string;
+
   constructor(private rezervacijeService: RezervacijeService, 
               private authService: AuthService, 
               private router: Router) {}
@@ -41,6 +44,11 @@ export class IstorijaUsrComponent implements OnInit {
     else {
       alert('Niste prijavljeni!');
       this.router.navigateByUrl('/');
+    }
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.v2 = true;
+      this.usrInf = 'Ulogovani ste kao: ' + this.authService.getKorisnikDetails().username;
     }
 
   }

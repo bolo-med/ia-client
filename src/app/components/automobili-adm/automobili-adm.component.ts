@@ -45,6 +45,9 @@ export class AutomobiliAdmComponent implements OnInit {
   dodajStatusBtn: boolean;
   dodajAutomobilBtn: boolean;
 
+  v2: boolean;
+  usrInf: string;
+
   constructor(private proizvodjaciService: ProizvodjaciService,
               private modeliService: ModeliService,
               private statusiService: StatusiService,
@@ -94,6 +97,11 @@ export class AutomobiliAdmComponent implements OnInit {
     else {
       alert('Nemate administratorska prava!');
       this.router.navigateByUrl('/');
+    }
+
+    if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn()) {
+      this.v2 = true;
+      this.usrInf = 'Ulogovani ste kao: ' + this.authService.getKorisnikDetails().username;
     }
 
   }
