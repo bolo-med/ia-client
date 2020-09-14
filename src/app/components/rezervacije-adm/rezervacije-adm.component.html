@@ -6,12 +6,12 @@
 
 <div class="centar">
     <div class="form-check form-check-inline">
-        <input class="form-check-input" id="a" type="radio" name="adm-rez" value="" checked (click)='kliknutoA()'>
+        <input class="form-check-input" id="a" type="radio" name="adm-rez" value="" checked (click)='kliknutoA()' [checked]='odabrano'>
         <label class="form-check-label" for="a">Aktuelne rezervacije</label>
     </div>
     
     <div class="form-check form-check-inline">
-        <input class="form-check-input" id="i" type="radio" name="adm-rez" value="" (click)='kliknutoI()'>
+        <input class="form-check-input" id="i" type="radio" name="adm-rez" value="" (click)='kliknutoI()' [checked]='!odabrano'>
         <label class="form-check-label" for="i">Istorija rezervisanja</label>
     </div>
 </div>

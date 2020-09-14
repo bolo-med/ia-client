@@ -22,7 +22,7 @@
         <td><div class="poravnanje" [ngClass]="{'tekst-crven': e.realizovana===false, 
                                                 'tekst-plav': e.realizovana===null, 
                                                 'tekst-zelen': e.realizovana===true}">
-              {{(e.realizovana === null) ? 'odobrena' : (e.realizovana === true) ? 'realizovana' : 'otkazana'}}
+              {{(e.realizovana === null) ? 'na čekanju' : (e.realizovana === true) ? 'realizovana' : 'otkazana'}}
             </div>
         </td>
         <td><div class="poravnanje" [ngClass]="{'tekst-crven': kasnjenje(e.datumVracanja) > 0, 

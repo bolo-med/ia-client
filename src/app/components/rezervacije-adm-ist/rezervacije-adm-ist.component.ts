@@ -222,6 +222,10 @@ export class RezervacijeAdmIstComponent implements OnInit {
       this.rezervacijePoAutomobilu();
       this.rezervacijePoGodini();
     }
+    else if ((+this.korisnikID === -1) && (+this.automobilID === -1) && (+this.godinaID !== -1) && (+this.mjesecID !== -1)) {
+      this.rezervacijePoGodini();
+      this.rezervacijePoMjesecu();
+    }
   }
 
   rezervacijePoKorisniku() {
@@ -322,19 +326,31 @@ export class RezervacijeAdmIstComponent implements OnInit {
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() && (this.authService.getKorisnikDetails().isAdmin === 1)) {
       this.rezervacijeService.deleteRezervacija(this.rezervacijaOdabrana.id).subscribe(data => {
         if (data.status === 0) {
-          this.ngOnInit();
-          alert("Rezervacija je uklonjena!");
+          //////////////////////////////////////////////////////////////////////////////
+          if (this.pozoviRoditeljskiNgOnInit() === true) {
+            this.parent.odabrano = false; // Posle ovog se zavrsi parent.ngOnInit, pa se vrijednost postavi na true.
+            alert('Rezervacija je uklonjena!');
+          }
+          /////////////////////////////////////////////////////////////////////////////
+          // this.ngOnInit();
+          // alert("Rezervacija je uklonjena!");
         }
         else {
           alert('Greska pri uklanjanju rezervacije!');
         }
-        // this.ngOnInit();
+        // this.parent.odabrano = false; // I ovo se izvrsava prije parent.ngOnInit
       });
     }
     else {
       alert('Nemate administratorska prava!');
       this.router.navigateByUrl('/');
     }
+  }
+
+  // Ipak vraca true, prije nego sto se zavrsi izvrsavanje parent.ngOnInita.
+  pozoviRoditeljskiNgOnInit(): boolean {
+    this.parent.ngOnInit();
+    return true;
   }
 
 }
