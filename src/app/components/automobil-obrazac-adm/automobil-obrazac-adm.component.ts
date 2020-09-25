@@ -16,8 +16,6 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AutomobilObrazacAdmComponent implements OnInit {
 
-  // automobil: Automobil;
-
   apiUrl = environment.apiUrl;
 
   putnici: number[];
@@ -49,8 +47,6 @@ export class AutomobilObrazacAdmComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.automobil = new Automobil();
-
     this.uploader.onAfterAddingAll = (file) => {
       file.withCredentials = false;
       this.uploader.uploadAll();
@@ -72,6 +68,7 @@ export class AutomobilObrazacAdmComponent implements OnInit {
   }
 
   dodajAutomobil() {
+
     if (window.localStorage.getItem('ia-token') && this.authService.isLoggedIn() 
                                                 && (this.authService.getKorisnikDetails().isAdmin === 1)) {
       
@@ -90,14 +87,21 @@ export class AutomobilObrazacAdmComponent implements OnInit {
       }
       else {
         if (confirm('Jeste li sigurni?')) {
+
+          this.automobil.id = null;
+          if (this.automobil.automatskiMjenjac === undefined) this.automobil.automatskiMjenjac = false;
+          
           this.automobiliService.insertAutomobil(this.automobil).subscribe(data => {
             if (data.status === 0) {
               alert('Automobil je dodat u bazu podataka!');
               this.parent.ngOnInit();
               this.ngOnInit();
             }
-            else {
+            else if (data.status === -1) {
               alert('Doslo je do greske pri dodavanju automobila!');
+            }
+            else {
+              alert('Doslo je do neke greske! Pokusali ste da unesete automobil.');
             }
           });
         }

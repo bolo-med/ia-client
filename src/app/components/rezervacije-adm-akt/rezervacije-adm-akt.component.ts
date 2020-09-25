@@ -224,6 +224,9 @@ export class RezervacijeAdmAktComponent implements OnInit {
                   }
                 });
               }
+              else {
+                this.parent.ngOnInit();
+              }
             }
             else {
               alert('Greska pri pretrazi automobila!');
