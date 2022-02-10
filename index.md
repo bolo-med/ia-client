@@ -44,6 +44,6 @@ Aplikacija se sastoji iz [klijentskog](https://github.com/bolo-med/ia-client) (A
 ![12.png](/docs/assets/images/12.png)
 *Slika 12 - Izborom rezervacije sa spiska, dobijaju se svi detalji o klijentu i automobilu. Moguće je promijeniti status rezervacije.*
 
-![13.png](/docs/assets/images/13.png)
+![13.PNG](/docs/assets/images/13.png)
 *Slika 13 - Stranica Administrator/Rezervacije, opcija Istorija rezervisanja. Moguće je filtrirati spisak, po određenim kriterijumima. Moguće je pogledati detalje svake rezervacije i ukloniti rezervaciju.*
 
