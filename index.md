@@ -1,8 +1,30 @@
-## Welcome to GitHub Pages
+# Aplikacija za iznajmljivanje automobila
 
-You can use the [editor on GitHub](https://github.com/bolo-med/ia-client/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Aplikacija se sastoji iz [klijentskog](https://github.com/bolo-med/ia-client) (Angular) i [serverskog](https://github.com/bolo-med/iznajmljivanje_automobila) (Node.js) dijela. Podaci se skladište u MySQL bazi podataka. Naredne slike prikazuju kako radi aplikacija.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Stranice dostupne svim posjetiocima
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Markdown
 
