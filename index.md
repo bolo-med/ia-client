@@ -1,6 +1,6 @@
 # Aplikacija za iznajmljivanje automobila
 
-Aplikacija se sastoji iz [klijentskog](https://github.com/bolo-med/ia-client) (Angular) i [serverskog](https://github.com/bolo-med/iznajmljivanje_automobila) (Node.js) dijela. Podaci se skladište u MySQL bazi podataka. Sledeće slike pokazuju rad aplikacije.
+Aplikacija se sastoji iz [klijentskog](https://github.com/bolo-med/ia-client) (Angular) i [serverskog](https://github.com/bolo-med/iznajmljivanje_automobila) (Node.js) dijela. Podaci se skladište u MySQL bazu podataka. Sledeće slike pokazuju rad aplikacije.
 
 <br />
 
@@ -67,7 +67,7 @@ Aplikacija se sastoji iz [klijentskog](https://github.com/bolo-med/ia-client) (A
 <br />
 
 ![11.png](/docs/assets/images/11.png)
-*Slika 11 - Stranica Administrator/Rezervacije, opcija Aktuelne rezervacije. Ako je klijent preuzeo automobil, ima status "realizovana". Prikazano je i kašnjnje vraćanja vozila, u danima.*
+*Slika 11 - Stranica Administrator/Rezervacije, opcija Aktuelne rezervacije. Ako je klijent preuzeo automobil, rezervacija ima status "realizovana". Prikazano je i kašnjnje vraćanja vozila, u danima.*
 
 <br />
 
