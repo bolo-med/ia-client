@@ -1,6 +1,6 @@
 # Aplikacija za iznajmljivanje automobila
 
-Aplikacija se sastoji iz [klijentskog](https://github.com/bolo-med/ia-client) (Angular) i [serverskog](https://github.com/bolo-med/iznajmljivanje_automobila) (Node.js) dijela. Podaci se skladište u MySQL bazu podataka. Sledeće slike pokazuju rad aplikacije.
+Aplikacija se sastoji iz [klijentskog](https://github.com/bolo-med/ia-client) (Angular) i [serverskog](https://github.com/bolo-med/iznajmljivanje_automobila) (Node.js) dijela. Podaci se čuvaju u MySQL bazi podataka. Sledeće slike pokazuju rad aplikacije.
 
 <br />
 
